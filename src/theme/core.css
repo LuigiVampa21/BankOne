@@ -27,3 +27,7 @@ ion-button.custom {
   height: 60px;
   /* width: 80vw; */
 }
+
+.router-container {
+  background: var(--ion-color-tertiary);
+}

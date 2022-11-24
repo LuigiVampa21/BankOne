@@ -4,6 +4,19 @@ import router from "./router";
 
 import { IonicVue } from "@ionic/vue";
 
+// import { addIcons } from "ionicons";
+// import {
+//   SettingsOutline,
+//   SwapHorizontalOutline,
+//   HomeOutline,
+// } from "ionicons/icons";
+
+// addIcons({
+//   SettingsOutline,
+//   SwapHorizontalOutline,
+//   HomeOutline,
+// });
+
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/vue/css/core.css";
 
