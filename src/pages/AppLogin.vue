@@ -5,6 +5,9 @@
         <ion-buttons slot="end" class="ion-margin"> Sign up </ion-buttons>
       </ion-toolbar>
     </ion-header>
+    <!-- <ion-toolbar>
+      <ion-buttons slot="end" class="ion-margin"> Sign up </ion-buttons>
+    </ion-toolbar> -->
     <ion-content>
       <ion-grid>
         <ion-row
