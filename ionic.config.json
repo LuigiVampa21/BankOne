@@ -1,0 +1,7 @@
+{
+  "name": "BankOne",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
