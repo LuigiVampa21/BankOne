@@ -25,9 +25,14 @@ ion-input.custom {
 ion-button.custom {
   --borde-radius: 10px;
   height: 60px;
-  /* width: 80vw; */
 }
 
 .router-container {
   background: var(--ion-color-tertiary);
+}
+
+ion-card {
+  margin-top: 10px;
+
+  margin-bottom: 10px;
 }

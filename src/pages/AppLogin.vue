@@ -60,7 +60,7 @@
                 <ion-row>
                   <ion-col>
                     <div class="ion-text-center">
-                      <ion-text class="ion-text-center" color="light-tint">
+                      <ion-text>
                         <h6>2022 © Bank One Inc.</h6>
                       </ion-text>
                     </div>
