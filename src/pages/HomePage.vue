@@ -1,9 +1,6 @@
 <template>
-  <ion-header>
-    <ion-toolbar></ion-toolbar>
-  </ion-header>
   <base-layout>
-    <ion-item color="primary">
+    <ion-item color="primary" class="ion-margin">
       <ion-avatar slot="start">
         <img
           class="avatar"
@@ -16,107 +13,57 @@
       </ion-label>
     </ion-item>
     <ion-grid>
-      <ion-row class="ion-margin-top ion-justify-content-center">
-        <ion-button color="secondary" class="btn-home">Overview</ion-button>
-        <ion-button color="secondary" class="btn-home">Stocks</ion-button>
-        <ion-button color="secondary" class="btn-home">Crypto</ion-button>
-        <ion-button color="secondary" class="btn-home">Commodities</ion-button>
-      </ion-row>
+      <!-- HOME HEADER -->
+      <div class="header-container">
+        <HomeHeader />
+      </div>
+
       <ion-row>
-        <ion-card color="secondary">
-          <ion-card-header>
-            <ion-row class="ion-justify-content-between">
-              <ion-col>
-                <ion-card-title class="total-amount"> 15 000 € </ion-card-title>
-                <ion-text>EUR</ion-text>
-              </ion-col>
-              <ion-item color="secondary">
-                <ion-avatar>
-                  <img
-                    class="avatar"
-                    alt="Silhouette of a person's head"
-                    src="https://via.placeholder.com/150C/O https://placeholder.com"
-                  />
-                </ion-avatar>
-              </ion-item>
-            </ion-row>
-          </ion-card-header>
-          <ion-row class="ion-justify-content-between">
-            <ion-text class="ion-margin-start">
-              <h6>Transactions</h6>
-            </ion-text>
-            <ion-text class="ion-margin-end" color="tertiary">
-              <h6>See All</h6>
-            </ion-text>
-          </ion-row>
-          <ion-card-content class="ion-justify-content-center">
-            <ion-row
-              class="ion-justify-content-between last-transaction-container"
-            >
-              <ion-item color="secondary">
-                <ion-avatar slot="start">
-                  <img
-                    class="avatar"
-                    alt="Silhouette of a person's head"
-                    src="https://via.placeholder.com/150C/O https://placeholder.com"
-                  />
-                </ion-avatar>
-              </ion-item>
-              <div class="last-transaction">
-                <ion-col>
-                  <ion-text>Instant Transfer</ion-text>
-                  <ion-text color="medium"><h6>M. DOE John</h6></ion-text>
-                </ion-col>
-              </div>
-              <div class="last-transaction-amount">
-                <ion-text color="success">+ 450€</ion-text>
-              </div>
-            </ion-row>
-          </ion-card-content>
-        </ion-card>
+        <!-- HomeOverview -->
+
+        <HomeOverview />
+
+        <!-- </ion-row> -->
+
         <!-- ------------------------------- CARDS ----------------------------- -->
 
         <div class="row-container">
-          <ion-row>
-            <ion-card color="secondary" class="containers card-container">
-              <ion-row class="ion-justify-content-between">
-                <ion-card-title class="ion-padding-start">
-                  <h6>Cards</h6>
-                </ion-card-title>
-                <ion-icon
-                  class="ellipse-padding"
-                  size="small"
-                  color="light"
-                  :icon="ellipsisHorizontalOutline"
-                ></ion-icon>
-              </ion-row>
-              <ion-text class="card-sub-title ion-padding-start" color="medium"
-                >Premium Card
-              </ion-text>
-              <ion-row>
-                <div class="bank-card-container ion-margin">
-                  <div class="card-bank-1"></div>
-                  <div class="card-bank-2"></div>
-                </div>
-              </ion-row>
-            </ion-card>
-          </ion-row>
+          <ion-card color="secondary" class="containers card-container">
+            <ion-row class="ion-justify-content-between">
+              <ion-card-title class="ion-padding-start">
+                <h6>Cards</h6>
+              </ion-card-title>
+              <ion-icon
+                class="ellipse-padding"
+                size="small"
+                color="light"
+                :icon="ellipsisHorizontalOutline"
+              ></ion-icon>
+            </ion-row>
+            <ion-text class="card-sub-title ion-padding-start" color="medium"
+              >Premium Card
+            </ion-text>
+            <ion-row>
+              <div class="bank-card-container ion-margin">
+                <div class="card-bank-1"></div>
+                <div class="card-bank-2"></div>
+              </div>
+            </ion-row>
+          </ion-card>
 
           <!-- ------------------------------- BUGET ----------------------------- -->
 
-          <ion-row>
-            <ion-card color="secondary" class="containers">
-              <ion-row class="ion-justify-content-between">
-                <ion-card-title class="ion-padding-start">
-                  <h6>Budget</h6>
-                </ion-card-title>
-                <ion-icon
-                  class="ellipse-padding"
-                  size="small"
-                  color="light"
-                  :icon="ellipsisHorizontalOutline"
-                ></ion-icon>
-              </ion-row>
+          <ion-card color="secondary" class="containers">
+            <ion-row class="ion-justify-content-between">
+              <ion-card-title class="ion-padding-start">
+                <h6>Budget</h6>
+              </ion-card-title>
+              <ion-icon
+                class="ellipse-padding"
+                size="small"
+                color="light"
+                :icon="ellipsisHorizontalOutline"
+              ></ion-icon>
               <ion-text class="card-sub-title ion-padding-start" color="medium"
                 >Premium Card
               </ion-text>
@@ -125,12 +72,13 @@
                   <div class="budget-diagram"></div>
                 </div>
               </ion-row>
-            </ion-card>
-          </ion-row>
+            </ion-row>
+          </ion-card>
         </div>
-        <!-- ------------------------------- LOAN----------------------------- -->
 
-        <ion-row>
+        <!-- ------------------------------- LOAN----------------------------- -->
+        <div class="row-container">
+          <!-- <ion-row> -->
           <ion-card color="secondary" class="containers">
             <ion-row class="ion-justify-content-between">
               <ion-card-title class="ion-padding-start">
@@ -155,36 +103,40 @@
               </div>
             </ion-row>
           </ion-card>
-        </ion-row>
+          <!-- </ion-row> -->
 
-        <!-- ------------------------------- DOCS ----------------------------- -->
+          <!-- ------------------------------- DOCS ----------------------------- -->
 
-        <div class="row-container">
-          <ion-row>
-            <ion-card color="secondary" class="containers">
-              <ion-row class="ion-justify-content-between">
-                <ion-card-title class="ion-padding-start">
-                  <h6>Documents</h6>
-                </ion-card-title>
-                <ion-icon
-                  class="ellipse-padding"
-                  size="small"
-                  color="light"
-                  :icon="ellipsisHorizontalOutline"
-                ></ion-icon>
-              </ion-row>
-              <ion-text class="card-sub-title ion-padding-start" color="medium"
-                >All you need to sleep well
-              </ion-text>
-              <ion-row>
-                <div class="documents-container ion-margin">
-                  <ion-icon size="large" :icon="document"></ion-icon>
-                  <ion-icon size="large" :icon="document"></ion-icon>
-                </div>
-              </ion-row>
-            </ion-card>
-          </ion-row>
+          <!-- <ion-row> -->
+          <ion-card color="secondary" class="containers">
+            <ion-row class="ion-justify-content-between">
+              <ion-card-title class="ion-padding-start">
+                <h6>Documents</h6>
+              </ion-card-title>
+              <ion-icon
+                class="ellipse-padding"
+                size="small"
+                color="light"
+                :icon="ellipsisHorizontalOutline"
+              ></ion-icon>
+            </ion-row>
+            <ion-text class="card-sub-title ion-padding-start" color="medium"
+              >All you need to sleep well
+            </ion-text>
+            <ion-row>
+              <div class="documents-container ion-margin">
+                <ion-icon size="large" :icon="document"></ion-icon>
+                <ion-icon size="large" :icon="document"></ion-icon>
+              </div>
+            </ion-row>
+          </ion-card>
+          <!-- </ion-row> -->
         </div>
+
+        <!-- <div class="test"> -->
+        <HomeCard :data="homeCards" />
+        <!-- </div> -->
+
         <!-- ------------------------------- SIBLINGS ----------------------------- -->
 
         <ion-card color="secondary" class="sibling-accounts-container">
@@ -337,17 +289,22 @@
 import {
   IonAvatar,
   IonItem,
-  IonHeader,
-  IonToolbar,
   IonLabel,
   IonText,
   IonGrid,
   IonRow,
   IonCard,
-  IonCardHeader,
   IonCardTitle,
-  IonCardContent,
 } from "@ionic/vue";
+import HomeHeader from "@/components/home/HomeHeader";
+import HomeOverview from "@/components/home/HomeOverview";
+import HomeCard from "@/components/home/HomeCard";
+
+import homeCards from "../utils/home/homeCards";
+// import homeBudget from "../utils/home/homeCards";
+// import homeLoan from "../utils/home/homeLoan";
+// import homeDocuments from "../utils/home/homeDocuments";
+
 import { ellipsisHorizontalOutline, document } from "ionicons/icons";
 import { defineComponent } from "vue";
 
@@ -356,21 +313,21 @@ export default defineComponent({
   components: {
     IonAvatar,
     IonItem,
-    IonHeader,
-    IonToolbar,
     IonLabel,
     IonText,
     IonGrid,
     IonRow,
     IonCard,
-    IonCardHeader,
     IonCardTitle,
-    IonCardContent,
+    HomeHeader,
+    HomeOverview,
+    HomeCard,
   },
   setup() {
     return {
       ellipsisHorizontalOutline,
       document,
+      homeCards,
     };
   },
 });
@@ -384,40 +341,22 @@ ion-avatar {
 ion-card {
   width: 100%;
 }
-.total-amount {
-  font-weight: 100;
-}
 
 ion-card-content {
   padding: 20px 0;
 }
 
-.last-transaction-container {
-  padding: 0;
-  width: 100%;
-}
-.last-transaction-amount,
-.last-transaction {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.last-transaction-container > *:nth-child(3) {
-  width: 25%;
+.header-container{
+  width: 100vw;
 }
 
-.last-transaction-container > *:nth-child(2) {
-  width: 45%;
+.row-container {
+  width: 100vw;
+  display: flex;
 }
 
 .containers {
-  /* width: calc(50vw - 32px);
-  margin-right: 16px;
-  margin-left: 16px; */
-}
-
-.card-sub-title {
-  font-size: 12px;
+  width: 50%;
 }
 
 .bank-card-container {

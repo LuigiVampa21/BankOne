@@ -1,0 +1,87 @@
+<template>
+  <ion-card color="secondary">
+    <ion-card-header>
+      <ion-row class="ion-justify-content-between">
+        <ion-col>
+          <ion-card-title class="fontWeight100"> 15 000 € </ion-card-title>
+          <ion-text>EUR</ion-text>
+        </ion-col>
+        <ion-item color="secondary">
+          <ion-avatar>
+            <img
+              class="avatar"
+              alt="Silhouette of a person's head"
+              src="https://via.placeholder.com/150C/O https://placeholder.com"
+            />
+          </ion-avatar>
+        </ion-item>
+      </ion-row>
+    </ion-card-header>
+    <ion-row class="ion-justify-content-between">
+      <ion-text class="ion-margin-start">
+        <h6>Transactions</h6>
+      </ion-text>
+      <ion-text class="ion-margin-end" color="tertiary">
+        <h6>See All</h6>
+      </ion-text>
+    </ion-row>
+    <ion-card-content class="ion-justify-content-center">
+      <ion-row class="ion-justify-content-between last-transaction-container">
+        <ion-item color="secondary">
+          <ion-avatar slot="start">
+            <img
+              class="avatar"
+              alt="Silhouette of a person's head"
+              src="https://via.placeholder.com/150C/O https://placeholder.com"
+            />
+          </ion-avatar>
+        </ion-item>
+        <div class="last-transaction">
+          <ion-col>
+            <ion-text>Instant Transfer</ion-text>
+            <ion-text color="medium"><h6>M. DOE John</h6></ion-text>
+          </ion-col>
+        </div>
+        <div class="last-transaction-amount">
+          <ion-text color="success">+ 450€</ion-text>
+        </div>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</template>
+
+<script>
+import { IonCardHeader, IonCardContent } from "@ionic/vue";
+export default {
+  name: "HomeOverview",
+  components: {
+    IonCardHeader,
+    IonCardContent,
+  },
+};
+</script>
+
+<style>
+.fontWeight100 {
+  font-weight: 100;
+}
+
+.last-transaction-container {
+  padding: 0;
+  width: 100%;
+}
+
+/* .last-transaction-amount,
+.last-transaction {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.last-transaction-container > *:nth-child(3) {
+  width: 25%;
+}
+
+.last-transaction-container > *:nth-child(2) {
+  width: 45%;
+} */
+</style>
