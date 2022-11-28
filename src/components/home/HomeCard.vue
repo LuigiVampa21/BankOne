@@ -2,7 +2,7 @@
   <ion-card color="secondary" class="containers card-container">
     <ion-row class="ion-justify-content-between">
       <ion-card-title class="ion-padding-start">
-        <h6>Cards</h6>
+        <h6>{{ data.title }}</h6>
       </ion-card-title>
       <ion-icon
         class="ellipse-padding"
@@ -36,9 +36,6 @@ export default {
     return {
       ellipsisHorizontalOutline,
     };
-  },
-  created() {
-    console.log(this.data);
   },
 };
 </script>

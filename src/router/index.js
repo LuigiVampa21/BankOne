@@ -21,6 +21,26 @@ const routes = [
     name: "Register",
     component: () => import("@/pages/AppRegister"),
   },
+  {
+    path: "/cards",
+    name: "Cards",
+    component: () => import("@/pages/CardPage"),
+  },
+  {
+    path: "/transactions",
+    name: "Transactions",
+    component: () => import("@/pages/TransactionsPage"),
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: () => import("@/pages/SettingsPage"),
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: () => import("@/pages/InvestmentsPage"),
+  },
 ];
 
 const router = createRouter({

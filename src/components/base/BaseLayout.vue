@@ -5,6 +5,12 @@
     </ion-buttons>
   </ion-header>
   <ion-content>
+    <ion-row
+      v-if="title"
+      class="ion-margin-start ion-margin-bottom ion-padding-bottom"
+    >
+      <h1 class="view-title">{{ title }}</h1>
+    </ion-row>
     <slot />
     <div class="router-container">
       <ion-icon size="large" color="dark" :icon="home"></ion-icon>
@@ -15,12 +21,7 @@
 </template>
 
 <script>
-import {
-  IonContent,
-  IonHeader,
-  IonBackButton,
-  IonButtons,
-} from "@ionic/vue";
+import { IonContent, IonHeader, IonBackButton, IonButtons } from "@ionic/vue";
 import { defineComponent } from "vue";
 import { settings } from "ionicons/icons";
 import { swapHorizontal } from "ionicons/icons";
@@ -28,7 +29,7 @@ import { home } from "ionicons/icons";
 
 export default defineComponent({
   name: "HomePage",
-  props: ["defaultBackLink"],
+  props: ["defaultBackLink", "title"],
   components: {
     IonContent,
     IonHeader,
