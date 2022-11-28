@@ -37,9 +37,19 @@ const routes = [
     component: () => import("@/pages/SettingsPage"),
   },
   {
-    path: "/settings",
-    name: "Settings",
+    path: "/investments",
+    name: "Investments",
     component: () => import("@/pages/InvestmentsPage"),
+  },
+  {
+    path: "/loans",
+    name: "Loans",
+    component: () => import("@/pages/LoanPage"),
+  },
+  {
+    path: "/help",
+    name: "Help",
+    component: () => import("@/pages/HelpPage"),
   },
 ];
 
