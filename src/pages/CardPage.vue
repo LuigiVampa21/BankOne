@@ -32,11 +32,9 @@ import cardUpgrade from "../utils/card/cardUpgrade";
 
 import { toggleOutline } from "ionicons/icons";
 
-import { defineComponent } from "vue";
-
 import { IonGrid, IonRow } from "@ionic/vue";
 
-export default defineComponent({
+export default {
   name: "CardPage",
   components: {
     CardCreditCard,
@@ -52,7 +50,7 @@ export default defineComponent({
       cardUpgrade,
     };
   },
-});
+};
 </script>
 
 <style>

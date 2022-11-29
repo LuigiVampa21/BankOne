@@ -1,21 +1,9 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+import vueConfig from "./vue.config";
 
 import { IonicVue } from "@ionic/vue";
-
-// import { addIcons } from "ionicons";
-// import {
-//   SettingsOutline,
-//   SwapHorizontalOutline,
-//   HomeOutline,
-// } from "ionicons/icons";
-
-// addIcons({
-//   SettingsOutline,
-//   SwapHorizontalOutline,
-//   HomeOutline,
-// });
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/vue/css/core.css";
@@ -43,6 +31,12 @@ import BaseLayout from "@/components/base/BaseLayout.vue";
 const app = createApp(App).use(IonicVue).use(router);
 
 app.component("base-layout", BaseLayout);
+
+app.config.compilerOptions.isCustomElement = tag => {
+  return tag.startsWith("ion-"); // (return true)
+};
+
+app.use(vueConfig);
 
 router.isReady().then(() => {
   app.mount("#app");

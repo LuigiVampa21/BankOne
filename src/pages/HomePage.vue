@@ -81,23 +81,22 @@ import homeLoan from "../utils/home/homeLoan";
 import homeDocuments from "../utils/home/homeDocuments";
 
 import { ellipsisHorizontalOutline, document } from "ionicons/icons";
-import { defineComponent } from "vue";
 
-export default defineComponent({
+export default {
   name: "HomePage",
   components: {
-    IonAvatar,
-    IonItem,
-    IonLabel,
-    IonText,
-    IonGrid,
-    IonRow,
-    IonCol,
     HomeHeader,
     HomeOverview,
     HomeCard,
     HomeSiblings,
     HomeWallet,
+    // IonAvatar,
+    // IonItem,
+    // IonLabel,
+    // IonText,
+    // IonGrid,
+    // IonRow,
+    // IonCol,
   },
   setup() {
     return {
@@ -107,9 +106,16 @@ export default defineComponent({
       homeBudget,
       homeLoan,
       homeDocuments,
+      IonAvatar,
+      IonItem,
+      IonLabel,
+      IonText,
+      IonGrid,
+      IonRow,
+      IonCol,
     };
   },
-});
+};
 </script>
 
 <style scoped>
