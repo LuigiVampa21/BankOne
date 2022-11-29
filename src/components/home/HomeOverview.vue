@@ -51,12 +51,24 @@
 </template>
 
 <script>
-import { IonCardHeader, IonCardContent } from "@ionic/vue";
+import {
+  IonAvatar,
+  IonCard,
+  IonCardTitle,
+  IonItem,
+  IonText,
+  IonRow,
+  IonCol,
+} from "@ionic/vue";
 export default {
-  name: "HomeOverview",
   components: {
-    IonCardHeader,
-    IonCardContent,
+    IonAvatar,
+    IonItem,
+    IonText,
+    IonRow,
+    IonCol,
+    IonCard,
+    IonCardTitle,
   },
 };
 </script>
@@ -70,18 +82,4 @@ export default {
   padding: 0;
   width: 100%;
 }
-
-/* .last-transaction-amount,
-.last-transaction {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.last-transaction-container > *:nth-child(3) {
-  width: 25%;
-}
-
-.last-transaction-container > *:nth-child(2) {
-  width: 45%;
-} */
 </style>

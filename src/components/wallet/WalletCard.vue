@@ -13,9 +13,22 @@
 </template>
 
 <script>
+import {
+  IonText,
+  IonRow,
+  IonCard,
+  IonIcon,
+} from "@ionic/vue";
 import { toggleOutline } from "ionicons/icons";
+
 export default {
   props: ["data"],
+  components: {
+    IonText,
+    IonRow,
+    IonCard,
+    IonIcon,
+  },
   setup() {
     return {
       toggleOutline,

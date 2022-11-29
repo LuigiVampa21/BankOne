@@ -18,9 +18,13 @@ import SettingsAccount from "../utils/settings/account";
 import SettingsCloseAccount from "../utils/settings/closeAccount";
 import SettingsLogOut from "../utils/settings/logout";
 import SettingsPrivacy from "../utils/settings/privacy";
+import { IonGrid, IonRow } from "@ionic/vue";
+
 export default {
   components: {
     SettingCard,
+    IonGrid,
+    IonRow,
   },
   setup() {
     return {

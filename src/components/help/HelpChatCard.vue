@@ -48,9 +48,14 @@
 </template>
 
 <script>
+import { IonCard, IonLabel, IonText, IonRow } from "@ionic/vue";
 export default {
-  props: ["chat"],
-  setup() {},
+  components: {
+    IonLabel,
+    IonText,
+    IonRow,
+    IonCard,
+  },
 };
 </script>
 
@@ -66,7 +71,7 @@ export default {
   font-size: 11px;
 }
 
-.ion-justify-content-end img{
-order: 2;
+.ion-justify-content-end img {
+  order: 2;
 }
 </style>

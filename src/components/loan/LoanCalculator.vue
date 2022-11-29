@@ -10,7 +10,19 @@
 </template>
 
 <script>
-export default {};
+import {
+  IonCard,
+  IonRow,
+  IonInput,
+} from "@ionic/vue";
+
+export default {
+  components: {
+    IonRow,
+    IonCard,
+    IonInput,
+  },
+};
 </script>
 
 <style></style>

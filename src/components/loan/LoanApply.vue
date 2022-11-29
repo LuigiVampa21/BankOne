@@ -27,7 +27,21 @@
 </template>
 
 <script>
-export default {};
+import {
+  IonCard,
+  IonText,
+  IonRow,
+  IonInput
+} from "@ionic/vue";
+
+export default {
+  components: {
+    IonText,
+    IonRow,
+    IonCard,
+    IonInput
+  },
+};
 </script>
 
 <style></style>

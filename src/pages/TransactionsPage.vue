@@ -23,11 +23,14 @@ import TransactionSearchBar from "@/components/transactions/TransactionSearchBar
 import TransactionCard from "@/components/transactions/TransactionCard.vue";
 import Income from "../utils/transaction/income";
 import Outcome from "../utils/transaction/outcome";
+import { IonGrid, IonRow } from "@ionic/vue";
 
 export default {
   components: {
     TransactionSearchBar,
     TransactionCard,
+    IonRow,
+    IonGrid,
   },
   setup() {
     return {

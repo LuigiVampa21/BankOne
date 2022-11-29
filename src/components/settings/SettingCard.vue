@@ -7,7 +7,6 @@
         :color="data.color"
         :icon="data.icon"
       ></ion-icon>
-      <!-- color="light" -->
       <ion-text class="ion-margin-start">{{ data.title }}</ion-text>
     </ion-row>
   </ion-card>
@@ -15,11 +14,15 @@
 
 <script>
 import { person, fingerPrint, logOut, closeCircle } from "ionicons/icons";
+import { IonCard, IonRow, IonIcon, IonText } from "@ionic/vue";
 
 export default {
   props: ["data"],
-  created() {
-    console.log(this.data.icon);
+  components: {
+    IonCard,
+    IonRow,
+    IonIcon,
+    IonText,
   },
   setup() {
     return {

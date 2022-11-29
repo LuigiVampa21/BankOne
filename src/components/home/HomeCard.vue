@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { IonRow, IonCard, IonCardTitle } from "@ionic/vue";
+import { IonRow, IonCard, IonCardTitle, IonIcon } from "@ionic/vue";
 import { ellipsisHorizontalOutline } from "ionicons/icons";
 
 export default {
@@ -30,6 +30,7 @@ export default {
     IonRow,
     IonCard,
     IonCardTitle,
+    IonIcon,
   },
   props: ["data"],
   setup() {

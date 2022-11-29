@@ -28,10 +28,13 @@
 </template>
 
 <script>
+import { IonAvatar, IonRow } from "@ionic/vue";
+
 export default {
   props: ["assets"],
-  created() {
-    console.log(this.assets);
+  components: {
+    IonAvatar,
+    IonRow,
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <base-layout :title="'Loans'">
-    <ion-row class="">
+    <ion-row>
       <LoanApply />
       <LoanCalculator />
     </ion-row>
@@ -10,11 +10,13 @@
 <script>
 import LoanApply from "../components/loan/LoanApply.vue";
 import LoanCalculator from "../components/loan/LoanCalculator.vue";
+import { IonRow } from "@ionic/vue";
 
 export default {
   components: {
     LoanApply,
     LoanCalculator,
+    IonRow,
   },
   setup() {
     return {};

@@ -34,11 +34,15 @@ import { toggleOutline } from "ionicons/icons";
 
 import { defineComponent } from "vue";
 
+import { IonGrid, IonRow } from "@ionic/vue";
+
 export default defineComponent({
   name: "CardPage",
   components: {
     CardCreditCard,
     CardOptions,
+    IonGrid,
+    IonRow,
   },
   setup() {
     return {

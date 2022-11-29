@@ -25,11 +25,11 @@
         <!-- HomeCards -->
 
         <div class="row-container">
-          <HomeCard :data="homeCards" />
+          <HomeCard :data="homeCards" router-link="/cards" />
           <HomeCard :data="homeBudget" />
         </div>
         <div class="row-container">
-          <HomeCard :data="homeLoan" />
+          <HomeCard :data="homeLoan" router-link="/loans" />
           <HomeCard :data="homeDocuments" />
         </div>
 

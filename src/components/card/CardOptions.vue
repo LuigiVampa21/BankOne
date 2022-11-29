@@ -9,7 +9,20 @@
 
 <script>
 import { toggleOutline } from "ionicons/icons";
+import {
+  IonCard,
+  IonText,
+  IonRow,
+  IonIcon,
+} from "@ionic/vue";
+
 export default {
+  components: {
+    IonText,
+    IonRow,
+    IonCard,
+    IonIcon,
+  },
   props: ["data"],
   setup() {
     return {

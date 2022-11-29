@@ -2,7 +2,7 @@
   <ion-card color="secondary" class="wallet-container ion-padding-bottom">
     <ion-row class="ion-justify-content-between">
       <ion-card-title class="ion-margin-start">
-        <h3>Wallets</h3>
+        <h3 router-link="/wallet">Wallets</h3>
       </ion-card-title>
       <ion-icon
         class="ellipse-padding"
@@ -61,7 +61,26 @@
 </template>
 
 <script>
-export default {};
+import {
+  IonAvatar,
+  IonCard,
+  IonCardTitle,
+  IonItem,
+  IonLabel,
+  IonText,
+  IonRow,
+} from "@ionic/vue";
+export default {
+  components: {
+    IonAvatar,
+    IonItem,
+    IonLabel,
+    IonText,
+    IonRow,
+    IonCard,
+    IonCardTitle,
+  },
+};
 </script>
 
 <style></style>

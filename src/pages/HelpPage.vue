@@ -16,9 +16,16 @@
 import HelpChatCard from "../components/help/HelpChatCard.vue";
 import chatHelp from "../utils/help/chatHelp";
 import { chatbox } from "ionicons/icons";
+import {
+  IonRow,
+  IonIcon
+} from "@ionic/vue";
+
 export default {
   components: {
     HelpChatCard,
+    IonRow,
+    IonIcon
   },
   setup() {
     return {

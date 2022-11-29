@@ -35,10 +35,25 @@
 </template>
 
 <script>
+import {
+  IonAvatar,
+  IonItem,
+  IonText,
+  IonRow,
+  IonCol,
+  IonCardContent,
+  IonCard,
+} from "@ionic/vue";
 export default {
   props: ["data"],
-  created() {
-    console.log(this.data);
+  components: {
+    IonAvatar,
+    IonItem,
+    IonText,
+    IonRow,
+    IonCol,
+    IonCardContent,
+    IonCard,
   },
 };
 </script>

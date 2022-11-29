@@ -3,7 +3,14 @@
 </template>
 
 <script>
-export default {};
+import {
+  IonInput,
+} from "@ionic/vue";
+export default {
+  components: {
+    IonInput,
+  },
+};
 </script>
 
 <style></style>

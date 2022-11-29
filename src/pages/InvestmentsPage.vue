@@ -10,6 +10,7 @@
 
 <script>
 import IvtCard from "../components/investments/IvtCard.vue";
+import { IonRow } from "@ionic/vue";
 
 import CommoditiesIndex from "../utils/investments/commodities";
 import CryptoIndex from "../utils/investments/crypto";
@@ -18,6 +19,7 @@ import StocksIndex from "../utils/investments/stock";
 export default {
   components: {
     IvtCard,
+    IonRow,
   },
   setup() {
     return {

@@ -16,10 +16,13 @@ import WalletCard from "../components/wallet/WalletCard.vue";
 import CheckingWallet from "../utils/wallet/CheckingWallet";
 import SavingWallet from "../utils/wallet/SavingWallet";
 import InvestmentsWallet from "../utils/wallet/InvestmentsWallet";
+import { IonGrid, IonRow } from "@ionic/vue";
 
 export default {
   components: {
     WalletCard,
+    IonRow,
+    IonGrid,
   },
   setup() {
     return {
