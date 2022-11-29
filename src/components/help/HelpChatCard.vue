@@ -7,7 +7,13 @@
         : { backgroundColor: 'var(--ion-color-medium)' }
     "
   >
-    <ion-row>
+    <ion-row
+      :class="
+        chat.by === 'user'
+          ? 'ion-justify-content-end'
+          : 'ion-justify-content-start'
+      "
+    >
       <img
         class="avatar"
         alt="Silhouette of a person's head"
@@ -58,5 +64,9 @@ export default {
 }
 .date {
   font-size: 11px;
+}
+
+.ion-justify-content-end img{
+order: 2;
 }
 </style>
