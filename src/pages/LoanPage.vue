@@ -1,21 +1,24 @@
 <template>
-  <base-layout :title="'Loans'">
-    <ion-row>
-      <LoanApply />
-      <LoanCalculator />
-    </ion-row>
-  </base-layout>
+  <ion-page>
+    <base-layout :title="'Loans'">
+      <ion-row>
+        <LoanApply />
+        <LoanCalculator />
+      </ion-row>
+    </base-layout>
+  </ion-page>
 </template>
 
 <script>
 import LoanApply from "../components/loan/LoanApply.vue";
 import LoanCalculator from "../components/loan/LoanCalculator.vue";
-import { IonRow } from "@ionic/vue";
+import { IonRow, IonPage } from "@ionic/vue";
 
 export default {
   components: {
     LoanApply,
     LoanCalculator,
+    IonPage,
     IonRow,
   },
   setup() {

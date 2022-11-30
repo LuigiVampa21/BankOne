@@ -1,31 +1,31 @@
 <template>
-  <base-layout :title="'Help Center'">
-    <ion-row class="ion-justify-content-center ion-align-items-center header">
-      <h4>Jonas</h4>
-      <ion-icon class="ion-margin" :icon="chatbox"></ion-icon>
-    </ion-row>
-    <ion-row>
-      <div class="chat-box" v-for="chat in chatHelp.chatBox" :key="chat.date">
-        <HelpChatCard :chat="chat" />
-      </div>
-    </ion-row>
-  </base-layout>
+  <ion-page>
+    <base-layout :title="'Help Center'">
+      <ion-row class="ion-justify-content-center ion-align-items-center header">
+        <h4>Jonas</h4>
+        <ion-icon class="ion-margin" :icon="chatbox"></ion-icon>
+      </ion-row>
+      <ion-row>
+        <div class="chat-box" v-for="chat in chatHelp.chatBox" :key="chat.date">
+          <HelpChatCard :chat="chat" />
+        </div>
+      </ion-row>
+    </base-layout>
+  </ion-page>
 </template>
 
 <script>
 import HelpChatCard from "../components/help/HelpChatCard.vue";
 import chatHelp from "../utils/help/chatHelp";
 import { chatbox } from "ionicons/icons";
-import {
-  IonRow,
-  IonIcon
-} from "@ionic/vue";
+import { IonRow, IonIcon, IonPage } from "@ionic/vue";
 
 export default {
   components: {
     HelpChatCard,
+    IonPage,
     IonRow,
-    IonIcon
+    IonIcon,
   },
   setup() {
     return {

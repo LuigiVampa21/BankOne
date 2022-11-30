@@ -134,9 +134,6 @@ h6 {
   font-size: 11px;
   color: var(--ion-color-medium);
 }
-.auth-footer {
-  width: 90vw;
-}
 .container {
   height: 85vh;
 }

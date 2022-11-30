@@ -1,5 +1,5 @@
 <template>
-  <ion-card color="secondary" class="containers card-container">
+  <ion-card color="secondary">
     <ion-row class="ion-justify-content-between">
       <ion-card-title class="ion-padding-start">
         <h6>{{ data.title }}</h6>
@@ -42,10 +42,6 @@ export default {
 </script>
 
 <style>
-.containers {
-  width: 50%;
-}
-
 .bank-card-container {
   width: 100%;
   display: flex;

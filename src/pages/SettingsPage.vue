@@ -1,14 +1,16 @@
 <template>
-  <base-layout :title="'Settings'">
-    <ion-grid>
-      <ion-row class="ion-justidy-content-center settings-container">
-        <SettingCard :data="SettingsAccount" />
-        <SettingCard :data="SettingsPrivacy" />
-        <SettingCard :data="SettingsLogOut" />
-        <SettingCard :data="SettingsCloseAccount" />
-      </ion-row>
-    </ion-grid>
-  </base-layout>
+  <ion-page>
+    <base-layout :title="'Settings'">
+      <ion-grid>
+        <ion-row class="ion-justidy-content-center settings-container">
+          <SettingCard :data="SettingsAccount" />
+          <SettingCard :data="SettingsPrivacy" />
+          <SettingCard :data="SettingsLogOut" />
+          <SettingCard :data="SettingsCloseAccount" />
+        </ion-row>
+      </ion-grid>
+    </base-layout>
+  </ion-page>
 </template>
 
 <script>
@@ -18,11 +20,12 @@ import SettingsAccount from "../utils/settings/account";
 import SettingsCloseAccount from "../utils/settings/closeAccount";
 import SettingsLogOut from "../utils/settings/logout";
 import SettingsPrivacy from "../utils/settings/privacy";
-import { IonGrid, IonRow } from "@ionic/vue";
+import { IonGrid, IonRow, IonPage } from "@ionic/vue";
 
 export default {
   components: {
     SettingCard,
+    IonPage,
     IonGrid,
     IonRow,
   },
