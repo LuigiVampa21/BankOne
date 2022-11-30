@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Settings'">
+    <base-layout :title="'Settings'" :backLink="'/home'">
       <ion-grid>
         <ion-row class="ion-justidy-content-center settings-container">
           <SettingCard :data="SettingsAccount" />

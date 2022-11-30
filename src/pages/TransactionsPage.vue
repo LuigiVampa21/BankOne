@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Transactions'">
+    <base-layout :title="'Transactions'" :backLink="'/home'">
       <ion-grid>
         <ion-row class="ion-justify-content-center">
           <ion-row class="ion-margin-bottom"> <TransactionSearchBar /></ion-row>

@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Help Center'">
+    <base-layout :title="'Help Center'" :backLink="'/home'">
       <ion-row class="ion-justify-content-center ion-align-items-center header">
         <h4>Jonas</h4>
         <ion-icon class="ion-margin" :icon="chatbox"></ion-icon>

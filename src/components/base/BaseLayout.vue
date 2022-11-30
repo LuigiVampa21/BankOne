@@ -1,9 +1,14 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-buttons slot="start">
-        <ion-back-button :default-href="defaultBackLink"></ion-back-button>
-      </ion-buttons>
+    <ion-header v-if="backLink">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button
+            :defaultHref="backLink"
+            color="medium"
+          ></ion-back-button>
+        </ion-buttons>
+      </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-row
@@ -44,6 +49,7 @@ import {
   IonBackButton,
   IonButtons,
   IonPage,
+  IonToolbar,
 } from "@ionic/vue";
 import { settings } from "ionicons/icons";
 import { swapHorizontal } from "ionicons/icons";
@@ -52,13 +58,14 @@ import { useRouter } from "vue-router";
 
 export default {
   name: "HomePage",
-  props: ["defaultBackLink", "title"],
+  props: ["backLink", "title"],
   components: {
     IonPage,
     IonContent,
     IonHeader,
     IonBackButton,
     IonButtons,
+    IonToolbar,
   },
   setup() {
     const router = useRouter();

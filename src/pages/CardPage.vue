@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Cards'">
+    <base-layout :title="'Cards'" :backLink="'/home'">
       <ion-grid>
         <ion-row
           class="ion-align-items-center ion-justify-content-center card-container"

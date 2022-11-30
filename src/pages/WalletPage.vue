@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Wallet'">
+    <base-layout :title="'Wallet'" :backLink="'/home'">
       <ion-grid>
         <ion-row class="box-container">
           <WalletCard :data="CheckingWallet" />

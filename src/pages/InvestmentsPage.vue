@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Investments'">
+    <base-layout :title="'Investments'" :backLink="'/home'">
       <ion-row>
         <IvtCard :data="StocksIndex" />
         <IvtCard :data="CryptoIndex" />

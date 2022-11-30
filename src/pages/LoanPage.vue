@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Loans'">
+    <base-layout :title="'Loans'" :backLink="'/home'">
       <ion-row>
         <LoanApply />
         <LoanCalculator />
