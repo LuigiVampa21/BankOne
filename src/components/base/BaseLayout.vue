@@ -80,11 +80,10 @@ export default {
 };
 </script>
 
-<style>
-.row-conatiner {
-  height: 95vh;
-}
+<style scoped>
+
 .router-container {
+  background: var(--ion-color-tertiary);
   border: 1px solid white;
   display: flex;
   justify-content: space-around;

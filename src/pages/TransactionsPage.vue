@@ -44,7 +44,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .transactions-container {
   position: relative;
   top: 5vh;

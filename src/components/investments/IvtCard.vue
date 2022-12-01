@@ -1,5 +1,9 @@
 <template>
-  <ion-card color="secondary" class="assets-container ion-margin-bottom">
+  <ion-card
+    color="secondary"
+    class="assets-container ion-margin-bottom"
+    :router-link="'investments/' + data.type"
+  >
     <ion-row class="ion-margin-bottom">
       <h6 class="asset-type-title">{{ data.type }}</h6>
     </ion-row>
@@ -10,17 +14,21 @@
 </template>
 
 <script>
+import { IonCard, IonRow } from "@ionic/vue";
+
 import IvtAsset from "./IvtAsset.vue";
 
 export default {
   props: ["data"],
   components: {
     IvtAsset,
+    IonCard,
+    IonRow,
   },
 };
 </script>
 
-<style>
+<style scoped>
 .assets-container {
   min-height: 20vh;
   margin-top: 2.5vh;

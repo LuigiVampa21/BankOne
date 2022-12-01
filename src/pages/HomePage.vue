@@ -28,10 +28,11 @@
 
             <div class="rows-container">
               <HomeCard router-link="/cards" :data="homeCards" />
-              <HomeCard :data="homeBudget" />
+              <!-- <HomeCard :data="homeBudget" /> -->
+              <HomeCard router-link="/investments" :data="homeInvestments" />
             </div>
             <div class="rows-container">
-              <HomeCard :data="homeLoan" router-link="/loans" />
+              <HomeCard router-link="/loans" :data="homeLoan" />
               <HomeCard :data="homeDocuments" />
             </div>
 
@@ -87,9 +88,10 @@ import HomeSiblings from "@/components/home/HomeSiblings";
 import HomeWallet from "@/components/home/HomeWallet";
 
 import homeCards from "../utils/home/homeCards";
-import homeBudget from "../utils/home/homeBudget";
+// import homeBudget from "../utils/home/homeBudget";
 import homeLoan from "../utils/home/homeLoan";
 import homeDocuments from "../utils/home/homeDocuments";
+import homeInvestments from "../utils/home/homeIvt";
 
 import { ellipsisHorizontalOutline, document } from "ionicons/icons";
 
@@ -117,9 +119,10 @@ export default {
       ellipsisHorizontalOutline,
       document,
       homeCards,
-      homeBudget,
+      // homeBudget,
       homeLoan,
       homeDocuments,
+      homeInvestments,
       router,
     };
   },

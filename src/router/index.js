@@ -42,6 +42,10 @@ const routes = [
     component: () => import("@/pages/InvestmentsPage"),
   },
   {
+    path: "/investments/:category",
+    component: () => import("@/pages/InvestmentsCategoryPage"),
+  },
+  {
     path: "/loans",
     name: "Loans",
     component: () => import("@/pages/LoanPage"),
@@ -50,6 +54,11 @@ const routes = [
     path: "/wallet",
     name: "Wallet",
     component: () => import("@/pages/WalletPage"),
+  },
+  {
+    path: "/documents",
+    name: "Documents",
+    component: () => import("@/pages/DocumentPage"),
   },
   {
     path: "/help",

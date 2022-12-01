@@ -2,9 +2,11 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="end" class="ion-margin"> Sign in </ion-buttons>
+        <ion-buttons slot="end" class="ion-margin" router-link="/login">
+          Sign in
+        </ion-buttons>
       </ion-toolbar>
-    </ion-header>
+    </ion-header> 
     <ion-content>
       <ion-grid>
         <ion-row

@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .transaction-container {
   height: 80px;
   width: 95vw;

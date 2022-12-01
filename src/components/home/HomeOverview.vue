@@ -69,12 +69,11 @@ export default {
     IonCol,
     IonCard,
     IonCardTitle,
-  
   },
 };
 </script>
 
-<style>
+<style scoped>
 .fontWeight100 {
   font-weight: 100;
 }

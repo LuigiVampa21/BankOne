@@ -55,17 +55,10 @@ ion-button.custom {
   height: 60px;
 }
 
-.router-container {
-  background: var(--ion-color-tertiary);
-}
-
 ion-card {
   margin-top: 10px;
 
   margin-bottom: 10px;
-}
-
-ion-card {
   width: 100%;
 }
 

@@ -37,7 +37,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .box-container {
   position: relative;
   top: 5vh;

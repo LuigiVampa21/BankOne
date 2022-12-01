@@ -87,7 +87,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .sibling-accounts-container {
   width: 100vw;
   height: 100%;

@@ -40,7 +40,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card {
   width: 80vw;
   height: 25vh;

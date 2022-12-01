@@ -30,13 +30,24 @@ import BaseLayout from "@/components/base/BaseLayout.vue";
 
 const app = createApp(App).use(IonicVue).use(router);
 
+app.use(vueConfig);
+
 app.component("base-layout", BaseLayout);
 
-app.config.compilerOptions.isCustomElement = tag => {
-  return tag.startsWith("ion-"); // (return true)
-};
+// app.config.compilerOptions.isCustomElement = tag => {
+//   return tag.startsWith("ion-"); // (return true)
+// };
 
-app.use(vueConfig);
+// app.config
+//   .rule("vue")
+//   .use("vue-loader")
+//   .tap(options => {
+//     options.compilerOptions = {
+//       ...options.compilerOptions,
+//       isCustomElement: tag => tag.startsWith("ion-"),
+//     };
+//     return options;
+//   });
 
 router.isReady().then(() => {
   app.mount("#app");
