@@ -51,8 +51,13 @@ ion-input.custom-2 {
 }
 
 ion-button.custom {
-  --borde-radius: 10px;
+  --border-radius: 10px;
   height: 60px;
+}
+
+ion-button.custom-1 {
+  --border-radius: 2px;
+  width: 100vw;
 }
 
 ion-card {

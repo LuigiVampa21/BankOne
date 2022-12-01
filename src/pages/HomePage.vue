@@ -28,12 +28,11 @@
 
             <div class="rows-container">
               <HomeCard router-link="/cards" :data="homeCards" />
-              <!-- <HomeCard :data="homeBudget" /> -->
               <HomeCard router-link="/investments" :data="homeInvestments" />
             </div>
             <div class="rows-container">
               <HomeCard router-link="/loans" :data="homeLoan" />
-              <HomeCard :data="homeDocuments" />
+              <HomeCard router-link="/documents" :data="homeDocuments" />
             </div>
 
             <!--  SIBLINGS  -->
@@ -88,7 +87,6 @@ import HomeSiblings from "@/components/home/HomeSiblings";
 import HomeWallet from "@/components/home/HomeWallet";
 
 import homeCards from "../utils/home/homeCards";
-// import homeBudget from "../utils/home/homeBudget";
 import homeLoan from "../utils/home/homeLoan";
 import homeDocuments from "../utils/home/homeDocuments";
 import homeInvestments from "../utils/home/homeIvt";
@@ -119,7 +117,6 @@ export default {
       ellipsisHorizontalOutline,
       document,
       homeCards,
-      // homeBudget,
       homeLoan,
       homeDocuments,
       homeInvestments,
