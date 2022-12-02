@@ -75,6 +75,7 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import {
   IonPage,
   IonContent,
@@ -93,7 +94,7 @@ import {
   IonText,
   IonCol,
 } from "@ionic/vue";
-export default {
+export default defineComponent({
   components: {
     IonPage,
     IonContent,
@@ -112,7 +113,7 @@ export default {
     IonText,
     IonCol,
   },
-};
+});
 </script>
 
 <style scoped>

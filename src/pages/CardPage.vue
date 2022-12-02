@@ -26,22 +26,22 @@
 </template>
 
 <script>
+import { IonGrid, IonRow, IonPage } from "@ionic/vue";
+import { defineComponent } from "vue";
 import CardCreditCard from "@/components/card/CardCreditCard";
 import CardOptions from "@/components/card/CardOptions";
 import cardDetail from "../utils/card/cardDetail";
 import cardInsurance from "../utils/card/cardInsurance";
 import cardUpgrade from "../utils/card/cardUpgrade";
 
-import { IonGrid, IonRow, IonPage } from "@ionic/vue";
-
-export default {
+export default defineComponent({
   name: "CardPage",
   components: {
-    CardCreditCard,
-    CardOptions,
     IonPage,
     IonGrid,
     IonRow,
+    CardCreditCard,
+    CardOptions,
   },
   setup() {
     return {
@@ -50,7 +50,7 @@ export default {
       cardUpgrade,
     };
   },
-};
+});
 </script>
 
 <style scoped>

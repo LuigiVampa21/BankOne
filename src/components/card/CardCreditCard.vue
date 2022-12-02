@@ -31,13 +31,14 @@
 
 <script>
 import { IonRow, IonText } from "@ionic/vue";
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "CardCreditCard",
   components: {
     IonRow,
     IonText,
   },
-};
+});
 </script>
 
 <style scoped>

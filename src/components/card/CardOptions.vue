@@ -8,10 +8,11 @@
 </template>
 
 <script>
-import { toggleOutline } from "ionicons/icons";
 import { IonCard, IonText, IonRow, IonIcon } from "@ionic/vue";
+import { defineComponent } from "vue";
+import { toggleOutline } from "ionicons/icons";
 
-export default {
+export default defineComponent({
   components: {
     IonText,
     IonRow,
@@ -24,7 +25,7 @@ export default {
       toggleOutline,
     };
   },
-};
+});
 </script>
 
 <style scoped>

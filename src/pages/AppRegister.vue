@@ -6,7 +6,7 @@
           Sign in
         </ion-buttons>
       </ion-toolbar>
-    </ion-header> 
+    </ion-header>
     <ion-content>
       <ion-grid>
         <ion-row
@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import {
   IonPage,
   IonContent,
@@ -113,7 +114,7 @@ import {
   IonCheckbox,
   IonItem,
 } from "@ionic/vue";
-export default {
+export default defineComponent({
   components: {
     IonPage,
     IonContent,
@@ -134,7 +135,7 @@ export default {
     IonCheckbox,
     IonItem,
   },
-};
+});
 </script>
 
 <style scoped>

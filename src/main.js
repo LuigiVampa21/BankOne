@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import vueConfig from "./vue.config";
+// import vueConfig from "./vue.config";
 
 import { IonicVue } from "@ionic/vue";
 
@@ -30,7 +30,7 @@ import BaseLayout from "@/components/base/BaseLayout.vue";
 
 const app = createApp(App).use(IonicVue).use(router);
 
-app.use(vueConfig);
+// app.use(vueConfig);
 
 app.component("base-layout", BaseLayout);
 
