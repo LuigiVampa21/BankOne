@@ -1,5 +1,5 @@
 export default {
-  bank_account_id: "mu%m30WBLRG*r@3PpO4j",
+  id: "mu%m30WBLRG*r@3PpO4j",
   creation_date: "1656272",
   is_active: true,
   type: "savings",

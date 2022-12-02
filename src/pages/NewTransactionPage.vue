@@ -1,55 +1,54 @@
 <template>
   <ion-page>
     <base-layout :title="'new transfer'" :backLink="'/transactions'">
-      <ion-row>
-        <ion-card color="secondary" class="ion-padding ion-text-center">
-          <ion-text>Please select an account to debit</ion-text>
-        </ion-card>
-        <ion-card
-          class="ion-padding ion-text-center ion-text-capitalize options"
-          v-for="account in accounts"
-          :key="account.id"
-          color="secondary"
-        >
-          {{ account.type }}
-        </ion-card>
-      </ion-row>
+      <ReactiveTxCp
+        :accounts="accounts"
+        :newTransaction="newTransaction"
+        :intext="intext"
+        @accountSender="accountSender"
+        @accountIE="accountIE"
+      />
     </base-layout>
   </ion-page>
 </template>
 
 <script>
-import { IonPage, IonCard, IonRow } from "@ionic/vue";
+import { ref } from "vue";
+import { IonPage } from "@ionic/vue";
+import ReactiveTxCp from "@/components/newTransaction/reactiveTxCp";
 import AccountChecking from "../utils/bank_account/account_checking.js";
 import AccountSavings from "../utils/bank_account/account_savings.js";
 import AccountInvestments from "../utils/bank_account/account_investments.js";
+import intext from "../utils/newTransferData/intext.js";
 
 export default {
   components: {
     IonPage,
-    IonCard,
-    IonRow,
+    ReactiveTxCp,
   },
   setup() {
     const accounts = [AccountChecking, AccountSavings, AccountInvestments];
+    const newTransaction = ref({
+      accountSending: null,
+      intext: null,
+      accountReceiving: null,
+      amount: 0,
+    });
+    const accountSender = account => {
+      newTransaction.value.accountSending = account.id;
+    };
+    const accountIE = i => {
+      newTransaction.value.intext = i;
+    };
     return {
       accounts,
+      newTransaction,
+      intext,
+      accountSender,
+      accountIE,
     };
-  },
-  created() {
-    console.log(this.accounts);
   },
 };
 </script>
 
-<style scoped>
-.options {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  top: 5vh;
-  height: 60px;
-  font-size: 16px;
-}
-</style>
+<style scoped></style>

@@ -1,5 +1,5 @@
 export default {
-  bank_account_id: "Fn7%qd538LvHk#d#FSe0",
+  id: "Fn7%qd538LvHk#d#FSe0",
   creation_date: "1656272",
   is_active: true,
   type: "investments",

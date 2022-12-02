@@ -35,14 +35,6 @@ const routes = [
     path: "/new-transaction",
     name: "NewTransactions",
     component: () => import("@/pages/NewTransactionPage"),
-    // children: [
-    //   {
-    //     path: "internal",
-    //   },
-    //   {
-    //     path: "external",
-    //   },
-    // ],
   },
   {
     path: "/settings",
