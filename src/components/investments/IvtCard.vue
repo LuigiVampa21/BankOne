@@ -2,7 +2,7 @@
   <ion-card
     color="secondary"
     class="assets-container ion-margin-bottom"
-    :router-link="'investments/' + data.type"
+    :router-link="'investments/' + data.type.toLowerCase()"
   >
     <ion-row class="ion-margin-bottom">
       <h6 class="asset-type-title">{{ data.type }}</h6>

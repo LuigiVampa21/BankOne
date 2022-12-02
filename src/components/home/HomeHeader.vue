@@ -1,5 +1,5 @@
 <template>
-  <ion-row class="ion-margin-bottom ion-justify-content-around">
+  <ion-row class="ion-margin-bottom ion-justify-content-around h-1">
     <ion-button color="secondary">Overview</ion-button>
     <ion-button color="secondary">Stocks</ion-button>
     <ion-button color="secondary">Crypto</ion-button>
@@ -19,4 +19,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.h-1 {
+  display: flex;
+  flex-wrap: nowrap;
+}
+</style>

@@ -1,6 +1,15 @@
 <template>
   <ion-page>
     <base-layout :title="'Transactions'" :backLink="'/home'">
+      <ion-row class="ion-justify-content-end ion-margin-bottom">
+        <ion-button
+          color="tertiary"
+          class="ion-text-capitalize"
+          @click="() => router.push('/new-transaction')"
+        >
+          <ion-text class="ion-padding"> new </ion-text>
+        </ion-button>
+      </ion-row>
       <ion-grid>
         <ion-row class="ion-justify-content-center">
           <ion-row class="ion-margin-bottom"> <TransactionSearchBar /></ion-row>
@@ -26,6 +35,7 @@ import TransactionCard from "@/components/transactions/TransactionCard.vue";
 import Income from "../utils/transaction/income";
 import Outcome from "../utils/transaction/outcome";
 import { IonGrid, IonRow, IonPage } from "@ionic/vue";
+import { useRouter } from "vue-router";
 
 export default {
   components: {
@@ -36,9 +46,11 @@ export default {
     IonGrid,
   },
   setup() {
+    const router = useRouter();
     return {
       Income,
       Outcome,
+      router,
     };
   },
 };

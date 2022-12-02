@@ -15,7 +15,7 @@
         v-if="title"
         class="ion-margin-start ion-margin-bottom ion-padding-bottom"
       >
-        <h1 class="view-title">{{ title }}</h1>
+        <h1 class="view-title ion-text-capitalize">{{ title }}</h1>
       </ion-row>
       <slot />
       <div class="router-container">
@@ -81,7 +81,6 @@ export default {
 </script>
 
 <style scoped>
-
 .router-container {
   background: var(--ion-color-tertiary);
   border: 1px solid white;

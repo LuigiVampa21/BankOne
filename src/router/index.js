@@ -32,6 +32,19 @@ const routes = [
     component: () => import("@/pages/TransactionsPage"),
   },
   {
+    path: "/new-transaction",
+    name: "NewTransactions",
+    component: () => import("@/pages/NewTransactionPage"),
+    // children: [
+    //   {
+    //     path: "internal",
+    //   },
+    //   {
+    //     path: "external",
+    //   },
+    // ],
+  },
+  {
     path: "/settings",
     name: "Settings",
     component: () => import("@/pages/SettingsPage"),
