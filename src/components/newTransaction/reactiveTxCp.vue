@@ -3,7 +3,7 @@
     <!-- FIRST STEP: Choose account to sen from -->
     <ion-row v-if="newTransaction.accountSending === null">
       <ion-card color="secondary" class="ion-padding ion-text-center">
-        <ion-text>Please select an account to debit</ion-text>
+        <ion-text>Select an account to debit</ion-text>
       </ion-card>
       <ion-card
         class="ion-padding ion-text-center ion-text-capitalize options"
@@ -34,25 +34,17 @@
         {{ i }}
       </ion-card>
     </ion-row>
-
-    <!-- <ion-row
-      v-if="newTransaction.accountSending"
-      class="ion-justify-content-center"
-    >
-      <ion-button color="tertiary" class="ion-text-capitalize back-btn">
-        <ion-text class="ion-padding"> back </ion-text>
-      </ion-button>
-    </ion-row> -->
   </div>
 </template>
 
 <script>
-import { IonCard, IonRow } from "@ionic/vue";
+import { IonCard, IonRow, IonText } from "@ionic/vue";
 
 export default {
   components: {
     IonCard,
     IonRow,
+    IonText,
   },
   props: ["accounts", "newTransaction", "intext"],
   setup(props, { emit }) {
@@ -80,8 +72,4 @@ export default {
   height: 60px;
   font-size: 16px;
 }
-/* .back-btn {
-  position: relative;
-  top: 45vh;
-} */
 </style>

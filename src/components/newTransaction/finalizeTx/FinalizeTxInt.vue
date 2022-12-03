@@ -21,22 +21,20 @@
       </ion-card>
     </ion-row>
     <ion-row
-      v-if="
-        newTransaction.accountReceiving !== null && newTransaction.amount === 0
-      "
+      v-if="newTransaction.accountReceiving !== null"
       class="ion-padding options"
     >
       <ion-text class="ion-text-capitalize">amount to send</ion-text>
       <ion-card
         class="ion-padding ion-text-center ion-text-capitalize options"
         color="secondary"
-        @click="amountToSend"
       >
         <ion-input
           class="custom ion-margin-bottom ion-margin-top"
           type="number"
           placeholder="0"
           v-model="amount"
+          @IonChange="updateAmount"
         ></ion-input>
       </ion-card>
     </ion-row>
@@ -45,18 +43,30 @@
 
 <script>
 import { ref } from "vue";
+import { IonRow, IonCard, IonText, IonInput } from "@ionic/vue";
 
 export default {
   props: ["accounts", "newTransaction"],
+  components: {
+    IonRow,
+    IonCard,
+    IonText,
+    IonInput,
+  },
   setup(props, { emit }) {
     let accountsToDebitArray = [];
-    const amount = ref(amount);
+    const amount = ref();
     const accountReceiving = account => {
       emit("accountToReceive", account);
+    };
+    const updateAmount = () => {
+      emit("amountToSend", amount.value);
     };
     return {
       accountsToDebitArray,
       accountReceiving,
+      updateAmount,
+      amount,
     };
   },
   created() {
