@@ -12,12 +12,18 @@
         <ion-input
           class="custom ion-margin-bottom ion-margin-top"
           type="date"
-          placeholder="Password"
+          placeholder="End date"
         ></ion-input>
         <ion-label>Select an account</ion-label>
         <ion-list class="account-type ion-margin-bottom ion-margin-top">
-          <ion-item color="secondary" class="account-type ion-margin-bottom ion-margin-top">
-            <ion-select color="secondary" placeholder="---------------------------------------------------">
+          <ion-item
+            color="secondary"
+            class="account-type ion-margin-bottom ion-margin-top"
+          >
+            <ion-select
+              color="secondary"
+              placeholder="---------------------------------------------------"
+            >
               <ion-select-option value="all">All</ion-select-option>
               <ion-select-option value="checking">Checking</ion-select-option>
               <ion-select-option value="savings">Savings</ion-select-option>
