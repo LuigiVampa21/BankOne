@@ -5,9 +5,26 @@
         <ion-text class="ion-text-capitalize">new external transfer</ion-text>
       </ion-card>
     </ion-row>
-    <ion-row v-if="newTransaction.accountReceiving === null">
-    
+    <ion-row
+      v-if="
+        newTransaction.accountReceiving === null && existingBeneficiary === null
+      "
+      class="ion-padding options"
+    >
+      <ion-card
+        v-for="i in exinex.exinex"
+        :key="i.index"
+        class="ion-padding ion-text-center ion-text-capitalize options"
+        color="secondary"
+        @click="existingBeneficiary = i"
+      >
+        {{ i }}
+      </ion-card>
     </ion-row>
+    <ExistingBeneficiary
+      v-if="existingBeneficiary === 'existing beneficiary'"
+    />
+    <NewBeneficiary v-if="existingBeneficiary === 'new beneficiary'" />
     <!-- <ion-row
       v-if="newTransaction.accountReceiving === null"
       class="ion-padding options"
@@ -52,13 +69,17 @@ import {
   IonText,
   //  IonInput
 } from "@ionic/vue";
-
+import exinex from "../../../utils/newTransferData/exinex.js";
+import ExistingBeneficiary from "./existingBeneficiary.vue";
+import NewBeneficiary from "./newBeneficiary.vue";
 export default {
   props: ["accounts", "newTransaction"],
   components: {
     IonRow,
     IonCard,
     IonText,
+    ExistingBeneficiary,
+    NewBeneficiary,
     // IonInput,
   },
   setup(props, { emit }) {
@@ -70,12 +91,18 @@ export default {
     const updateAmount = () => {
       emit("amountToSend", amount.value);
     };
+    const existingBeneficiary = ref(null);
     return {
       accountReceiving,
       updateAmount,
       amount,
       knowAccountsArray,
+      existingBeneficiary,
+      exinex,
     };
+  },
+  created() {
+    console.log(this.exinex);
   },
 };
 </script>

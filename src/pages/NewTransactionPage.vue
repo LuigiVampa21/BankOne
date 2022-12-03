@@ -15,7 +15,10 @@
         @accountToReceive="accountToReceive"
         @amountToSend="amountToSend"
       />
-      <FinalizeTxExt v-if="newTransaction.intext == 'external'" />
+      <FinalizeTxExt
+        v-if="newTransaction.intext == 'external'"
+        :newTransaction="newTransaction"
+      />
 
       <ion-row
         v-if="newTransaction.accountReceiving"

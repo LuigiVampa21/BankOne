@@ -27,12 +27,14 @@ import "./theme/core.css";
 
 /* Components */
 import BaseLayout from "@/components/base/BaseLayout.vue";
+import BaseCard from "@/components/base/BaseCard.vue";
 
 const app = createApp(App).use(IonicVue).use(router);
 
 // app.use(vueConfig);
 
 app.component("base-layout", BaseLayout);
+app.component("base-card", BaseCard);
 
 // app.config.compilerOptions.isCustomElement = tag => {
 //   return tag.startsWith("ion-"); // (return true)
