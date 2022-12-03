@@ -10,6 +10,7 @@
 import { IonRow, IonCard, IonText } from "@ionic/vue";
 export default {
   props: ["data"],
+  name: "BaseCard",
   components: {
     IonRow,
     IonCard,

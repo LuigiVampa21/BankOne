@@ -50,6 +50,21 @@ ion-input.custom-2 {
   height: 40px;
 }
 
+ion-input.custom-3 {
+  --background: var(--ion-color-secondary);
+  --color: var(--ion-color-secondary-contrast);
+  --padding-bottom: 10px;
+  --padding-end: 10px;
+  --padding-start: 10px;
+  --padding-top: 10px;
+  border-top-left-radius: 7.5px;
+  border-top-right-radius: 7.5px;
+  border-bottom-left-radius: 7.5px;
+  border-bottom-right-radius: 7.5px;
+  height: 60px;
+  width: 80vw;
+}
+
 ion-button.custom {
   --border-radius: 10px;
   height: 60px;
@@ -83,4 +98,17 @@ ion-item.account-type {
 .account-type.ios.list-ios {
   border-radius: 10px;
   background-color: var(--ion-color-primary);
+}
+
+.pos-down2\5 {
+  position: relative;
+  top: 2.5vh;
+}
+.pos-down5 {
+  position: relative;
+  top: 5vh;
+}
+.pos-down10 {
+  position: relative;
+  top: 10vh;
 }

@@ -18,6 +18,8 @@
       <FinalizeTxExt
         v-if="newTransaction.intext == 'external'"
         :newTransaction="newTransaction"
+        @accountToReceiveFinalize="accountToReceive"
+        @amountToSend="amountToSend"
       />
 
       <ion-row
@@ -65,10 +67,11 @@ export default {
   setup() {
     const accounts = [AccountChecking, AccountSavings, AccountInvestments];
     const newTransaction = ref({
-      accountSending: "pR2mS$#7p71pOogHxfV$",
-      intext: "external",
-      // accountSending: null,
-      // intext: null,
+      // accountSending: "pR2mS$#7p71pOogHxfV$",
+      // intext: "external",
+      // accountReceiving: "dLO1G#fu$@YZWg3z2o0j",
+      accountSending: null,
+      intext: null,
       accountReceiving: null,
       amount: 0,
     });
@@ -100,6 +103,7 @@ export default {
       accountIE,
       accountToReceive,
       amountToSend,
+      // accountReceiving,
       sendTx,
     };
   },

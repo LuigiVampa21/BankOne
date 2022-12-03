@@ -22,25 +22,20 @@
       </ion-card>
     </ion-row>
     <ExistingBeneficiary
-      v-if="existingBeneficiary === 'existing beneficiary'"
+      v-if="
+        existingBeneficiary === 'existing beneficiary' &&
+        !newTransaction.accountReceiving
+      "
+      @accountReceiving="accountToReceive"
     />
-    <NewBeneficiary v-if="existingBeneficiary === 'new beneficiary'" />
-    <!-- <ion-row
-      v-if="newTransaction.accountReceiving === null"
-      class="ion-padding options"
-    >
-      <ion-text class="ion-text-capitalize">account to credit</ion-text>
-      <ion-card
-        class="ion-padding ion-text-center ion-text-capitalize options"
-        v-for="account in accountsToDebitArray"
-        :key="account.type"
-        color="secondary"
-        @click="accountReceiving(account)"
-      >
-        {{ account.type }}
-      </ion-card>
-    </ion-row> -->
-    <!-- <ion-row
+    <NewBeneficiary
+      v-if="
+        existingBeneficiary === 'new beneficiary' &&
+        !newTransaction.accountReceiving
+      "
+      @accountReceiving="accountToReceive"
+    />
+    <ion-row
       v-if="newTransaction.accountReceiving !== null"
       class="ion-padding options"
     >
@@ -57,18 +52,13 @@
           @IonChange="updateAmount"
         ></ion-input>
       </ion-card>
-    </ion-row> -->
+    </ion-row>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
-import {
-  IonRow,
-  IonCard,
-  IonText,
-  //  IonInput
-} from "@ionic/vue";
+import { IonRow, IonCard, IonText, IonInput } from "@ionic/vue";
 import exinex from "../../../utils/newTransferData/exinex.js";
 import ExistingBeneficiary from "./existingBeneficiary.vue";
 import NewBeneficiary from "./newBeneficiary.vue";
@@ -80,29 +70,26 @@ export default {
     IonText,
     ExistingBeneficiary,
     NewBeneficiary,
-    // IonInput,
+    IonInput,
   },
   setup(props, { emit }) {
     let knowAccountsArray = [];
     const amount = ref();
-    const accountReceiving = account => {
-      emit("accountToReceive", account);
+    const accountToReceive = account => {
+      emit("accountToReceiveFinalize", account);
     };
     const updateAmount = () => {
       emit("amountToSend", amount.value);
     };
     const existingBeneficiary = ref(null);
     return {
-      accountReceiving,
+      accountToReceive,
       updateAmount,
       amount,
       knowAccountsArray,
       existingBeneficiary,
       exinex,
     };
-  },
-  created() {
-    console.log(this.exinex);
   },
 };
 </script>
