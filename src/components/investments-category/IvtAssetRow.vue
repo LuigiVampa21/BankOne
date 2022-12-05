@@ -12,17 +12,17 @@
       />
     </ion-avatar>
     <h6 class="asset-title">{{ asset.name }}</h6>
-    <h6 class="asset-price">$ {{ asset.price }}</h6>
+    <ion-row class="tx-amount ion-justify-content-end">
+      <h6 class="asset-price">$ {{ asset.price }}</h6>
+    </ion-row>
   </ion-row>
 </template>
 
 <script>
 export default {
   props: ["assets"],
-  created() {
-    console.log(this.data);
-  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

@@ -1,2 +1,5 @@
-BACK BTN TRANSACTIONS
 SPINNER FOR REQUESTS
+SWIPER JS
+disappear footer when scrolling down
+change from eur to usd
+imgs for home cards

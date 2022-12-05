@@ -112,3 +112,8 @@ ion-item.account-type {
   position: relative;
   top: 10vh;
 }
+
+.tx-amount {
+  width: 33%;
+  align-items: center;
+}

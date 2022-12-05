@@ -28,7 +28,7 @@
     <ion-card-content class="ion-justify-content-center">
       <ion-row class="ion-justify-content-between last-transaction-container">
         <ion-item color="secondary">
-          <ion-avatar slot="start">
+          <ion-avatar>
             <img
               class="avatar"
               alt="Silhouette of a person's head"
@@ -37,14 +37,12 @@
           </ion-avatar>
         </ion-item>
         <div class="last-transaction">
-          <ion-col>
-            <ion-text>Instant Transfer</ion-text>
-            <ion-text color="medium"><h6>M. DOE John</h6></ion-text>
-          </ion-col>
+          <ion-text>Instant Transfer</ion-text>
+          <ion-text color="medium"><h6>M. DOE John</h6></ion-text>
         </div>
-        <div class="last-transaction-amount">
+        <ion-row class="tx-amount ion-justify-content-end">
           <ion-text color="success">+ 450€</ion-text>
-        </div>
+        </ion-row>
       </ion-row>
     </ion-card-content>
   </ion-card>

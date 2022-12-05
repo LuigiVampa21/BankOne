@@ -1,9 +1,15 @@
 <template>
   <ion-row class="ion-margin-bottom ion-justify-content-around h-1">
     <ion-button color="secondary">Overview</ion-button>
-    <ion-button color="secondary">Stocks</ion-button>
-    <ion-button color="secondary">Crypto</ion-button>
-    <ion-button color="secondary">Commodities</ion-button>
+    <ion-button color="secondary" router-link="/investments/stocks"
+      >Stocks</ion-button
+    >
+    <ion-button color="secondary" router-link="/investments/crypto"
+      >Crypto</ion-button
+    >
+    <ion-button color="secondary" router-link="/investments/commodities"
+      >Commodities</ion-button
+    >
   </ion-row>
 </template>
 

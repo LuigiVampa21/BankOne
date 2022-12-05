@@ -3,7 +3,7 @@
     <ion-content>
       <base-layout>
         <ion-item color="primary" class="ion-margin">
-          <ion-avatar slot="start">
+          <ion-avatar>
             <img
               class="avatar"
               alt="Silhouette of a person's head"
@@ -11,7 +11,7 @@
             />
           </ion-avatar>
           <ion-label>
-            <ion-text> Hello Luigi </ion-text>
+            <ion-text class="ion-margin-start"> Hello Luigi </ion-text>
           </ion-label>
         </ion-item>
         <ion-grid>
