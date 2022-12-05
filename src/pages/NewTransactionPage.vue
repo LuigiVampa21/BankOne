@@ -18,8 +18,10 @@
       <FinalizeTxExt
         v-if="newTransaction.intext == 'external'"
         :newTransaction="newTransaction"
+        @exinexBeneficiaryEmit="exinexFn"
         @accountToReceiveFinalize="accountToReceive"
         @amountToSend="amountToSend"
+        :exinexFparent="newTransaction.exinex"
       />
 
       <ion-row
@@ -38,7 +40,11 @@
         v-if="newTransaction.accountSending"
         class="ion-justify-content-center"
       >
-        <ion-button color="tertiary" class="ion-text-capitalize back-btn">
+        <ion-button
+          color="tertiary"
+          class="ion-text-capitalize back-btn"
+          @click="backFn"
+        >
           <ion-text class="ion-padding"> back </ion-text>
         </ion-button>
       </ion-row>
@@ -74,6 +80,7 @@ export default {
       intext: null,
       accountReceiving: null,
       amount: 0,
+      exinex: null,
     });
     const accountSender = account => {
       newTransaction.value.accountSending = account.id;
@@ -81,12 +88,16 @@ export default {
     const accountIE = i => {
       newTransaction.value.intext = i;
     };
+    const exinexFn = i => {
+      newTransaction.value.exinex = i;
+      // console.log(newTransaction.value);
+    };
     const accountToReceive = account => {
       newTransaction.value.accountReceiving = account.id;
     };
     const amountToSend = amount => {
       newTransaction.value.amount = +amount;
-      console.log(newTransaction.value);
+      // console.log(newTransaction.value);
     };
     const sendTx = () => {
       // SEND newTransaction To DB and reset newTransaction Obj
@@ -94,6 +105,48 @@ export default {
       newTransaction.value.intext = null;
       newTransaction.value.accountReceiving = null;
       newTransaction.value.amount = 0;
+    };
+    const backFn = () => {
+      if (
+        newTransaction.value.accountSending != null &&
+        newTransaction.value.intext === null
+      ) {
+        newTransaction.value.accountSending = null;
+        // console.log(1);
+      }
+      if (
+        newTransaction.value.intext !== null &&
+        newTransaction.value.exinex === null &&
+        newTransaction.value.accountReceiving === null
+      ) {
+        newTransaction.value.intext = null;
+        // console.log(2);
+      }
+      if (
+        newTransaction.value.intext === "internal" &&
+        newTransaction.value.accountReceiving !== null &&
+        newTransaction.value.amount == 0
+      ) {
+        newTransaction.value.accountReceiving = null;
+        // console.log(3);
+      }
+      if (
+        newTransaction.value.intext === "external" &&
+        newTransaction.value.exinex !== null &&
+        newTransaction.value.accountReceiving === null &&
+        newTransaction.value.amount == 0
+      ) {
+        newTransaction.value.exinex = null;
+      }
+      if (
+        newTransaction.value.intext === "external" &&
+        newTransaction.value.exinex !== null &&
+        newTransaction.value.accountReceiving !== null &&
+        newTransaction.value.amount == 0
+      ) {
+        newTransaction.value.accountReceiving = null;
+        console.log(newTransaction.value);
+      }
     };
     return {
       accounts,
@@ -103,8 +156,9 @@ export default {
       accountIE,
       accountToReceive,
       amountToSend,
-      // accountReceiving,
+      backFn,
       sendTx,
+      exinexFn,
     };
   },
 };

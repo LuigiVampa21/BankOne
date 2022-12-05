@@ -33,6 +33,7 @@
           class="custom ion-margin-bottom ion-margin-top"
           type="number"
           placeholder="0"
+          :disabled="amount == 0"
           v-model="amount"
           @IonChange="updateAmount"
         ></ion-input>

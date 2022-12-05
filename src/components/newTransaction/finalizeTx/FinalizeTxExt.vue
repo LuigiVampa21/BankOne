@@ -7,7 +7,9 @@
     </ion-row>
     <ion-row
       v-if="
-        newTransaction.accountReceiving === null && existingBeneficiary === null
+        (newTransaction.accountReceiving === null &&
+          existingBeneficiary === null) ||
+        exinexFparent === null
       "
       class="ion-padding options"
     >
@@ -16,7 +18,10 @@
         :key="i.index"
         class="ion-padding ion-text-center ion-text-capitalize options"
         color="secondary"
-        @click="existingBeneficiary = i"
+        @click="
+          existingBeneficiary = i;
+          existingBeneficiaryFn(i);
+        "
       >
         {{ i }}
       </ion-card>
@@ -24,14 +29,16 @@
     <ExistingBeneficiary
       v-if="
         existingBeneficiary === 'existing beneficiary' &&
-        !newTransaction.accountReceiving
+        !newTransaction.accountReceiving &&
+        exinexFparent !== null
       "
       @accountReceiving="accountToReceive"
     />
     <NewBeneficiary
       v-if="
         existingBeneficiary === 'new beneficiary' &&
-        !newTransaction.accountReceiving
+        !newTransaction.accountReceiving &&
+        exinexFparent !== null
       "
       @accountReceiving="accountToReceive"
     />
@@ -48,6 +55,7 @@
           class="custom ion-margin-bottom ion-margin-top"
           type="number"
           placeholder="0"
+          :disabled="amount == 0"
           v-model="amount"
           @IonChange="updateAmount"
         ></ion-input>
@@ -63,7 +71,7 @@ import exinex from "../../../utils/newTransferData/exinex.js";
 import ExistingBeneficiary from "./existingBeneficiary.vue";
 import NewBeneficiary from "./newBeneficiary.vue";
 export default {
-  props: ["accounts", "newTransaction"],
+  props: ["accounts", "newTransaction", "exinexFparent"],
   components: {
     IonRow,
     IonCard,
@@ -75,16 +83,20 @@ export default {
   setup(props, { emit }) {
     let knowAccountsArray = [];
     const amount = ref();
+    const existingBeneficiary = ref(props.exinexFparent);
     const accountToReceive = account => {
       emit("accountToReceiveFinalize", account);
     };
     const updateAmount = () => {
       emit("amountToSend", amount.value);
     };
-    const existingBeneficiary = ref(null);
+    const existingBeneficiaryFn = i => {
+      emit("exinexBeneficiaryEmit", i);
+    };
     return {
       accountToReceive,
       updateAmount,
+      existingBeneficiaryFn,
       amount,
       knowAccountsArray,
       existingBeneficiary,
