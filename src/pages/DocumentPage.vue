@@ -2,7 +2,7 @@
   <ion-page>
     <base-layout :title="'Documents'" :backLink="'/home'">
       <ion-row class="ion-justify-content-center">
-        <DocumentCard />
+        <DocumentCard @emitAccount="accountValue" @emitType="typeValue" />
         <ion-button color="tertiary" class="custom-1 ion-padding"
           >Search</ion-button
         >
@@ -28,8 +28,17 @@ export default {
       startDate: null,
       endDate: null,
     };
+    const accountValue = account => {
+      queryObj.account = account;
+    };
+    const typeValue = type => {
+      queryObj.type = type;
+      console.log(queryObj);
+    };
     return {
       queryObj,
+      accountValue,
+      typeValue,
     };
   },
 };
