@@ -20,6 +20,18 @@ export default {
     IonPage,
     IonButton,
   },
+  setup() {
+    let queryObj = {
+      account: null,
+      type: null,
+      amount: null,
+      startDate: null,
+      endDate: null,
+    };
+    return {
+      queryObj,
+    };
+  },
 };
 </script>
 
