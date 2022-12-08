@@ -11,7 +11,7 @@
             <ion-select
               color="secondary"
               v-model="account"
-              placeholder="---------------------------------------------------"
+              placeholder=""
               @ionChange="accountChange"
             >
               <ion-select-option value="all">All</ion-select-option>
@@ -32,7 +32,7 @@
             <ion-select
               color="secondary"
               v-model="type"
-              placeholder="---------------------------------------------------"
+              placeholder=""
               @ionChange="typeChange"
             >
               <ion-select-option value="all">All</ion-select-option>
@@ -54,14 +54,14 @@
           v-model="startDate"
           class="custom ion-margin-bottom ion-margin-top"
           type="date"
-          placeholder="Start date"
+          @ionChange="startDateChange"
         ></ion-input>
         <ion-label>End date</ion-label>
         <ion-input
           v-model="endDate"
-          class="custom ion-margin-bottom ion-margin-top"
+          class="custom ion-margin-top"
           type="date"
-          placeholder="End date"
+          @ionChange="endDateChange"
         ></ion-input>
       </form>
     </ion-card-content>
@@ -104,10 +104,14 @@ export default {
       emit("emitType", type.detail.value);
     };
     const numberChange = number => {
-      console.log(number);
-      emit("emitNumber", )
-
-    }
+      emit("emitNumber", +number.detail.value);
+    };
+    const startDateChange = date => {
+      emit("emitStartDate", date.detail.value);
+    };
+    const endDateChange = date => {
+      emit("emitEndDate", date.detail.value);
+    };
     return {
       account,
       type,
@@ -116,7 +120,9 @@ export default {
       endDate,
       accountChange,
       typeChange,
-      numberChange
+      numberChange,
+      startDateChange,
+      endDateChange,
     };
   },
 };
