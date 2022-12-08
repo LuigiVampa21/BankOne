@@ -2,9 +2,11 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="end" class="ion-margin" router-link="/register">
-          Sign up
-        </ion-buttons>
+        <ion-row class="ion-justify-content-end">
+          <ion-buttons class="ion-margin" router-link="/register">
+            Sign up
+          </ion-buttons>
+        </ion-row>
       </ion-toolbar>
     </ion-header>
     <ion-content>

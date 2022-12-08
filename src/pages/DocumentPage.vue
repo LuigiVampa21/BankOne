@@ -23,6 +23,8 @@
 <script>
 import DocumentCard from "@/components/documents/DocumentCard";
 import { IonPage, IonButton } from "@ionic/vue";
+import axios from "axios";
+
 export default {
   components: {
     DocumentCard,
@@ -52,9 +54,20 @@ export default {
     const endDateValue = date => {
       queryObj.endDate = date;
     };
-    const serachData = () => {
+    const serachData = async () => {
       console.log(queryObj);
-      console.log(process.env.VUE_APP_API_URL_DEV);
+      try {
+        const docs = await axios.get(
+          process.env.VUE_APP_ROOT_API + "/transactions/documents",
+          {
+            params: 
+              queryObj,
+          }
+        );
+        console.log(docs);
+      } catch (err) {
+        console.error(err);
+      }
     };
     return {
       queryObj,
