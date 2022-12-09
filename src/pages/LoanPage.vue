@@ -7,7 +7,12 @@
           @emitIncome="loanIncome"
           @emitDuration="loanDuration"
         />
-        <LoanCalculator :loanObj="loanObj" @emitRate="rateChange" />
+        <LoanCalculator
+          :loanObj="loanObj"
+          @emitRate="rateChange"
+          @emitMonthlyTotal="monthlyTotalChange"
+          @emitTotal="totalChange"
+        />
         <ion-button color="tertiary" @click="sendLoan">
           <ion-text class="ion-text-capitalize ion-padding"> confirm </ion-text>
         </ion-button>
@@ -37,6 +42,8 @@ export default {
       income: 0,
       duration: 0,
       rate: 0,
+      monthlyTotal: 0,
+      total: 0,
     });
     const loanAmount = amount => {
       loanObj.amount = amount;
@@ -48,13 +55,16 @@ export default {
       loanObj.duration = duration;
     };
     const rateChange = rate => {
-      loanObj.rate = rate
+      loanObj.rate = rate;
+    };
+    const monthlyTotalChange = monthlyTotal => {
+      loanObj.monthlyTotal = monthlyTotal;
+    };
+    const totalChange = total => {
+      loanObj.total = total;
     };
     const sendLoan = async () => {
-      await axios.post(
-        process.env.VUE_APP_ROOT_API + "/transactions/loans",
-        loanObj
-      );
+      await axios.post(process.env.VUE_APP_ROOT_API + "/loans", loanObj);
     };
     return {
       loanObj,
@@ -63,6 +73,8 @@ export default {
       loanDuration,
       rateChange,
       sendLoan,
+      monthlyTotalChange,
+      totalChange,
     };
   },
 };

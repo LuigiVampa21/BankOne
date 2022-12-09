@@ -66,6 +66,8 @@ export default {
         monthlyTotal.value
       );
       emit('emitRate', rate.value)
+      emit('emitMonthlyTotal', monthlyTotal.value)
+      emit('emitTotal', total.value)
     };
     watch(props.loanObj, () => loanComputor());
     return {
