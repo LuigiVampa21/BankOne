@@ -7,39 +7,62 @@
       <ion-text class="ion-margin">
         <h6>Amount desired</h6>
       </ion-text>
-      <ion-input class="custom-2 ion-margin" type="number"></ion-input>
+      <ion-input
+        @ionChange="amountChange"
+        class="custom-2 ion-margin"
+        type="number"
+      ></ion-input>
     </ion-row>
     <ion-row class="ion-justify-content-between ion-align-items-center">
       <ion-text class="ion-margin">
         <h6>Monthly income</h6>
       </ion-text>
-      <ion-input class="custom-2 ion-margin" type="number"></ion-input>
+      <ion-input
+        @ionChange="incomeChange"
+        class="custom-2 ion-margin"
+        type="number"
+      ></ion-input>
     </ion-row>
     <ion-row
       class="ion-margin-bottom ion-justify-content-between ion-align-items-center"
     >
       <ion-text class="ion-margin">
-        <h6>Period intended</h6>
+        <h6>Duration intended</h6>
       </ion-text>
-      <ion-input class="custom-2 ion-margin" type="number"></ion-input>
+      <ion-input
+        @ionChange="durationChange"
+        class="custom-2 ion-margin"
+        type="number"
+      ></ion-input>
     </ion-row>
   </ion-card>
 </template>
 
 <script>
-import {
-  IonCard,
-  IonText,
-  IonRow,
-  IonInput
-} from "@ionic/vue";
+import { IonCard, IonText, IonRow, IonInput } from "@ionic/vue";
 
 export default {
   components: {
     IonText,
     IonRow,
     IonCard,
-    IonInput
+    IonInput,
+  },
+  setup(props, { emit }) {
+    const amountChange = amount => {
+      emit("emitAmount", amount.detail.value);
+    };
+    const incomeChange = income => {
+      emit("emitIncome", income.detail.value);
+    };
+    const durationChange = duration => {
+      emit("emitDuration", duration.detail.value);
+    };
+    return {
+      amountChange,
+      incomeChange,
+      durationChange,
+    };
   },
 };
 </script>
