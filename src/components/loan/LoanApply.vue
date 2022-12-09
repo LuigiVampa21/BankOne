@@ -27,7 +27,7 @@
       class="ion-margin-bottom ion-justify-content-between ion-align-items-center"
     >
       <ion-text class="ion-margin">
-        <h6>Duration intended</h6>
+        <h6>Duration (years)</h6>
       </ion-text>
       <ion-input
         @ionChange="durationChange"
