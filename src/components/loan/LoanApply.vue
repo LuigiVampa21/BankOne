@@ -9,6 +9,8 @@
       </ion-text>
       <ion-input
         @ionChange="amountChange"
+        max="500000"
+        min="1000"
         class="custom-2 ion-margin"
         type="number"
       ></ion-input>
@@ -30,6 +32,8 @@
         <h6>Duration (years)</h6>
       </ion-text>
       <ion-input
+        min="1"
+        max="25"
         @ionChange="durationChange"
         class="custom-2 ion-margin"
         type="number"

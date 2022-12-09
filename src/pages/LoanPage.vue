@@ -8,7 +8,7 @@
           @emitDuration="loanDuration"
         />
         <LoanCalculator :loanObj="loanObj" />
-        <ion-button color="tertiary">
+        <ion-button color="tertiary" @click="sendLoan">
           <ion-text class="ion-text-capitalize ion-padding"> confirm </ion-text>
         </ion-button>
       </ion-row>
@@ -20,7 +20,8 @@
 import LoanApply from "../components/loan/LoanApply.vue";
 import LoanCalculator from "../components/loan/LoanCalculator.vue";
 import { IonRow, IonPage, IonButton } from "@ionic/vue";
-import {reactive} from "vue";
+import { reactive } from "vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -46,11 +47,15 @@ export default {
     const loanDuration = duration => {
       loanObj.duration = duration;
     };
+    const sendLoan = async () => {
+      await axios.post(process.env.VUE_APP_ROOT_API + "/loans", loanObj);
+    };
     return {
       loanObj,
       loanAmount,
       loanIncome,
       loanDuration,
+      sendLoan,
     };
   },
 };
