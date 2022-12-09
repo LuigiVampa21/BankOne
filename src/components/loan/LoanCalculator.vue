@@ -35,7 +35,7 @@ export default {
     LoanColResults,
   },
   props: ["loanObj"],
-  setup(props) {
+  setup(props,{emit}) {
     let loanObjReactive = reactive(props.loanObj);
     let rate = ref(0);
     let totalInterest = ref(0);
@@ -65,6 +65,7 @@ export default {
         loanObjReactive,
         monthlyTotal.value
       );
+      emit('emitRate', rate.value)
     };
     watch(props.loanObj, () => loanComputor());
     return {
@@ -80,10 +81,4 @@ export default {
 </script>
 
 <style scoped>
-.calc-container {
-  flex-direction: column;
-  /* width: 70%;
-  position: relative;
-  left: 40%; */
-}
 </style>

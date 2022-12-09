@@ -16,7 +16,6 @@ exports.computeTotalInterest = (loanObj, monthlyInterest) => {
 
 exports.computeTotalMonthly = (loanObj, interest) => {
   let total = loanObj.amount / (loanObj.duration * toMonth) + +interest;
-  console.log(total, "total");
   if (total == Infinity || isNaN(total)) return 0;
   return total.toFixed(2);
 };
