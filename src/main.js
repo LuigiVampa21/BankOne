@@ -1,7 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-// import vueConfig from "./vue.config";
 
 import { IonicVue } from "@ionic/vue";
 
@@ -33,26 +32,10 @@ import BaseAvatar from "@/components/base/BaseAvatar.vue";
 
 const app = createApp(App).use(IonicVue).use(router);
 
-// app.use(vueConfig);
 
 app.component("base-layout", BaseLayout);
 app.component("base-card", BaseCard);
 app.component("base-avatar", BaseAvatar);
-
-// app.config.compilerOptions.isCustomElement = tag => {
-//   return tag.startsWith("ion-"); // (return true)
-// };
-
-// app.config
-//   .rule("vue")
-//   .use("vue-loader")
-//   .tap(options => {
-//     options.compilerOptions = {
-//       ...options.compilerOptions,
-//       isCustomElement: tag => tag.startsWith("ion-"),
-//     };
-//     return options;
-//   });
 
 router.isReady().then(() => {
   app.mount("#app");

@@ -2,9 +2,11 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="end" class="ion-margin" router-link="/login">
-          Sign in
-        </ion-buttons>
+        <ion-row class="ion-justify-content-end">
+          <ion-buttons class="ion-margin" router-link="/login">
+            Sign in
+          </ion-buttons>
+        </ion-row>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -31,50 +33,120 @@
             <ion-card-content>
               <form>
                 <ion-grid>
-                  <ion-row>
+                  <div>
                     <ion-input
-                      class="custom ion-margin-bottom ion-margin-end"
-                      type="text"
-                      placeholder="Last name"
-                    ></ion-input>
-                    <ion-input
+                      v-model="lastName"
                       class="custom ion-margin-bottom"
                       type="text"
-                      placeholder="First name"
+                      name="credentials.lastName"
+                      placeholder="Last name"
+                      :clear-on-edit="true"
                     ></ion-input>
-                  </ion-row>
+                    <div class="errorMsg">
+                      <ion-text color="danger">{{
+                        errors["credentials.lastName"]
+                      }}</ion-text>
+                    </div>
+                    <ion-input
+                      v-model="firstName"
+                      class="custom ion-margin-bottom"
+                      type="text"
+                      name="credentials.firstName"
+                      placeholder="First name"
+                      :clear-on-edit="true"
+                    ></ion-input>
+                  </div>
+                  <div class="errorMsg">
+                    <ion-text color="danger">{{
+                      errors["credentials.firstName"]
+                    }}</ion-text>
+                  </div>
                   <ion-input
+                    v-model="birthDate"
                     class="custom ion-margin-bottom"
-                    type="text"
+                    type="date"
+                    name="credentials.birthDate"
                     placeholder="Date of birth"
+                    :clear-on-edit="true"
                   ></ion-input>
+                  <div class="errorMsg">
+                    <ion-text color="danger">{{
+                      errors["credentials.birthDate"]
+                    }}</ion-text>
+                  </div>
                   <ion-input
+                    v-model="email"
                     class="custom ion-margin-bottom"
                     type="email"
+                    name="credentials.email"
                     placeholder="Email"
+                    :clear-on-edit="true"
                   ></ion-input>
+                  <div class="errorMsg">
+                    <ion-text color="danger">{{
+                      errors["credentials.email"]
+                    }}</ion-text>
+                  </div>
                   <ion-input
+                    v-model="phone"
+                    class="custom ion-margin-bottom"
+                    type="tel"
+                    name="credentials.phone"
+                    placeholder="Phone"
+                    :clear-on-edit="true"
+                  ></ion-input>
+                  <div class="errorMsg">
+                    <ion-text color="danger">{{
+                      errors["credentials.phone"]
+                    }}</ion-text>
+                  </div>
+                  <ion-input
+                    v-model="password"
                     class="custom ion-margin-bottom"
                     type="password"
+                    name="credentials.password"
                     placeholder="Password"
+                    :clear-on-edit="true"
                   ></ion-input>
+                  <div class="errorMsg">
+                    <ion-text color="danger">{{
+                      errors["credentials.password"]
+                    }}</ion-text>
+                  </div>
                   <ion-input
+                    v-model="confirmPassword"
                     class="custom ion-margin-bottom"
                     type="password"
+                    name="credentials.confirmPassword"
                     placeholder="Confirm Password"
+                    :clear-on-edit="true"
                   ></ion-input>
+                  <div class="errorMsg">
+                    <ion-text color="danger">{{
+                      errors["credentials.confirmPassword"]
+                    }}</ion-text>
+                  </div>
                   <ion-item>
-                    <ion-checkbox slot="start"></ion-checkbox>
+                    <ion-checkbox
+                      slot="start"
+                      name="credentials.tos"
+                      :value="false"
+                      @ionChange="showCred"
+                    ></ion-checkbox>
                     <ion-label>
                       <h3>I agree to the terms and conditions</h3>
                     </ion-label>
                   </ion-item>
+                  <ion-text color="danger" v-if="!value && checkboxError">
+                    You must accept the terms and conditions
+                  </ion-text>
 
                   <ion-button
                     class="custom ion-margin-bottom ion-margin-top"
-                    type="submit"
+                    type="button"
                     color="tertiary"
                     expand="block"
+                    @click.prevent="sendRegister"
                     >Sign up</ion-button
                   >
                 </ion-grid>
@@ -93,7 +165,11 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import axios from "axios";
+import differenceInYears from "date-fns/differenceInYears";
+import * as yup from "yup";
+import { useField, useFormErrors, useForm } from "vee-validate";
 import {
   IonPage,
   IonContent,
@@ -114,6 +190,40 @@ import {
   IonCheckbox,
   IonItem,
 } from "@ionic/vue";
+
+const phoneRegex = RegExp(/^(\\+33|0|0033)[1-9][0-9]{8}$/);
+
+const credentialsComponentSchema = yup
+  .object({
+    credentials: yup.object({
+      lastName: yup.string().required("Last Name required"),
+      firstName: yup.string().required("First Name required"),
+      birthDate: yup
+        .string()
+        .required("Birth Date required")
+        .test("Birth Date", "You must be adult", value => {
+          return differenceInYears(new Date(), new Date(value)) >= 18;
+        }),
+      email: yup.string().required("Email required").email("Invalid Email"),
+      phone: yup
+        .string()
+        .matches(phoneRegex, "Invalid phone Number")
+        .required("Phone required"),
+      password: yup.string().required("Password required"),
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("password"), null], "Passwords must match"),
+      // tos: yup.bool()
+        // .default(false)
+        // .oneOf([true], "You must accept the terms and conditions")
+        // .required("You must accept the terms and conditions")
+        // .test('TOS', 'You must accept the terms and conditions', function() {
+        //   console.log(this.schema.exclusiveTests)
+        //   console.log(this);
+        // }),
+    }),
+  })
+  .required();
 export default defineComponent({
   components: {
     IonPage,
@@ -134,6 +244,81 @@ export default defineComponent({
     IonLabel,
     IonCheckbox,
     IonItem,
+  },
+  setup() {
+    const registerForm = useForm({
+      validationSchema: credentialsComponentSchema,
+    });
+    const { value: lastName } = useField("credentials.lastName");
+    const { value: firstName } = useField("credentials.firstName");
+    const { value: birthDate } = useField("credentials.birthDate");
+    const { value: email } = useField("credentials.email");
+    const { value: phone } = useField("credentials.phone");
+    const { value: password } = useField("credentials.password");
+    const { value: confirmPassword } = useField("credentials.confirmPassword");
+    // const { value: tos } = useField("credentials.tos");
+
+    let value = ref(false);
+    let checkboxError = ref(false);
+
+    const sendRegister = async () => {
+
+      try {
+        const resp = await registerForm.validate();
+        if (resp.valid) {
+          if(!value.value){
+        checkboxError.value = true
+        return
+      }
+      const { birthDate, confirmPassword, email, firstName, lastName, password, phone } =  registerForm.values.credentials
+          const response = await axios.post(
+            process.env.VUE_APP_ROOT_API + "/auth/register",
+            {
+              firstName: firstName.toLowerCase(),
+              lastName: lastName.toLowerCase(),
+              phone,
+              birthDate,
+              confirmPassword,
+              email,
+              password,
+            }
+          );
+
+          console.log(response);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    const showCred = () => {
+      value.value = !value.value
+      // console.log(credentialsComponentSchema.fields.credentials.fields.tos.exclusiveTests.TOS);
+      // credentialsComponentSchema.fields.credentials.fields.tos.exclusiveTests.required = !credentialsComponentSchema.fields.credentials.fields.tos.exclusiveTests.required
+      // console.log(credentialsComponentSchema.fields.credentials.fields.tos.exclusiveTests.required);
+      // console.log(credentialsComponentSchema.fields.tos._whitelist);
+
+      // credentialsComponentSchema.fields.credentials.fields.tos.exclusiveTests.TOS = !credentialsComponentSchema.fields.credentials.fields.tos.exclusiveTests.TOS
+
+      // console.log(credentialsComponentSchema.fields.credentials.fields.tos._whitelist.list);
+      // credentialsComponentSchema.fields.credentials.fields.tos._whitelist.list = !credentialsComponentSchema.fields.credentials.fields.tos._whitelist.list
+      // console.log(credentialsComponentSchema.fields.credentials.fields.tos._whitelist.list);
+    }
+    return {
+      lastName,
+      firstName,
+      birthDate,
+      email,
+      phone,
+      password,
+      confirmPassword,
+      registerForm,
+      value,
+checkboxError,
+      // tos,
+      sendRegister,
+      errors: useFormErrors(),
+      showCred
+    };
   },
 });
 </script>
@@ -162,6 +347,19 @@ h6 {
   font-size: 11px;
   color: var(--ion-color-medium);
 }
+
+.name-errors-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -8px;
+}
+.errorMsg {
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+.name-errors-container > * {
+  width: 50vw;
+}
 .auth-footer {
   width: 90vw;
 }
@@ -172,9 +370,17 @@ h6 {
 ion-checkbox {
   --size: 16px;
   --background: var(--ion-color-light);
-  --background-checked: var(--ion-color-tertiary);
+  --background-checked: var(--ion-color-secondary);
 }
 ion-item {
   --background: var(--ion-color-primary);
 }
 </style>
+
+first_name:
+last_name:
+email:
+phone_number:
+birth_date:
+password:
+confirmed_password:
