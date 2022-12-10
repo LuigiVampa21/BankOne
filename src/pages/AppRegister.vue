@@ -189,6 +189,7 @@ import {
   IonLabel,
   IonCheckbox,
   IonItem,
+  toastController,
 } from "@ionic/vue";
 
 const phoneRegex = RegExp(/^(\\+33|0|0033)[1-9][0-9]{8}$/);
@@ -213,6 +214,8 @@ const credentialsComponentSchema = yup
       confirmPassword: yup
         .string()
         .oneOf([yup.ref("password"), null], "Passwords must match"),
+        // DO NOT REMOVE FOR NOW 
+
       // tos: yup.bool()
         // .default(false)
         // .oneOf([true], "You must accept the terms and conditions")
@@ -256,22 +259,24 @@ export default defineComponent({
     const { value: phone } = useField("credentials.phone");
     const { value: password } = useField("credentials.password");
     const { value: confirmPassword } = useField("credentials.confirmPassword");
+        // DO NOT REMOVE FOR NOW 
+
     // const { value: tos } = useField("credentials.tos");
 
     let value = ref(false);
     let checkboxError = ref(false);
 
     const sendRegister = async () => {
-
       try {
         const resp = await registerForm.validate();
-        if (resp.valid) {
+        if(!resp.valid) return;
+        // if (resp.valid) {
           if(!value.value){
         checkboxError.value = true
         return
       }
       const { birthDate, confirmPassword, email, firstName, lastName, password, phone } =  registerForm.values.credentials
-          const response = await axios.post(
+          await axios.post(
             process.env.VUE_APP_ROOT_API + "/auth/register",
             {
               firstName: firstName.toLowerCase(),
@@ -283,15 +288,17 @@ export default defineComponent({
               password,
             }
           );
-
-          console.log(response);
-        }
+          await registerToast()
+        // }
       } catch (err) {
         console.error(err);
       }
     };
     const showCred = () => {
       value.value = !value.value
+      // If we still have time we'll solve this in the end, For now the conditional rendering error message trick will be OK
+      // Do not REMOVE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
       // console.log(credentialsComponentSchema.fields.credentials.fields.tos.exclusiveTests.TOS);
       // credentialsComponentSchema.fields.credentials.fields.tos.exclusiveTests.required = !credentialsComponentSchema.fields.credentials.fields.tos.exclusiveTests.required
       // console.log(credentialsComponentSchema.fields.credentials.fields.tos.exclusiveTests.required);
@@ -303,6 +310,15 @@ export default defineComponent({
       // credentialsComponentSchema.fields.credentials.fields.tos._whitelist.list = !credentialsComponentSchema.fields.credentials.fields.tos._whitelist.list
       // console.log(credentialsComponentSchema.fields.credentials.fields.tos._whitelist.list);
     }
+    const registerToast = async() => {
+      const toast = await toastController.create({
+        message: 'Please check your email, to verify your account 😊',
+        duration: 2500,
+        position: "top",
+        color: 'success',
+      })
+      await toast.present()
+    } 
     return {
       lastName,
       firstName,
@@ -313,10 +329,10 @@ export default defineComponent({
       confirmPassword,
       registerForm,
       value,
-checkboxError,
+      checkboxError,
       // tos,
-      sendRegister,
       errors: useFormErrors(),
+      sendRegister,
       showCred
     };
   },
@@ -348,11 +364,11 @@ h6 {
   color: var(--ion-color-medium);
 }
 
-.name-errors-container {
+/* .name-errors-container {
   display: flex;
   justify-content: space-between;
   margin-top: -8px;
-}
+} */
 .errorMsg {
   margin-top: -8px;
   margin-bottom: 8px;
@@ -376,11 +392,3 @@ ion-item {
   --background: var(--ion-color-primary);
 }
 </style>
-
-first_name:
-last_name:
-email:
-phone_number:
-birth_date:
-password:
-confirmed_password:

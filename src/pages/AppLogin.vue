@@ -33,20 +33,36 @@
             <ion-card-content>
               <form>
                 <ion-input
+                v-model="email"
                   class="custom ion-margin-bottom"
                   type="email"
+                  name="credentials.email"
                   placeholder="Email"
+                  :clear-on-edit="true"
                 ></ion-input>
+                <div class="errorMsg">
+                      <ion-text color="danger">{{
+                        errors["credentials.email"]
+                      }}</ion-text>
+                    </div>
                 <ion-input
+                v-model="password"
                   class="custom ion-margin-bottom"
                   type="password"
+                  name="credentials.password"
                   placeholder="Password"
                 ></ion-input>
+                <div class="errorMsg">
+                      <ion-text color="danger">{{
+                        errors["credentials.password"]
+                      }}</ion-text>
+                    </div>
                 <ion-button
                   class="custom ion-margin-bottom"
-                  type="submit"
+                  type="button"
                   color="tertiary"
                   expand="block"
+                  @click.prevent="sendLogin"
                   >Sign in</ion-button
                 >
               </form>
@@ -78,6 +94,9 @@
 
 <script>
 import { defineComponent } from "vue";
+import axios from "axios";
+import * as yup from "yup";
+import { useField, useFormErrors, useForm } from "vee-validate";
 import {
   IonPage,
   IonContent,
@@ -96,6 +115,18 @@ import {
   IonText,
   IonCol,
 } from "@ionic/vue";
+
+const credentialsComponentSchema = yup
+  .object({
+    credentials: yup.object({
+      email: yup.string().required("Email required").email("Invalid Email"),
+      password: yup.string().required("Password required"),
+  })
+})
+  .required();
+
+
+
 export default defineComponent({
   components: {
     IonPage,
@@ -115,6 +146,33 @@ export default defineComponent({
     IonText,
     IonCol,
   },
+  setup(){
+    const loginForm = useForm({
+      validationSchema: credentialsComponentSchema,
+    });
+    const sendLogin = async() => {
+      try{
+        const resp = await loginForm.validate();
+        if(!resp.valid) return;
+        const { email, password } = loginForm.values.credentials
+        const response = await axios.post(process.env.VUE_APP_ROOT_API + "/auth/login", {
+          email,
+          password
+        })
+        console.log(response);
+      }catch(err){
+        console.error(err);
+      }
+    }
+    const { value: email } = useField("credentials.email");
+    const { value: password } = useField("credentials.password");
+    return{
+      email,
+      password,
+      errors: useFormErrors(),
+      sendLogin,
+    }
+  }
 });
 </script>
 
@@ -141,5 +199,10 @@ h6 {
 }
 .container {
   height: 85vh;
+}
+
+.errorMsg {
+  margin-top: -8px;
+  margin-bottom: 8px;
 }
 </style>
