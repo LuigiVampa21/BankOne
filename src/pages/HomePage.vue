@@ -68,6 +68,8 @@
 
 <script>
 import { useRouter } from "vue-router";
+import { useAuthStore } from "../stores/auth";
+import {onMounted}from 'vue';
 import {
   IonPage,
   IonAvatar,
@@ -113,6 +115,11 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const authStore = useAuthStore();
+    onMounted( async () => {
+      const token = await authStore.getUserFromStorage()  
+      console.log(token);
+    })
     return {
       ellipsisHorizontalOutline,
       document,
