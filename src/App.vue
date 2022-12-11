@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { onMounted } from "vue";
+import { useAuthStore } from "./stores/auth";
 import { IonApp, IonRouterOutlet } from "@ionic/vue";
 
 export default {
@@ -12,6 +14,16 @@ export default {
   components: {
     IonApp,
     IonRouterOutlet,
+  },
+  setup() {
+    const authStore = useAuthStore();
+    onMounted(async () => {
+      // await authStore.getUser();
+      const token = await authStore.getUserFromStorage("token");
+      const user = await authStore.getUserFromStorage("userID");
+      console.log(token);
+      console.log(user);
+    });
   },
 };
 </script>

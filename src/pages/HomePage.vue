@@ -2,7 +2,14 @@
   <ion-page>
     <ion-content>
       <base-layout>
-        <ion-item color="primary" class="ion-margin">
+        <ion-row class="ion-justify-content-end">
+          <ion-button @click="logout">
+            <ion-text color="light" class="ion-text-capitalize"
+              >log out</ion-text
+            >
+          </ion-button>
+        </ion-row>
+        <ion-item color="primary" class="ion-margin-start ion-margin-bottom">
           <ion-avatar>
             <img
               class="avatar"
@@ -69,7 +76,12 @@
 <script>
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth";
-import {onMounted}from 'vue';
+import { useOverviewStore } from "../stores/overview";
+import { storeToRefs } from "pinia";
+import {
+  // reactive,
+  onMounted,
+} from "vue";
 import {
   IonPage,
   IonAvatar,
@@ -80,6 +92,8 @@ import {
   IonRow,
   IonCol,
   IonContent,
+  // IonToolbar,
+  IonButton,
 } from "@ionic/vue";
 
 import HomeHeader from "@/components/home/HomeHeader";
@@ -112,14 +126,26 @@ export default {
     IonGrid,
     IonRow,
     IonCol,
+    // IonToolbar,
+    IonButton,
   },
   setup() {
     const router = useRouter();
+    // const overview = reactive({
+    //   username: null,
+    //   lastTx: null,
+    //   accounts: null,
+    // });
     const authStore = useAuthStore();
-    onMounted( async () => {
-      const token = await authStore.getUserFromStorage()  
-      console.log(token);
-    })
+    const overviewStore = useOverviewStore();
+    // Those will needs to be passed as arguments to components
+    const { username, lastTx, accounts } = storeToRefs(overviewStore);
+    const logout = async () => {
+      await authStore.HandleLogout();
+    };
+    onMounted(async () => {
+      await overviewStore.getOverview();
+    });
     return {
       ellipsisHorizontalOutline,
       document,
@@ -128,6 +154,11 @@ export default {
       homeDocuments,
       homeInvestments,
       router,
+      username,
+      lastTx,
+      accounts,
+      logout,
+      // overview,
     };
   },
 };
