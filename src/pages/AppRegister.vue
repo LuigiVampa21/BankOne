@@ -166,10 +166,13 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import axios from "axios";
+import { useAuthStore } from "../stores/auth";
+// Store To Refs is imported for loading here
+import { storeToRefs } from "pinia";
 import differenceInYears from "date-fns/differenceInYears";
 import * as yup from "yup";
 import { useField, useFormErrors, useForm } from "vee-validate";
+// import notifier from '../utils/notifications/toastr'
 import {
   IonPage,
   IonContent,
@@ -190,6 +193,7 @@ import {
   IonCheckbox,
   IonItem,
   toastController,
+  useIonRouter,
 } from "@ionic/vue";
 
 const phoneRegex = RegExp(/^(\\+33|0|0033)[1-9][0-9]{8}$/);
@@ -266,8 +270,13 @@ export default defineComponent({
     let value = ref(false);
     let checkboxError = ref(false);
 
+    const ionRouter = useIonRouter();
+    const authStore = useAuthStore();
+    const {registerSuccess, errorAPIMessage,
+      // loading
+     } = storeToRefs(authStore);
+
     const sendRegister = async () => {
-      try {
         const resp = await registerForm.validate();
         if(!resp.valid) return;
         // if (resp.valid) {
@@ -275,25 +284,31 @@ export default defineComponent({
         checkboxError.value = true
         return
       }
-      const { birthDate, confirmPassword, email, firstName, lastName, password, phone } =  registerForm.values.credentials
-          await axios.post(
-            process.env.VUE_APP_ROOT_API + "/auth/register",
-            {
-              firstName: firstName.toLowerCase(),
-              lastName: lastName.toLowerCase(),
-              phone,
-              birthDate,
-              confirmPassword,
-              email,
-              password,
-            }
-          );
-          await registerToast()
+         await authStore.handleRegister(registerForm.values.credentials)
+         if(registerSuccess.value){
+           const message = 'Please check your email, to verify your account 😊';
+           await registerToast(message, 'success');
+           clearCredentials();
+           navigateToLoginPage();
+          }
         // }
-      } catch (err) {
-        console.error(err);
+        if(errorAPIMessage.value){
+          await registerToast(errorAPIMessage.value, 'danger');
+        }
       }
-    };
+    const clearCredentials = () => {
+      registerForm.values.credentials.firstName = "";
+      registerForm.values.credentials.lastName = "";
+      registerForm.values.credentials.phone = "";
+      registerForm.values.credentials.birthDate = "";
+      registerForm.values.credentials.confirmPassword = "";
+      registerForm.values.credentials.email = "";
+      registerForm.values.credentials.password = "";
+    }
+    const navigateToLoginPage = () => {
+      ionRouter.navigate('/login', 'backward', 'replace')
+    }
+
     const showCred = () => {
       value.value = !value.value
       // If we still have time we'll solve this in the end, For now the conditional rendering error message trick will be OK
@@ -310,12 +325,12 @@ export default defineComponent({
       // credentialsComponentSchema.fields.credentials.fields.tos._whitelist.list = !credentialsComponentSchema.fields.credentials.fields.tos._whitelist.list
       // console.log(credentialsComponentSchema.fields.credentials.fields.tos._whitelist.list);
     }
-    const registerToast = async() => {
+    const registerToast = async(message, color) => {
       const toast = await toastController.create({
-        message: 'Please check your email, to verify your account 😊',
+        message,
         duration: 2500,
         position: "top",
-        color: 'success',
+        color,
       })
       await toast.present()
     } 
