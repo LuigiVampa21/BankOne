@@ -18,11 +18,11 @@ export default {
   setup() {
     const authStore = useAuthStore();
     onMounted(async () => {
-      // await authStore.getUser();
-      const token = await authStore.getUserFromStorage("token");
-      const user = await authStore.getUserFromStorage("userID");
-      console.log(token);
-      console.log(user);
+      await authStore.getUser();
+      // const token = await authStore.getFromStorage("token");
+      // const user = await authStore.getFromStorage("userID");
+      // console.log(token, 'APP VUE');
+      // console.log(user, 'APP VUE');
     });
   },
 };

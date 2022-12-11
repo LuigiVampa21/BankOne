@@ -6,6 +6,8 @@ import axios from "axios";
 export const useAuthStore = defineStore("auth", () => {
   let currentUser = ref(null);
   let currentToken = ref("");
+  //   isAuth = testing purposes => after prod just use if(currentUser.value !== null)
+  let isAuth = ref(false);
   let registerSuccess = ref(false);
   let loading = ref(false);
   let loadingUser = ref(false);
@@ -26,12 +28,15 @@ export const useAuthStore = defineStore("auth", () => {
         }
       );
       const { user, token } = response.data;
-      currentUser.value = user;
+      currentUser.value = {
+        username: user.first_name,
+        id: user.id,
+      };
+      console.log(currentUser.value, "authStoreJS");
       currentToken.value = token;
-      await setUserToStorage("token", currentToken);
-      await setUserToStorage("userID", currentUser.value.id);
-      //   await setUserToStorage("userID", user.id);
-
+      isAuth.value = true;
+      await setToStorage("token", token);
+      await setToStorage("userID", user.id);
       loading.value = false;
     } catch (err) {
       errorAPIMessage.value = err;
@@ -69,25 +74,36 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
-  const HandleLogout = async () => {};
+  const handleLogout = async () => {
+    console.log("logout AUTHSTORE");
+    currentUser.value = null;
+    currentToken.value = "";
+    isAuth.value = false;
+    removeFromStorage("token");
+    removeFromStorage("userID");
+  };
 
   const getUser = async () => {
     loadingUser.value = true;
-    const id = await getUserFromStorage("userID");
+    const id = await getFromStorage("userID");
     // maybe add headers with token and authMiddleware into getSingle user server side
     const response = await axios.get(
       process.env.VUE_APP_ROOT_API + "/users/" + id
     );
-    currentUser.value = response.user;
-    console.log(currentUser.value);
+    // currentUser.value = response.user;
+    console.log(response);
   };
 
-  const setUserToStorage = async (key, value) => {
+  const setToStorage = async (key, value) => {
     await ionicStorage.set(key, value);
   };
-  const getUserFromStorage = async key => {
+  const getFromStorage = async key => {
     const dataStorage = await ionicStorage.get(key);
+    console.log(dataStorage, "AuthStore");
     return dataStorage;
+  };
+  const removeFromStorage = async key => {
+    await ionicStorage.remove(key);
   };
 
   return {
@@ -97,11 +113,12 @@ export const useAuthStore = defineStore("auth", () => {
     loadingUser,
     registerSuccess,
     errorAPIMessage,
-    // setUserToStorage,
-    getUserFromStorage,
+    isAuth,
+    setToStorage,
+    getFromStorage,
     handleLogin,
     handleRegister,
-    HandleLogout,
+    handleLogout,
     getUser,
   };
 });

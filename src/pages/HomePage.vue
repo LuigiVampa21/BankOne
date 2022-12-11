@@ -93,6 +93,7 @@ import {
   IonCol,
   IonContent,
   // IonToolbar,
+  useIonRouter,
   IonButton,
 } from "@ionic/vue";
 
@@ -131,6 +132,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const ionRouter = useIonRouter();
     // const overview = reactive({
     //   username: null,
     //   lastTx: null,
@@ -140,8 +142,16 @@ export default {
     const overviewStore = useOverviewStore();
     // Those will needs to be passed as arguments to components
     const { username, lastTx, accounts } = storeToRefs(overviewStore);
+    // const { isAuth } = storeToRefs(authStore);
     const logout = async () => {
-      await authStore.HandleLogout();
+      console.log("logout HOME PAGE");
+      await authStore.handleLogout();
+      // if (!isAuth) {
+      navigateToLoginPage();
+      // }
+    };
+    const navigateToLoginPage = () => {
+      ionRouter.navigate("/login", "backward", "replace");
     };
     onMounted(async () => {
       await overviewStore.getOverview();
