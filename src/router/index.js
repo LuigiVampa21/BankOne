@@ -70,6 +70,12 @@ const routes = [
     name: "Help",
     component: () => import("@/pages/HelpPage"),
   },
+  {
+    path: '/404',
+    name: 'NotFound',
+    component: () => import ('@/pages/NotFoundPage')
+   },  
+  { path: '/:catchAll(.*)', redirect: '/404' },  
 ];
 
 const router = createRouter({

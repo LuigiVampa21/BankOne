@@ -1,6 +1,9 @@
 import { createApp } from "vue";
+import { createPinia } from "pinia";
+
 import App from "./App.vue";
 import router from "./router";
+
 
 import { IonicVue } from "@ionic/vue";
 
@@ -30,7 +33,7 @@ import BaseLayout from "@/components/base/BaseLayout.vue";
 import BaseCard from "@/components/base/BaseCard.vue";
 import BaseAvatar from "@/components/base/BaseAvatar.vue";
 
-const app = createApp(App).use(IonicVue).use(router);
+const app = createApp(App).use(IonicVue).use(createPinia()).use(router);
 
 
 app.component("base-layout", BaseLayout);

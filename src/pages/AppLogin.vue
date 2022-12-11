@@ -94,7 +94,8 @@
 
 <script>
 import { defineComponent } from "vue";
-import axios from "axios";
+import { useAuthStore } from "../stores/auth";
+import { storeToRefs } from "pinia";
 import * as yup from "yup";
 import { useField, useFormErrors, useForm } from "vee-validate";
 import {
@@ -114,6 +115,8 @@ import {
   IonRow,
   IonText,
   IonCol,
+  useIonRouter,
+  toastController
 } from "@ionic/vue";
 
 const credentialsComponentSchema = yup
@@ -124,7 +127,6 @@ const credentialsComponentSchema = yup
   })
 })
   .required();
-
 
 
 export default defineComponent({
@@ -150,20 +152,43 @@ export default defineComponent({
     const loginForm = useForm({
       validationSchema: credentialsComponentSchema,
     });
+    const ionRouter = useIonRouter();
+    const authStore = useAuthStore();
+    const {currentUser, errorAPIMessage,
+      //  loading
+    } = storeToRefs(authStore)
     const sendLogin = async() => {
       try{
         const resp = await loginForm.validate();
         if(!resp.valid) return;
-        const { email, password } = loginForm.values.credentials
-        const response = await axios.post(process.env.VUE_APP_ROOT_API + "/auth/login", {
-          email,
-          password
-        })
-        console.log(response);
+        await authStore.handleLogin(loginForm.values.credentials)
+        if(!currentUser.value){
+          loginToastFail()
+          return
+        }
+          navigateToHomePage()
+          clearCredentials()
+          //clear error messages
       }catch(err){
         console.error(err);
       }
     }
+    const clearCredentials = () => {
+      loginForm.values.credentials.email = "";
+      loginForm.values.credentials.password = "";
+    }
+    const navigateToHomePage = () => {
+      ionRouter.navigate('/home', 'forward', 'replace')
+    }
+    const loginToastFail = async() => {
+      const toast = await toastController.create({
+        message: errorAPIMessage.value,
+        duration: 2500,
+        position: "top",
+        color: 'danger',
+      })
+      await toast.present()
+    } 
     const { value: email } = useField("credentials.email");
     const { value: password } = useField("credentials.password");
     return{
