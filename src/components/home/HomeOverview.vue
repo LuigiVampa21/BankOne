@@ -3,7 +3,10 @@
     <ion-card-header>
       <ion-row class="ion-justify-content-between">
         <ion-col>
-          <ion-card-title class="fontWeight100"> 15 000 € </ion-card-title>
+          <ion-card-title class="fontWeight100" v-if="overviewTotal">
+            {{ overviewTotal }} €
+          </ion-card-title>
+          <!-- CURRENCY DEPENDS ON COUNTRY -->
           <ion-text>EUR</ion-text>
         </ion-col>
         <ion-item color="secondary">
@@ -37,7 +40,9 @@
           </ion-avatar>
         </ion-item>
         <div class="last-transaction">
-          <ion-text>Instant Transfer</ion-text>
+          <ion-text class="ion-text-capitalize"
+            >{{ lastTXR?.type }} transfer</ion-text
+          >
           <ion-text color="medium"><h6>M. DOE John</h6></ion-text>
         </div>
         <ion-row class="tx-amount ion-justify-content-end">
@@ -49,6 +54,7 @@
 </template>
 
 <script>
+import sum from "../../utils/home/computor";
 import {
   IonAvatar,
   IonCard,
@@ -58,7 +64,14 @@ import {
   IonRow,
   IonCol,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
+import {
+  defineComponent,
+  // onMounted,
+  onBeforeUpdate,
+  // watch,
+  ref,
+  // toRefs,
+} from "vue";
 export default defineComponent({
   components: {
     IonAvatar,
@@ -70,8 +83,38 @@ export default defineComponent({
     IonCardTitle,
   },
   props: ["bankAccounts", "lastTX"],
-  setup() {
-    return {};
+  // props: ["overview"],
+  // props: {
+  //   bankAccounts: Array,
+  //   lastTX: Object,
+  // },
+  // setup(props) {
+  setup(props) {
+    // const { accounts } = toRefs(props);
+    // let accounts = ref(null);
+    // const sumAccounts = sum(props.bankAccounts);
+    // const logBA = () => {
+    // onMounted(() => {
+    let overviewTotal = ref(null);
+    let lastTXR = ref(null);
+    onBeforeUpdate(() => {
+      sum(props.bankAccounts);
+      overviewTotal.value = sum(props.bankAccounts);
+      lastTXR.value = props.lastTX;
+      console.log(props.lastTX);
+      console.log(lastTXR.value);
+      // accounts = this.bankAccounts;
+      // console.log(props);
+      // console.log(props.bankAccounts);
+    });
+    // watch(props.bankAccounts, () => {
+    // logBA();
+    // });
+
+    return {
+      overviewTotal,
+      lastTXR,
+    };
   },
 });
 </script>

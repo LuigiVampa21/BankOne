@@ -19,7 +19,7 @@
           </ion-avatar>
           <ion-label>
             <ion-text class="ion-margin-start ion-text-capitalize">
-              hello {{ currentUser.username }}
+              hello {{ currentUser?.username }}
             </ion-text>
           </ion-label>
         </ion-item>
@@ -32,6 +32,8 @@
             <!-- HomeOverview -->
 
             <HomeOverview :lastTX="lastTX" :bankAccounts="bankAccounts" />
+
+            <!-- :overview="overview" -->
 
             <!-- HomeCards -->
 
@@ -83,6 +85,8 @@ import { storeToRefs } from "pinia";
 import {
   // reactive,
   onMounted,
+  // onBeforeMount,
+  // ref,
 } from "vue";
 import {
   IonPage,
@@ -136,7 +140,6 @@ export default {
     const router = useRouter();
     const ionRouter = useIonRouter();
     // const overview = reactive({
-    //   username: null,
     //   lastTx: null,
     //   accounts: null,
     // });
@@ -144,6 +147,8 @@ export default {
     const overviewStore = useOverviewStore();
     // Those will needs to be passed as arguments to components
     const { lastTX, bankAccounts } = storeToRefs(overviewStore);
+    // let lastTXRef = ref(null);
+    // let bankAccountsRef = ref(null);
     const { isAuth, currentUser } = storeToRefs(authStore);
     const logout = async () => {
       console.log("logout HOME PAGE");
@@ -156,8 +161,16 @@ export default {
     const navigateToLoginPage = () => {
       ionRouter.navigate("/login", "backward", "replace");
     };
+    // onBeforeMount(async () => {
+    //   await overviewStore.getOverview();
+    // });
     onMounted(async () => {
+      // onMounted(() => {
       await overviewStore.getOverview();
+
+      // overview.accounts = bankAccounts.value;
+      // overview.lastTx = lastTX.value;
+      // console.log(overview);
     });
     return {
       ellipsisHorizontalOutline,
@@ -170,8 +183,8 @@ export default {
       currentUser,
       lastTX,
       bankAccounts,
-      logout,
       // overview,
+      logout,
     };
   },
 };
