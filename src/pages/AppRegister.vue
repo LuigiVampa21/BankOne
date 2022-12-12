@@ -292,7 +292,7 @@ export default defineComponent({
            navigateToLoginPage();
           }
         // }
-        if(errorAPIMessage.value){
+        else if(errorAPIMessage.value){
           await registerToast(errorAPIMessage.value, 'danger');
         }
       }

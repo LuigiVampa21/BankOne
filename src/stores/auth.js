@@ -73,7 +73,12 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   const handleLogout = async () => {
-    console.log("logout AUTHSTORE");
+    currentToken.value = await getFromStorage("token");
+    await axios.get(process.env.VUE_APP_ROOT_API + '/auth/logout', {
+      headers: {
+        authorization: `Bearer ${currentToken.value}`,
+      },
+    })
     currentUser.value = null;
     currentToken.value = "";
     isAuth.value = false;

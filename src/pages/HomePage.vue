@@ -9,6 +9,8 @@
             >
           </ion-button>
         </ion-row>
+        <ion-row class='ion-justify-content-between'>
+
         <ion-item color="primary" class="ion-margin-start ion-margin-bottom">
           <ion-avatar>
             <img
@@ -23,6 +25,7 @@
             </ion-text>
           </ion-label>
         </ion-item>
+        </ion-row>
         <ion-grid>
           <ion-row>
             <!-- HOME HEADER -->
@@ -52,7 +55,7 @@
 
             <!--  WALLETS  -->
 
-            <HomeWallet router-link="/wallet" />
+            <HomeWallet :accounts="bankAccounts" router-link="/wallet" />
 
             <ion-grid>
               <ion-row
@@ -151,7 +154,6 @@ export default {
     // let bankAccountsRef = ref(null);
     const { isAuth, currentUser } = storeToRefs(authStore);
     const logout = async () => {
-      console.log("logout HOME PAGE");
       await authStore.handleLogout();
       if (!isAuth.value) {
         console.log(isAuth.value);
@@ -161,16 +163,8 @@ export default {
     const navigateToLoginPage = () => {
       ionRouter.navigate("/login", "backward", "replace");
     };
-    // onBeforeMount(async () => {
-    //   await overviewStore.getOverview();
-    // });
     onMounted(async () => {
-      // onMounted(() => {
       await overviewStore.getOverview();
-
-      // overview.accounts = bankAccounts.value;
-      // overview.lastTx = lastTX.value;
-      // console.log(overview);
     });
     return {
       ellipsisHorizontalOutline,

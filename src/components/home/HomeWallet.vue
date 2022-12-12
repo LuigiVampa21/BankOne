@@ -15,71 +15,41 @@
       <ion-text color="medium" class="ion-margin-start">Total</ion-text>
       <ion-text class="ion-margin-start wallet-total-amount">25 780 €</ion-text>
     </ion-row>
-    <ion-row
-      class="ion-margin-top ion-padding-top ion-justify-content-between ion-align-items-center"
-    >
-      <ion-item color="secondary">
-        <ion-avatar slot="start" class="sibling-avatar">
-          <img
-            alt="Silhouette of a person's head"
-            src="https://ionicframework.com/docs/img/demos/avatar.svg"
-          />
-        </ion-avatar>
-        <ion-label>Checking</ion-label>
-      </ion-item>
-      <ion-text class="ion-margin-end">2350 €</ion-text>
-    </ion-row>
-    <ion-row
-      class="ion-margin-top ion-justify-content-between ion-align-items-center"
-    >
-      <ion-item color="secondary">
-        <ion-avatar slot="start" class="sibling-avatar">
-          <img
-            alt="Silhouette of a person's head"
-            src="https://ionicframework.com/docs/img/demos/avatar.svg"
-          />
-        </ion-avatar>
-        <ion-label>Saving</ion-label>
-      </ion-item>
-      <ion-text class="ion-margin-end">12 350 €</ion-text>
-    </ion-row>
-    <ion-row
-      class="ion-margin-top ion-justify-content-between ion-align-items-center ion-padding-bottom"
-    >
-      <ion-item color="secondary">
-        <ion-avatar slot="start" class="sibling-avatar">
-          <img
-            alt="Silhouette of a person's head"
-            src="https://ionicframework.com/docs/img/demos/avatar.svg"
-          />
-        </ion-avatar>
-        <ion-label>Investments</ion-label>
-      </ion-item>
-      <ion-text class="ion-margin-end">11 080 €</ion-text>
-    </ion-row>
+
+    <HomeWalletRow v-for="account in accountsOrder" :key="account.id" :account="account" />
+
   </ion-card>
 </template>
 
 <script>
+import HomeWalletRow from "./HomeWalletRow.vue"
+import order from '../../utils/home/order'
 import {
-  IonAvatar,
   IonCard,
   IonCardTitle,
-  IonItem,
-  IonLabel,
   IonText,
   IonRow,
 } from "@ionic/vue";
+import {ref, onUpdated} from "vue";
 export default {
   components: {
-    IonAvatar,
-    IonItem,
-    IonLabel,
     IonText,
     IonRow,
     IonCard,
     IonCardTitle,
+    HomeWalletRow,
   },
+  props:["accounts"],
+  setup(props){
+    let accountsOrder = ref(null)
+    onUpdated( () => {
+      accountsOrder.value = order(props.accounts);
+      console.log(accountsOrder.value);
+    });
+    return{
+  accountsOrder
+    }
+  }
 };
 </script>
 
