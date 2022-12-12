@@ -21,8 +21,6 @@ export default {
       await authStore.getUser();
       // const token = await authStore.getFromStorage("token");
       // const user = await authStore.getFromStorage("userID");
-      // console.log(token, 'APP VUE');
-      // console.log(user, 'APP VUE');
     });
   },
 };

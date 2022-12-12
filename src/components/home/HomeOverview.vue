@@ -58,7 +58,8 @@ import {
   IonRow,
   IonCol,
 } from "@ionic/vue";
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   components: {
     IonAvatar,
     IonItem,
@@ -68,7 +69,11 @@ export default {
     IonCard,
     IonCardTitle,
   },
-};
+  props: ["bankAccounts", "lastTX"],
+  setup() {
+    return {};
+  },
+});
 </script>
 
 <style scoped>

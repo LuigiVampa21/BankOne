@@ -18,7 +18,9 @@
             />
           </ion-avatar>
           <ion-label>
-            <ion-text class="ion-margin-start"> Hello Luigi </ion-text>
+            <ion-text class="ion-margin-start ion-text-capitalize">
+              hello {{ currentUser.username }}
+            </ion-text>
           </ion-label>
         </ion-item>
         <ion-grid>
@@ -29,7 +31,7 @@
             </div>
             <!-- HomeOverview -->
 
-            <HomeOverview />
+            <HomeOverview :lastTX="lastTX" :bankAccounts="bankAccounts" />
 
             <!-- HomeCards -->
 
@@ -141,14 +143,15 @@ export default {
     const authStore = useAuthStore();
     const overviewStore = useOverviewStore();
     // Those will needs to be passed as arguments to components
-    const { username, lastTx, accounts } = storeToRefs(overviewStore);
-    // const { isAuth } = storeToRefs(authStore);
+    const { lastTX, bankAccounts } = storeToRefs(overviewStore);
+    const { isAuth, currentUser } = storeToRefs(authStore);
     const logout = async () => {
       console.log("logout HOME PAGE");
       await authStore.handleLogout();
-      // if (!isAuth) {
-      navigateToLoginPage();
-      // }
+      if (!isAuth.value) {
+        console.log(isAuth.value);
+        navigateToLoginPage();
+      }
     };
     const navigateToLoginPage = () => {
       ionRouter.navigate("/login", "backward", "replace");
@@ -164,9 +167,9 @@ export default {
       homeDocuments,
       homeInvestments,
       router,
-      username,
-      lastTx,
-      accounts,
+      currentUser,
+      lastTX,
+      bankAccounts,
       logout,
       // overview,
     };

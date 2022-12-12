@@ -32,7 +32,6 @@ export const useAuthStore = defineStore("auth", () => {
         username: user.first_name,
         id: user.id,
       };
-      console.log(currentUser.value, "authStoreJS");
       currentToken.value = token;
       isAuth.value = true;
       await setToStorage("token", token);
@@ -55,7 +54,6 @@ export const useAuthStore = defineStore("auth", () => {
       phone,
     } = credentials;
     try {
-      //  const response = await axios.post(
       await axios.post(process.env.VUE_APP_ROOT_API + "/auth/register", {
         firstName: firstName.toLowerCase(),
         lastName: lastName.toLowerCase(),
@@ -90,8 +88,14 @@ export const useAuthStore = defineStore("auth", () => {
     const response = await axios.get(
       process.env.VUE_APP_ROOT_API + "/users/" + id
     );
-    // currentUser.value = response.user;
-    console.log(response);
+    const { user } = response.data;
+    currentUser.value = {
+      username: user.first_name,
+      id: user.id,
+    };
+    if (currentUser.value.id) {
+      isAuth.value = true;
+    }
   };
 
   const setToStorage = async (key, value) => {
@@ -99,7 +103,6 @@ export const useAuthStore = defineStore("auth", () => {
   };
   const getFromStorage = async key => {
     const dataStorage = await ionicStorage.get(key);
-    console.log(dataStorage, "AuthStore");
     return dataStorage;
   };
   const removeFromStorage = async key => {
