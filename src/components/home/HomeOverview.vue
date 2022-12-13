@@ -25,7 +25,7 @@
         <h6>Transactions</h6>
       </ion-text>
       <ion-text class="ion-margin-end" color="tertiary">
-        <h6>See All</h6>
+        <h6 @click="() => router.push('/transactions')">See All</h6>
       </ion-text>
     </ion-row>
     <ion-card-content class="ion-justify-content-center">
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+ import { useRouter } from "vue-router";
 import sum from "../../utils/home/computor";
 import {
   IonAvatar,
@@ -66,11 +67,8 @@ import {
 } from "@ionic/vue";
 import {
   defineComponent,
-  // onMounted,
   onBeforeUpdate,
-  // watch,
   ref,
-  // toRefs,
 } from "vue";
 export default defineComponent({
   components: {
@@ -83,18 +81,8 @@ export default defineComponent({
     IonCardTitle,
   },
   props: ["bankAccounts", "lastTX", "beneficiary"],
-  // props: ["overview"],
-  // props: {
-  //   bankAccounts: Array,
-  //   lastTX: Object,
-  // },
-  // setup(props) {
   setup(props) {
-    // const { accounts } = toRefs(props);
-    // let accounts = ref(null);
-    // const sumAccounts = sum(props.bankAccounts);
-    // const logBA = () => {
-    // onMounted(() => {
+    const router = useRouter();
     let overviewTotal = ref(null);
     let lastTXR = ref(null);
     let beneficiaryR = ref('');
@@ -105,14 +93,11 @@ export default defineComponent({
       beneficiaryR = props.beneficiary;
       console.log(props.lastTX);
     });
-    // watch(props.bankAccounts, () => {
-    // logBA();
-    // });
-
     return {
       overviewTotal,
       lastTXR,
       beneficiaryR,
+      router
     };
   },
 });

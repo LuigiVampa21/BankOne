@@ -25,7 +25,7 @@
 <script>
 import {onMounted, onUpdated, ref} from 'vue'
 import { useTxStore } from "../stores/transactions"
-import {storeToRefs} from "pinia"
+import { storeToRefs } from "pinia"
 
 import TransactionSearchBar from "@/components/transactions/TransactionSearchBar.vue";
 
@@ -51,7 +51,6 @@ export default {
     })
     onUpdated(() => {
       allTxsR.value = transactions;
-      // console.log(allTxsR.value);
     })
     return {
       Income,

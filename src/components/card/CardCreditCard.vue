@@ -6,14 +6,14 @@
     <ion-row class="ion-margin-start">
       <div class="chip"></div>
     </ion-row>
-    <ion-row class="ion-margin-start">
-      <ion-text> <h2>**** **** **** ****</h2> </ion-text>
+    <ion-row class="ion-margin-start ion-margin-end">
+      <ion-text> <h3>* * * *  &nbsp;&nbsp; * * * * &nbsp;&nbsp; * * * * &nbsp;&nbsp; * * * *</h3> </ion-text>
     </ion-row>
     <ion-row>
       <ion-text class="ion-margin-start">
         <div class="expiry-container">
           <h6>EXPIRY DATE</h6>
-          <span class="date">**/**</span>
+          <span class="date">* * / * *</span>
         </div>
       </ion-text>
     </ion-row>
@@ -22,7 +22,7 @@
     >
       <h6 class="card-holder-title">CARD HOLDER</h6>
       <ion-text class="card-holder-name ion-margin-end">
-        ****** ******
+        * * * * * &nbsp;&nbsp;  * * * * *
       </ion-text>
       <ion-text class="card-holder-logo"> VISA </ion-text>
     </ion-row>
@@ -38,6 +38,10 @@ export default defineComponent({
     IonRow,
     IonText,
   },
+  props: ['cards'],
+  // setup(props){
+  //   console.log(props.cards);
+  // }
 });
 </script>
 
