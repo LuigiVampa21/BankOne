@@ -43,10 +43,10 @@
           <ion-text class="ion-text-capitalize"
             >{{ lastTXR?.type }} transfer</ion-text
           >
-          <ion-text color="medium"><h6>M. DOE John</h6></ion-text>
+          <ion-text color="medium" class="ion-text-uppercase"><h6>M. {{ beneficiary }}</h6></ion-text>
         </div>
         <ion-row class="tx-amount ion-justify-content-end">
-          <ion-text color="success">+ 450€</ion-text>
+          <ion-text :color="lastTXR?.inflow ? 'success' : 'danger'"> {{lastTXR?.inflow ? '+' : '-'}} {{lastTXR?.amount}}€</ion-text> 
         </ion-row>
       </ion-row>
     </ion-card-content>
@@ -82,7 +82,7 @@ export default defineComponent({
     IonCard,
     IonCardTitle,
   },
-  props: ["bankAccounts", "lastTX"],
+  props: ["bankAccounts", "lastTX", "beneficiary"],
   // props: ["overview"],
   // props: {
   //   bankAccounts: Array,
@@ -97,12 +97,12 @@ export default defineComponent({
     // onMounted(() => {
     let overviewTotal = ref(null);
     let lastTXR = ref(null);
+    let beneficiaryR = ref('');
     onBeforeUpdate(() => {
       sum(props.bankAccounts);
       overviewTotal.value = sum(props.bankAccounts);
       lastTXR.value = props.lastTX;
-      // accounts = this.bankAccounts;
-      // console.log(props);
+      beneficiaryR = props.beneficiary;
       console.log(props.lastTX);
     });
     // watch(props.bankAccounts, () => {
@@ -112,6 +112,7 @@ export default defineComponent({
     return {
       overviewTotal,
       lastTXR,
+      beneficiaryR,
     };
   },
 });

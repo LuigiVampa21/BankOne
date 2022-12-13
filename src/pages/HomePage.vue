@@ -34,7 +34,7 @@
             </div>
             <!-- HomeOverview -->
 
-            <HomeOverview :lastTX="lastTX" :bankAccounts="bankAccounts" />
+            <HomeOverview :lastTX="lastTX" :bankAccounts="bankAccounts" :beneficiary="beneficiary"/>
 
             <!-- :overview="overview" -->
 
@@ -149,7 +149,7 @@ export default {
     const authStore = useAuthStore();
     const overviewStore = useOverviewStore();
     // Those will needs to be passed as arguments to components
-    const { lastTX, bankAccounts } = storeToRefs(overviewStore);
+    const { lastTX, bankAccounts, beneficiary } = storeToRefs(overviewStore);
     // let lastTXRef = ref(null);
     // let bankAccountsRef = ref(null);
     const { isAuth, currentUser } = storeToRefs(authStore);
@@ -177,6 +177,7 @@ export default {
       currentUser,
       lastTX,
       bankAccounts,
+      beneficiary,
       // overview,
       logout,
     };

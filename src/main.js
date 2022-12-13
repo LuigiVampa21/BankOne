@@ -31,6 +31,7 @@ import "./theme/core.css";
 import BaseLayout from "@/components/base/BaseLayout.vue";
 import BaseCard from "@/components/base/BaseCard.vue";
 import BaseAvatar from "@/components/base/BaseAvatar.vue";
+import BaseItemRow from "@/components/base/BaseItemRow.vue";
 
 const app = createApp(App).use(IonicVue).use(createPinia()).use(router);
 
@@ -38,6 +39,7 @@ const app = createApp(App).use(IonicVue).use(createPinia()).use(router);
 app.component("base-layout", BaseLayout);
 app.component("base-card", BaseCard);
 app.component("base-avatar", BaseAvatar);
+app.component("base-item-row", BaseItemRow);
 
 router.isReady().then(() => {
   app.mount("#app");

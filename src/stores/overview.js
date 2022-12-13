@@ -11,6 +11,7 @@ export const useOverviewStore = defineStore("overview", () => {
   let allTxs = ref(null);
   let lastTX = ref(null);
   let loading = ref(false);
+  let beneficiary = ref('');
   // const knownAccounts = ref(null);
 
   const getOverview = async () => {
@@ -25,9 +26,10 @@ export const useOverviewStore = defineStore("overview", () => {
           },
         }
         );
-        const { accounts, lastTransaction } = response.data;
+        const { accounts, lastTx, beneficiaryName } = response.data;
         bankAccounts.value = accounts;
-        lastTX.value = lastTransaction;
+        lastTX.value = lastTx;
+        beneficiary.value = beneficiaryName
         loading.value = false;
       } catch (err) {
         console.error(err);
@@ -45,6 +47,7 @@ export const useOverviewStore = defineStore("overview", () => {
     allTxs,
     lastTX,
     loading,
+    beneficiary,
     getOverview,
   };
 });
