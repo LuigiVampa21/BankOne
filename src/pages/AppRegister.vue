@@ -7,6 +7,7 @@
             Sign in
           </ion-buttons>
         </ion-row>
+        <ion-progress-bar v-if="loading" type="indeterminate" color="success"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -193,6 +194,7 @@ import {
   IonCheckbox,
   IonItem,
   toastController,
+  IonProgressBar,
   useIonRouter,
 } from "@ionic/vue";
 
@@ -251,6 +253,7 @@ export default defineComponent({
     IonLabel,
     IonCheckbox,
     IonItem,
+    IonProgressBar,
   },
   setup() {
     const registerForm = useForm({
@@ -272,8 +275,7 @@ export default defineComponent({
 
     const ionRouter = useIonRouter();
     const authStore = useAuthStore();
-    const {registerSuccess, errorAPIMessage,
-      // loading
+    const {registerSuccess, errorAPIMessage, loading
      } = storeToRefs(authStore);
 
     const sendRegister = async () => {
@@ -346,6 +348,7 @@ export default defineComponent({
       value,
       checkboxError,
       // tos,
+      loading,
       errors: useFormErrors(),
       sendRegister,
       showCred

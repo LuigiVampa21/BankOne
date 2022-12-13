@@ -44,6 +44,7 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   const handleRegister = async credentials => {
+    loading.value = true;
     const {
       birthDate,
       confirmPassword,
@@ -73,6 +74,7 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   const handleLogout = async () => {
+    loading.value = true;
     currentToken.value = await getFromStorage("token");
     await axios.get(process.env.VUE_APP_ROOT_API + '/auth/logout', {
       headers: {
@@ -84,6 +86,7 @@ export const useAuthStore = defineStore("auth", () => {
     isAuth.value = false;
     removeFromStorage("token");
     removeFromStorage("userID");
+    loading.value = false;
   };
 
   const getUser = async () => {
@@ -101,6 +104,7 @@ export const useAuthStore = defineStore("auth", () => {
     if (currentUser.value.id) {
       isAuth.value = true;
     }
+    loadingUser.value = false;
   };
 
   const setToStorage = async (key, value) => {

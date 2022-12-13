@@ -7,6 +7,7 @@
             Sign up
           </ion-buttons>
         </ion-row>
+        <ion-progress-bar v-if="loading" type="indeterminate" color="success"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -116,6 +117,7 @@ import {
   IonText,
   IonCol,
   useIonRouter,
+  IonProgressBar,
   toastController
 } from "@ionic/vue";
 
@@ -147,6 +149,7 @@ export default defineComponent({
     IonRow,
     IonText,
     IonCol,
+    IonProgressBar, 
   },
   setup(){
     const loginForm = useForm({
@@ -155,7 +158,7 @@ export default defineComponent({
     const ionRouter = useIonRouter();
     const authStore = useAuthStore();
     const {currentUser, errorAPIMessage,
-      //  loading
+       loading
     } = storeToRefs(authStore)
     const sendLogin = async() => {
       try{
@@ -196,6 +199,7 @@ export default defineComponent({
       password,
       errors: useFormErrors(),
       sendLogin,
+      loading
     }
   }
 });

@@ -101,11 +101,9 @@ export default defineComponent({
       sum(props.bankAccounts);
       overviewTotal.value = sum(props.bankAccounts);
       lastTXR.value = props.lastTX;
-      console.log(props.lastTX);
-      console.log(lastTXR.value);
       // accounts = this.bankAccounts;
       // console.log(props);
-      // console.log(props.bankAccounts);
+      console.log(props.lastTX);
     });
     // watch(props.bankAccounts, () => {
     // logBA();

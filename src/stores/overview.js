@@ -10,11 +10,11 @@ export const useOverviewStore = defineStore("overview", () => {
   let bankAccounts = ref(null);
   let allTxs = ref(null);
   let lastTX = ref(null);
-  let overviewLoading = ref(false);
   let loading = ref(false);
   // const knownAccounts = ref(null);
 
   const getOverview = async () => {
+    loading.value = true;
     try {
       token.value = await authStore.getFromStorage("token");
       const response = await axios.get(
@@ -24,14 +24,18 @@ export const useOverviewStore = defineStore("overview", () => {
             authorization: `Bearer ${token.value}`,
           },
         }
-      );
-      const { accounts, lastTransaction } = response.data;
-      bankAccounts.value = accounts;
-      lastTX.value = lastTransaction;
-    } catch (err) {
-      console.error(err);
+        );
+        const { accounts, lastTransaction } = response.data;
+        bankAccounts.value = accounts;
+        lastTX.value = lastTransaction;
+        loading.value = false;
+      } catch (err) {
+        console.error(err);
+        loading.value = false;
     }
   };
+
+  // maybe stock id of accounts into storage that would avoid that make request every time user wants to reload to another component
 
   // const ionicOverviewStorage = new Storage();
   // ionicOverviewStorage.create();
@@ -40,7 +44,6 @@ export const useOverviewStore = defineStore("overview", () => {
     bankAccounts,
     allTxs,
     lastTX,
-    overviewLoading,
     loading,
     getOverview,
   };

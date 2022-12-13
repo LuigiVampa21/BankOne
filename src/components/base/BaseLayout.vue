@@ -8,6 +8,7 @@
             color="medium"
           ></ion-back-button>
         </ion-buttons>
+        <ion-progress-bar v-if="loading || loadingUser" type="indeterminate" color="success"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -50,11 +51,15 @@ import {
   IonButtons,
   IonPage,
   IonToolbar,
+  IonProgressBar
 } from "@ionic/vue";
 import { settings } from "ionicons/icons";
 import { swapHorizontal } from "ionicons/icons";
 import { home } from "ionicons/icons";
 import { useRouter } from "vue-router";
+import {useAuthStore} from "../../stores/auth"
+import {useOverviewStore} from "../../stores/overview"
+import {storeToRefs} from "pinia";
 
 export default {
   name: "HomePage",
@@ -66,14 +71,21 @@ export default {
     IonBackButton,
     IonButtons,
     IonToolbar,
+    IonProgressBar
   },
   setup() {
     const router = useRouter();
+    const authStore = useAuthStore();
+    const overviewStore = useOverviewStore();
+    const {loadingUser} = storeToRefs(authStore);
+    const {loading} = storeToRefs(overviewStore)
     return {
       settings,
       swapHorizontal,
       home,
       router,
+      loadingUser,
+      loading
     };
   },
   methods: {},

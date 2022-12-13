@@ -44,7 +44,6 @@ export default {
     let accountsOrder = ref(null)
     onUpdated( () => {
       accountsOrder.value = order(props.accounts);
-      console.log(accountsOrder.value);
     });
     return{
   accountsOrder
