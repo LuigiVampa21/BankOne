@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Transactions'" :backLink="'/home'">
+    <base-layout :title="'Transactions'" :loading="loading" :backLink="'/home'">
       <ion-row class="ion-justify-content-end ion-margin-bottom">
         <ion-button
           color="tertiary"
@@ -14,16 +14,6 @@
         <ion-row class="ion-justify-content-center">
           <ion-row class="ion-margin-bottom"> <TransactionSearchBar /></ion-row>
           <ion-row class="transactions-container" v-if="allTxsR">
-            <!-- <TransactionCard :data="Income" />
-            <TransactionCard :data="Outcome" />
-            <TransactionCard :data="Income" />
-            <TransactionCard :data="Outcome" />
-            <TransactionCard :data="Income" />
-            <TransactionCard :data="Outcome" />
-            <TransactionCard :data="Income" />
-            <TransactionCard :data="Outcome" /> -->
-
-            <!-- <base-item-row v-for="tx in allTxsR" :key="tx?.id" :tx="tx"></base-item-row> -->
             <base-item-row :tx="allTxsR.value"></base-item-row>
           </ion-row>
         </ion-row>
@@ -38,7 +28,6 @@ import { useTxStore } from "../stores/transactions"
 import {storeToRefs} from "pinia"
 
 import TransactionSearchBar from "@/components/transactions/TransactionSearchBar.vue";
-// import TransactionCard from "@/components/transactions/TransactionCard.vue";
 
 import Income from "../utils/transaction/income";
 import Outcome from "../utils/transaction/outcome";
@@ -48,7 +37,6 @@ import { useRouter } from "vue-router";
 export default {
   components: {
     TransactionSearchBar,
-    // TransactionCard,
     IonPage,
     IonRow,
     IonGrid,
@@ -56,7 +44,7 @@ export default {
   setup() {
     const router = useRouter();
     const txStore = useTxStore();
-    const {transactions} = storeToRefs(txStore);
+    const {transactions, loading} = storeToRefs(txStore);
     let allTxsR = ref(null);
     onMounted(() => {
      txStore.getAllTxs()
@@ -69,7 +57,8 @@ export default {
       Income,
       Outcome,
       router,
-      allTxsR
+      allTxsR,
+      loading
     };
   },
 };

@@ -8,7 +8,7 @@
           <ion-text class="ion-text-capitalize"
             >{{ txI?.type }} transfer</ion-text
           >
-          <ion-text color="medium" class="ion-text-uppercase"><h6>M. {{ beneficiary }}</h6></ion-text>
+          <ion-text color="medium" class="ion-text-uppercase"><h6>M. {{ txI.beneficiary_name }}</h6></ion-text>
         </div>
         <ion-row class="tx-amount ion-justify-content-end">
           <ion-text :color="txI?.inflow ? 'success' : 'danger'"> {{txI?.inflow ? '+' : '-'}} {{txI?.amount}}€</ion-text> 
