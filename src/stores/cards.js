@@ -30,6 +30,7 @@ export const useCardStore = defineStore("card", () => {
         }
         if(card.length === 1){
           card.push(custormCard.secondCard)
+          hasSecondCard.value= false
         }
         cards.value = card;
         loading.value = false;
