@@ -14,7 +14,8 @@
           <!-- <CardCreditCard :cards="cardsR[0]" class="ion-margin-end" />
           <CardCreditCard :cards="cardsR[1]" class="ion-margin-end" /> -->
 
-  <CardCreditCard v-for="card in arrayCard.value" :key="card?.id" :card="card" />
+  <CardCreditCard v-for="card in arrayCard.value" :key="card?.id" :card="card" :showDetails="showCardDetails" />
+  <!-- <CardCreditCard v-for="card in arrayCard.value" :key="card?.id" :card="card" :showDetails="showCardDetails" /> -->
   <!-- <CardCreditCard :arrayCard="arrayCard"/> -->
 
 
@@ -28,7 +29,9 @@
         <ion-row
           class="ion-justify-content-center ion-padding-top ion-margin-top"
         >
-          <CardOptions v-for="detail in detailArrayF" :key="detail.text" :data="detail"/>
+          <CardOptions v-for="detail in cardOpts" :key="detail.text" :data="detail" @optChange="setOpts"
+          />
+           <!-- @setValues="initOpt" -->
         </ion-row>
       </ion-grid>
     </base-layout>
@@ -36,7 +39,9 @@
 </template>
 
 <script>
-import { onMounted, onUpdated, ref, defineComponent  } from 'vue'
+import { onMounted, onUpdated, ref, defineComponent, 
+// reactive 
+} from 'vue'
 
 import { useCardStore } from "../stores/cards";
 import { storeToRefs } from "pinia";
@@ -63,32 +68,47 @@ export default defineComponent({
     const cardStore = useCardStore();
     const {cards, loading, hasSecondCard} = storeToRefs(cardStore);
     let arrayCard = ref([]);
-    // let details = ref(false);
-    // let insurances = ref(false);
-    // let hasPhysicalCard = ref()
+    let cardOpts = ref(null);
+    let showCardDetails = ref(false);
+    // let cardSetOpts = reactive({
+    //   detail: null,
+    //   insurance: null,
+    //   physicalCard: null
+    // })
 
   onMounted(async () => {
     await cardStore.getAllCards()
-    hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value)
+    cardOpts.value = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value);
+    // console.log(cardOpts.value);
   })
   onUpdated(() => {
     arrayCard.value = cards
-    // hasPhysicalCard.value = hasSecondCard;
-
     })
-    // hasPhysicalCard.value = hasSecondCard.value;
-    // console.log(hasPhysicalCard);
-    // physicalCard.value = hasSecondCard.value
-    // console.log(physicalCard.value);
-    // const cardDetailF = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value)
-    // console.log(cardDetail);
+    // const logCardOpts = () => {
+    //   console.log(cardOpts.value);
+    // }
+
+  const setOpts = opt => {
+      console.log(opt.title, opt.mode);
+      for (const cardOpt of cardOpts.value){
+        if(opt.title == cardOpt.title){
+          cardOpt.mode = opt.mode
+        // logCardOpts()
+        if(opt.title === 'detail'){
+          showCardDetails.value = !showCardDetails.value
+        }
+        }
+      }
+    }
     return {
       cardDetail,
-      // cardDetailF,
+      cardOpts,
       arrayCard,
       loading,
       hasSecondCard,
-
+      setOpts,
+      // initOpt,
+      showCardDetails
     };
   },
 });

@@ -25,7 +25,6 @@ export const useCardStore = defineStore("card", () => {
         );
         const { card } = response.data;
         if(card.length > 1){
-          console.log('has 2 Cards');
           hasSecondCard.value = true
         }
         if(card.length === 1){
@@ -34,6 +33,7 @@ export const useCardStore = defineStore("card", () => {
         }
         cards.value = card;
         loading.value = false;
+        console.log(card);
       } catch (err) {
         console.error(err);
         loading.value = false;
