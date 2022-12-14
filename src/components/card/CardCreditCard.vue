@@ -31,17 +31,24 @@
 
 <script>
 import { IonRow, IonText } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 export default defineComponent({
   name: "CardCreditCard",
   components: {
     IonRow,
     IonText,
   },
-  props: ['cards'],
-  // setup(props){
-  //   console.log(props.cards);
-  // }
+  props: ['card'],
+  setup(props){
+    const cardR = ref(null);
+    onMounted(() => {
+      cardR.value = props.card; 
+      // console.log(cardR.value);
+    })
+    return{
+      cardR,
+    }
+  }
 });
 </script>
 

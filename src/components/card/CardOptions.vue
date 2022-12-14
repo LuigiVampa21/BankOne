@@ -1,28 +1,31 @@
 <template>
   <ion-card color="secondary" class="card-items">
-    <ion-row class="ion-justify-content-between">
-      <ion-text class="ion-padding">{{ data.text }}</ion-text>
-      <ion-icon class="ion-padding" :src="toggleOutline"></ion-icon>
+    <ion-row class="ion-justify-content-between detail-container">
+      <ion-text class="ion-padding text-detail">{{ data.text }}</ion-text>
+      <ion-toggle :checked="ok" class="toggle-detail"></ion-toggle>
     </ion-row>
   </ion-card>
 </template>
 
 <script>
-import { IonCard, IonText, IonRow, IonIcon } from "@ionic/vue";
+import { IonCard, IonText, IonRow, IonToggle } from "@ionic/vue";
 import { defineComponent } from "vue";
-import { toggleOutline } from "ionicons/icons";
 
 export default defineComponent({
   components: {
     IonText,
     IonRow,
     IonCard,
-    IonIcon,
+    IonToggle
   },
   props: ["data"],
-  setup() {
+  setup(props) {
+    const ok = true;
+    const no = false;
+    console.log(props.data);
     return {
-      toggleOutline,
+      ok,
+      no
     };
   },
 });
@@ -32,5 +35,21 @@ export default defineComponent({
 .card-items {
   height: 50px;
   width: 90%;
+}
+.text-detail{
+  font-size: 18px;
+}
+ion-toggle {
+  --background: var(--ion-color-primary);
+  --background-checked: var(--ion-color-tertiary);
+
+  --handle-background: var(--ion-color-tertiary);
+  --handle-background-checked: var(--ion-color-secondary);
+}
+.toggle-detail{
+  margin-right: 5px
+}
+.detail-container{
+  align-items: center;
 }
 </style>

@@ -1,16 +1,21 @@
 <template>
   <ion-page>
-    <base-layout :title="'Cards'" :backLink="'/home'">
+    <base-layout :title="'Cards'" :loading="loading" :backLink="'/home'">
       <ion-grid>
         <ion-row
-          class="ion-align-items-center ion-justify-content-around card-container"
-          v-if="cardsR"
+          class="ion-align-items-center ion-justify-content-center"
+          v-if="arrayCard"
                   >
+        <!-- <ion-row
+          class="ion-align-items-center ion-justify-content-around card-container"
+          v-if="arrayCard"
+                  > -->
 
           <!-- <CardCreditCard :cards="cardsR[0]" class="ion-margin-end" />
           <CardCreditCard :cards="cardsR[1]" class="ion-margin-end" /> -->
 
-  <CardCreditCard v-for="card in cardsR" :key="card?.id" :card="card" />
+  <CardCreditCard v-for="card in arrayCard.value" :key="card?.id" :card="card" />
+  <!-- <CardCreditCard :arrayCard="arrayCard"/> -->
 
 
         </ion-row>
@@ -23,9 +28,7 @@
         <ion-row
           class="ion-justify-content-center ion-padding-top ion-margin-top"
         >
-          <CardOptions :data="cardDetail" />
-          <CardOptions :data="cardInsurance" />
-          <CardOptions :data="cardUpgrade" />
+          <CardOptions v-for="detail in detailArrayF" :key="detail.text" :data="detail"/>
         </ion-row>
       </ion-grid>
     </base-layout>
@@ -33,25 +36,19 @@
 </template>
 
 <script>
+import { onMounted, onUpdated, ref, defineComponent  } from 'vue'
+
 import { useCardStore } from "../stores/cards";
 import { storeToRefs } from "pinia";
-// import { computed } from 'vue';
 
-import {
-  onMounted, 
-onUpdated, 
-ref} from 'vue'
 
 import { IonGrid, IonRow, IonPage } from "@ionic/vue";
-import { defineComponent } from "vue";
 
 import CardCreditCard from "@/components/card/CardCreditCard";
 import CardOptions from "@/components/card/CardOptions";
 
-// import customCard from "../utils/card/customCard"
 import cardDetail from "../utils/card/cardDetail";
-import cardInsurance from "../utils/card/cardInsurance";
-import cardUpgrade from "../utils/card/cardUpgrade";
+import hasSecondCardFn from "../utils/card/setSecondCard"
 
 export default defineComponent({
   name: "CardPage",
@@ -63,50 +60,35 @@ export default defineComponent({
     CardOptions,
   },
   setup() {
-    let cardsR = ref(null);
     const cardStore = useCardStore();
-    const {cards} = storeToRefs(cardStore);
-    // let arrayLength = ref(0);
-
+    const {cards, loading, hasSecondCard} = storeToRefs(cardStore);
+    let arrayCard = ref([]);
+    // let details = ref(false);
+    // let insurances = ref(false);
+    // let hasPhysicalCard = ref()
 
   onMounted(async () => {
     await cardStore.getAllCards()
+    hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value)
   })
   onUpdated(() => {
+    arrayCard.value = cards
+    // hasPhysicalCard.value = hasSecondCard;
 
-    cardsR.value = cards;
-
-    // const getCards = computed(() => {return cards.value});
-    // const getLength = computed(() => getCards.value.length === 1)
-    // cardsR.value = cards;
-    // arrayLength.value = getLength
-    // if(arrayLength.value){
-
-      // if true we need to add a second card to ask if the user wants to get a second card
-      // If not we'll just iterate through the cards
-      // cardsR.value.push(customCard.secondCard)
-      // [...cardsR.value, customCard.secondCard]
-
-    // }else{
-
-      // console.log(cardsR.value);
-    // }
-
-    // console.log(cardsR.value[0]);
-    // if(getLength.value < 2){
-    //   console.log('Hiiya');
-      // cardsR.value.push(customCard.secondCard)
-      // console.log(customCard.secondCard);
-    // }
-    
-    // console.log(cardsR.value);
-  })
-
+    })
+    // hasPhysicalCard.value = hasSecondCard.value;
+    // console.log(hasPhysicalCard);
+    // physicalCard.value = hasSecondCard.value
+    // console.log(physicalCard.value);
+    // const cardDetailF = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value)
+    // console.log(cardDetail);
     return {
       cardDetail,
-      cardInsurance,
-      cardUpgrade,
-      cardsR,
+      // cardDetailF,
+      arrayCard,
+      loading,
+      hasSecondCard,
+
     };
   },
 });
@@ -117,7 +99,8 @@ export default defineComponent({
   height: 40vh;
   /* display: flex; */
   /* flex-direction: row; */
-  width: 200vw;
+  /* width: 200vw; */
+  width: 100vw;
 
 }
 

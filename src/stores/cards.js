@@ -2,12 +2,14 @@ import { ref } from "vue";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { useAuthStore } from "./auth";
+import custormCard from "../utils/card/customCard"
 
 export const useCardStore = defineStore("card", () => {
   const authStore = useAuthStore();
   let token = ref("");
   let cards = ref(null);
   let loading = ref(false);
+  let hasSecondCard = ref(false);
 
   const getAllCards = async () => {
     loading.value = true;
@@ -22,7 +24,13 @@ export const useCardStore = defineStore("card", () => {
         }
         );
         const { card } = response.data;
-        // console.log(card);
+        if(card.length > 1){
+          console.log('has 2 Cards');
+          hasSecondCard.value = true
+        }
+        if(card.length === 1){
+          card.push(custormCard.secondCard)
+        }
         cards.value = card;
         loading.value = false;
       } catch (err) {
@@ -34,6 +42,7 @@ export const useCardStore = defineStore("card", () => {
   return {
     cards,
     loading,
+    hasSecondCard,
     getAllCards,
   };
 });

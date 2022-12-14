@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {onMounted, onUpdated, ref} from 'vue'
+import {onMounted, onUpdated, ref, defineComponent} from 'vue'
 import { useTxStore } from "../stores/transactions"
 import { storeToRefs } from "pinia"
 
@@ -34,7 +34,7 @@ import Outcome from "../utils/transaction/outcome";
 import { IonGrid, IonRow, IonPage } from "@ionic/vue";
 import { useRouter } from "vue-router";
 
-export default {
+export default defineComponent({
   components: {
     TransactionSearchBar,
     IonPage,
@@ -60,7 +60,7 @@ export default {
       loading
     };
   },
-};
+});
 </script>
 
 <style scoped>
