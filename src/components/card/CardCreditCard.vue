@@ -38,6 +38,7 @@
 <script>
 import { IonRow, IonText } from "@ionic/vue";
 import { defineComponent, ref, onMounted } from "vue";
+import { hasInsurancesFn } from "../../utils/card/setCardsOptions"
 import {formatter, dateFormatter} from "../../utils/card/formatCardNumbers";
 
 export default defineComponent({
@@ -47,12 +48,15 @@ export default defineComponent({
     IonText,
   },
   props: ['card', 'showDetails'],
-  setup(props){
+  setup(props, {emit}){
     let cardR = ref(null);
     onMounted(() => {
       cardR.value = props.card; 
       cardR.value.formattedCardNumbers = formatter(props.card.card_numbers);
       cardR.value.formattedDateNumbers = dateFormatter(props.card.expiration_date);
+      if(hasInsurancesFn(cardR.value)){
+        emit('initInsurances', cardR.value.type)
+      }
     })
     return{
       cardR,

@@ -9,6 +9,7 @@ export default {
     {  
         title: 'insurance', 
         text: 'insurances',
+        hasInsurances: null,
         mode: false,
     },
     {  

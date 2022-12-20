@@ -1,8 +1,8 @@
 <template>
-  <ion-card color="secondary" class="card-items">
+  <ion-card color="secondary" class="card-items" v-if="slide === 0">
     <ion-row class="ion-justify-content-between detail-container">
       <ion-text class="ion-padding text-detail ion-text-capitalize" v-model="opt.text">{{ data.text }}</ion-text>
-      <ion-toggle :checked="data.hasSecondCard" class="toggle-detail" @ionChange="emitChange" v-model="opt.mode"></ion-toggle>
+      <ion-toggle :checked="data.hasSecondCard || data.hasInsurances" class="toggle-detail" @ionChange="emitChange" v-model="opt.mode"></ion-toggle>
     </ion-row>
   </ion-card>
 </template>
@@ -20,13 +20,14 @@ export default defineComponent({
     IonCard,
     IonToggle
   },
-  props: ["data"],
+  props: ["data", "insurancesEnabled", "slide"],
   setup(props, {emit}) {
     const opt = reactive({
       title:null,
       text:null,
       mode:null,
     })
+    console.log(props.data);
     onMounted(() => {
       opt.title =  props.data.title;
       opt.text =  props.data.text;

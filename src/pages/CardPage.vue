@@ -4,34 +4,21 @@
       <ion-grid>
         <ion-row
           class="ion-align-items-center ion-justify-content-center"
-          v-if="arrayCard"
+          v-if="arrayCard.value"
                   >
-        <!-- <ion-row
-          class="ion-align-items-center ion-justify-content-around card-container"
-          v-if="arrayCard"
-                  > -->
+                  <ion-slides pager="true" ref="slider" @ionSlideDidChange="getSlide"	>
+                    <ion-slide v-for="card in arrayCard.value" :key="card?.id" class="card-item-slide">
+                      <CardCreditCard :card="card" :showDetails="showCardDetails" @initInsurances="receiveInsurance"/>
+                    </ion-slide>
 
-          <!-- <CardCreditCard :cards="cardsR[0]" class="ion-margin-end" />
-          <CardCreditCard :cards="cardsR[1]" class="ion-margin-end" /> -->
+                  </ion-slides>
 
-  <CardCreditCard v-for="card in arrayCard.value" :key="card?.id" :card="card" :showDetails="showCardDetails" />
-  <!-- <CardCreditCard v-for="card in arrayCard.value" :key="card?.id" :card="card" :showDetails="showCardDetails" /> -->
-  <!-- <CardCreditCard :arrayCard="arrayCard"/> -->
-
-
-        </ion-row>
-        <ion-row class="ion-justify-content-center row-card-container">
-          <div class="dot-container">
-            <div class="dot dot-1"></div>
-            <div class="dot dot-2"></div>
-          </div>
         </ion-row>
         <ion-row
           class="ion-justify-content-center ion-padding-top ion-margin-top"
         >
-          <CardOptions v-for="detail in cardOpts" :key="detail.text" :data="detail" @optChange="setOpts"
+          <CardOptions v-for="detail in cardOpts" :key="detail.text" :data="detail" @optChange="setOpts" :insurancesEnabled="insurancesEnabled" :slide="slide"
           />
-           <!-- @setValues="initOpt" -->
         </ion-row>
       </ion-grid>
     </base-layout>
@@ -47,13 +34,15 @@ import { useCardStore } from "../stores/cards";
 import { storeToRefs } from "pinia";
 
 
-import { IonGrid, IonRow, IonPage } from "@ionic/vue";
+import { IonGrid, IonRow, IonPage, IonSlides, IonSlide } from "@ionic/vue";
 
 import CardCreditCard from "@/components/card/CardCreditCard";
 import CardOptions from "@/components/card/CardOptions";
 
 import cardDetail from "../utils/card/cardDetail";
-import hasSecondCardFn from "../utils/card/setSecondCard"
+import {hasSecondCardFn, setInsurances
+  //  hasInsurancesFn
+} from "../utils/card/setCardsOptions"
 
 export default defineComponent({
   name: "CardPage",
@@ -63,13 +52,22 @@ export default defineComponent({
     IonRow,
     CardCreditCard,
     CardOptions,
+    IonSlides,
+    IonSlide
   },
   setup() {
+    const slider = ref(null);
+    const slide = ref(0)
     const cardStore = useCardStore();
     const {cards, loading, hasSecondCard} = storeToRefs(cardStore);
     let arrayCard = ref([]);
     let cardOpts = ref(null);
     let showCardDetails = ref(false);
+    let insurancesEnabled = ref(false);
+    const slideOpts = {
+      initialSlide: 1,
+      speed: 400
+    };
 
   onMounted(async () => {
     await cardStore.getAllCards()
@@ -89,6 +87,27 @@ export default defineComponent({
         }
       }
     }
+  const receiveInsurance = card => {
+    if(card === 'digital' && slide.value === 0){
+      insurancesEnabled.value = true;
+      // setInsurances()
+      // cardOpts.value = setInsurances(cardDetail.detailArray);
+      cardOpts.value = setInsurances(cardDetail.detailArray);
+      // console.log(cardOpts.value);
+    }
+    if(card === 'physical' && slide.value === 1){
+      insurancesEnabled.value = true;
+    }
+  }
+  const getSlide = async() => {
+      // const el = await slider.value.$el.getSwiper();
+      // console.log(el);
+      slide.value = await slider.value.$el.getActiveIndex();
+      // receiveInsurance();
+      // console.log(slide.value);
+  }
+  // async function getActiveIndex(index) {
+  // }
     return {
       cardDetail,
       cardOpts,
@@ -96,7 +115,12 @@ export default defineComponent({
       loading,
       hasSecondCard,
       setOpts,
-      showCardDetails
+      showCardDetails,
+      slideOpts,
+      receiveInsurance,
+      getSlide,
+      slider,
+      slide,
     };
   },
 });
@@ -105,9 +129,6 @@ export default defineComponent({
 <style scoped>
 .card-container {
   height: 40vh;
-  /* display: flex; */
-  /* flex-direction: row; */
-  /* width: 200vw; */
   width: 100vw;
 
 }
@@ -122,14 +143,11 @@ export default defineComponent({
   width: 30px;
 }
 
-.dot {
-  width: 8px;
-  height: 8px;
-  background: white;
-  border-radius: 50%;
+.card-item-slide{
+  margin-bottom: 50px
 }
-
-.dot-2 {
-  background: var(--ion-color-medium);
+ion-slides{
+  --bullet-background: var(--ion-color-medium);
+  --bullet-background-active:   var(--ion-color-tertiary);
 }
 </style>

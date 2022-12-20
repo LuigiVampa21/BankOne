@@ -33,7 +33,7 @@ export const useCardStore = defineStore("card", () => {
         }
         cards.value = card;
         loading.value = false;
-        console.log(card);
+        // console.log(card);
       } catch (err) {
         console.error(err);
         loading.value = false;
