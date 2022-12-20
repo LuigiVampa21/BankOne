@@ -91,7 +91,6 @@ export default defineComponent({
       overviewTotal.value = sum(props.bankAccounts);
       lastTXR.value = props.lastTX;
       beneficiaryR = props.beneficiary;
-      console.log(props.lastTX);
     });
     return {
       overviewTotal,

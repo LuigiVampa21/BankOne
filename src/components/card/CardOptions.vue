@@ -1,5 +1,6 @@
 <template>
-  <ion-card color="secondary" class="card-items" v-if="slide === 0">
+  <!-- <ion-card color="secondary" class="card-items" v-if="slide === 0"> -->
+  <ion-card color="secondary" class="card-items">
     <ion-row class="ion-justify-content-between detail-container">
       <ion-text class="ion-padding text-detail ion-text-capitalize" v-model="opt.text">{{ data.text }}</ion-text>
       <ion-toggle :checked="data.hasSecondCard || data.hasInsurances" class="toggle-detail" @ionChange="emitChange" v-model="opt.mode"></ion-toggle>
@@ -11,7 +12,9 @@
 import { IonCard, IonText, IonRow, IonToggle } from "@ionic/vue";
 import { defineComponent, reactive,
 //  ref, 
-onMounted } from "vue";
+onMounted,
+ onUpdated 
+} from "vue";
 
 export default defineComponent({
   components: {
@@ -27,11 +30,16 @@ export default defineComponent({
       text:null,
       mode:null,
     })
-    console.log(props.data);
     onMounted(() => {
       opt.title =  props.data.title;
       opt.text =  props.data.text;
-      opt.mode = props.data.hasSecondCard || false;
+      opt.mode = props.data.hasSecondCard || props.data.hasInsurances || false;
+      emit('setValues', opt)
+    })
+    onUpdated(() => {
+      opt.title =  props.data.title;
+      opt.text =  props.data.text;
+      opt.mode = props.data.hasSecondCard || props.data.hasInsurances || false;
       emit('setValues', opt)
     })
     const emitChange = () => {

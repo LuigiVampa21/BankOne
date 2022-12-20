@@ -35,6 +35,7 @@ import BaseItemRow from "@/components/base/BaseItemRow.vue";
 
 const app = createApp(App).use(IonicVue).use(createPinia()).use(router);
 
+app.config.warnHandler = () => null;
 
 app.component("base-layout", BaseLayout);
 app.component("base-card", BaseCard);

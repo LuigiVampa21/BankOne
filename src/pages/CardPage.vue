@@ -8,7 +8,7 @@
                   >
                   <ion-slides pager="true" ref="slider" @ionSlideDidChange="getSlide"	>
                     <ion-slide v-for="card in arrayCard.value" :key="card?.id" class="card-item-slide">
-                      <CardCreditCard :card="card" :showDetails="showCardDetails" @initInsurances="receiveInsurance"/>
+                      <CardCreditCard :card="card" :showDetails="showCardDetails"/>
                     </ion-slide>
 
                   </ion-slides>
@@ -17,7 +17,7 @@
         <ion-row
           class="ion-justify-content-center ion-padding-top ion-margin-top"
         >
-          <CardOptions v-for="detail in cardOpts" :key="detail.text" :data="detail" @optChange="setOpts" :insurancesEnabled="insurancesEnabled" :slide="slide"
+          <CardOptions v-for="detail in cardOpts" :key="detail.text" :data="detail" @optChange="setOpts" :slide="slide"
           />
         </ion-row>
       </ion-grid>
@@ -26,7 +26,10 @@
 </template>
 
 <script>
-import { onMounted, onUpdated, ref, defineComponent, 
+import { 
+  onMounted,
+   onUpdated, ref, defineComponent, onBeforeMount,
+  onUnmounted
 // reactive 
 } from 'vue'
 
@@ -40,7 +43,8 @@ import CardCreditCard from "@/components/card/CardCreditCard";
 import CardOptions from "@/components/card/CardOptions";
 
 import cardDetail from "../utils/card/cardDetail";
-import {hasSecondCardFn, setInsurances
+import {hasSecondCardFn, 
+   resetCardDetails,
   //  hasInsurancesFn
 } from "../utils/card/setCardsOptions"
 
@@ -59,24 +63,32 @@ export default defineComponent({
     const slider = ref(null);
     const slide = ref(0)
     const cardStore = useCardStore();
-    const {cards, loading, hasSecondCard} = storeToRefs(cardStore);
+    const {cards, loading, hasSecondCard, hasInsurances} = storeToRefs(cardStore);
     let arrayCard = ref([]);
     let cardOpts = ref(null);
     let showCardDetails = ref(false);
-    let insurancesEnabled = ref(false);
+    // let insurancesEnabled = ref(false);
     const slideOpts = {
       initialSlide: 1,
       speed: 400
     };
 
-  onMounted(async () => {
-    await cardStore.getAllCards()
-    cardOpts.value = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value);
+    onBeforeMount(async () => {
+      await cardStore.getAllCards();
+    })
+    onMounted(async () => {
+    await cardStore.getAllCards();
+    console.log(hasInsurances.value);
+    cardOpts.value = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value, hasInsurances.value);
   })
   onUpdated(() => {
-    arrayCard.value = cards
+    arrayCard.value = cards;
+    cardOpts.value = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value, hasInsurances.value);
     })
-
+  onUnmounted(() => {
+    cardOpts.value = resetCardDetails(cardDetail.detailArray);
+    hasInsurances.value = false;
+  })
   const setOpts = opt => {
       for (const cardOpt of cardOpts.value){
         if(opt.title == cardOpt.title){
@@ -87,37 +99,19 @@ export default defineComponent({
         }
       }
     }
-  const receiveInsurance = card => {
-    if(card === 'digital' && slide.value === 0){
-      insurancesEnabled.value = true;
-      // setInsurances()
-      // cardOpts.value = setInsurances(cardDetail.detailArray);
-      cardOpts.value = setInsurances(cardDetail.detailArray);
-      // console.log(cardOpts.value);
-    }
-    if(card === 'physical' && slide.value === 1){
-      insurancesEnabled.value = true;
-    }
-  }
   const getSlide = async() => {
-      // const el = await slider.value.$el.getSwiper();
-      // console.log(el);
       slide.value = await slider.value.$el.getActiveIndex();
-      // receiveInsurance();
-      // console.log(slide.value);
   }
-  // async function getActiveIndex(index) {
-  // }
     return {
       cardDetail,
       cardOpts,
       arrayCard,
       loading,
       hasSecondCard,
+      hasInsurances,
       setOpts,
       showCardDetails,
       slideOpts,
-      receiveInsurance,
       getSlide,
       slider,
       slide,

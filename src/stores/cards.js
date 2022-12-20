@@ -10,6 +10,7 @@ export const useCardStore = defineStore("card", () => {
   let cards = ref(null);
   let loading = ref(false);
   let hasSecondCard = ref(false);
+  let hasInsurances = ref(false);
 
   const getAllCards = async () => {
     loading.value = true;
@@ -24,16 +25,24 @@ export const useCardStore = defineStore("card", () => {
         }
         );
         const { card } = response.data;
+        console.log(card[0]);
         if(card.length > 1){
           hasSecondCard.value = true
         }
         if(card.length === 1){
           card.push(custormCard.secondCard)
-          hasSecondCard.value= false
+          hasSecondCard.value = false
+        }
+        if(card[0].insurances === true){
+          hasInsurances.value = true
+          console.log('hasIsurance');
+        }
+        if(card[0].insurances === false){
+          hasInsurances.value = false
+          console.log('hasNOTIsurance');
         }
         cards.value = card;
         loading.value = false;
-        // console.log(card);
       } catch (err) {
         console.error(err);
         loading.value = false;
@@ -45,6 +54,7 @@ export const useCardStore = defineStore("card", () => {
     cards,
     loading,
     hasSecondCard,
+    hasInsurances,
     getAllCards,
   };
 });

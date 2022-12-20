@@ -156,7 +156,6 @@ export default {
     const logout = async () => {
       await authStore.handleLogout();
       if (!isAuth.value) {
-        console.log(isAuth.value);
         navigateToLoginPage();
       }
     };
