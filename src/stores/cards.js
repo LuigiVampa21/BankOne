@@ -37,7 +37,8 @@ export const useCardStore = defineStore("card", () => {
       } catch (err) {
         console.error(err);
         loading.value = false;
-    }
+      }
+      loading.value = false;
   };
 
   return {

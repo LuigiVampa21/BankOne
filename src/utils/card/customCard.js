@@ -2,7 +2,7 @@ export default {
     secondCard: {
 
         BankAccountId: "",
-        card_numbers: "0000 0000 0000 0000",
+        card_numbers: "0000000000000000",
         createdAt: "2022-12-13T10:36:30.721Z",
         cvc: 999,
         deletedAt: null,

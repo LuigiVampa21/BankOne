@@ -67,7 +67,7 @@ export const useAuthStore = defineStore("auth", () => {
       registerSuccess.value = true;
       loading.value = false;
     } catch (err) {
-      console.log(err.response.data.message);
+      console.log(err);
       errorAPIMessage.value = err.response.data.message;
       loading.value = false;
     }

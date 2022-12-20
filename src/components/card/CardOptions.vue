@@ -23,8 +23,6 @@ export default defineComponent({
   props: ["data"],
   setup(props, {emit}) {
     const opt = reactive({
-      // text: ref(''),
-      // mode: ref(null)
       title:null,
       text:null,
       mode:null,
@@ -34,10 +32,8 @@ export default defineComponent({
       opt.text =  props.data.text;
       opt.mode = props.data.hasSecondCard || false;
       emit('setValues', opt)
-    // console.log(opt);
     })
     const emitChange = () => {
-      // console.log(opt);
       emit('optChange', opt)
     }
     return {

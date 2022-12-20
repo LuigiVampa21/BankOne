@@ -70,30 +70,19 @@ export default defineComponent({
     let arrayCard = ref([]);
     let cardOpts = ref(null);
     let showCardDetails = ref(false);
-    // let cardSetOpts = reactive({
-    //   detail: null,
-    //   insurance: null,
-    //   physicalCard: null
-    // })
 
   onMounted(async () => {
     await cardStore.getAllCards()
     cardOpts.value = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value);
-    // console.log(cardOpts.value);
   })
   onUpdated(() => {
     arrayCard.value = cards
     })
-    // const logCardOpts = () => {
-    //   console.log(cardOpts.value);
-    // }
 
   const setOpts = opt => {
-      console.log(opt.title, opt.mode);
       for (const cardOpt of cardOpts.value){
         if(opt.title == cardOpt.title){
           cardOpt.mode = opt.mode
-        // logCardOpts()
         if(opt.title === 'detail'){
           showCardDetails.value = !showCardDetails.value
         }
@@ -107,7 +96,6 @@ export default defineComponent({
       loading,
       hasSecondCard,
       setOpts,
-      // initOpt,
       showCardDetails
     };
   },
