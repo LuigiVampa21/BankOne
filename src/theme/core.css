@@ -75,6 +75,11 @@ ion-button.custom-1 {
   width: 100vw;
 }
 
+ion-button.custom-2 {
+  --border-radius: 2px;
+  width: 50vw;
+}
+
 ion-card {
   margin-top: 10px;
 
@@ -107,6 +112,10 @@ ion-item.account-type {
 .pos-down5 {
   position: relative;
   top: 5vh;
+}
+.pos-down8 {
+  position: relative;
+  top: 8vh;
 }
 .pos-down10 {
   position: relative;

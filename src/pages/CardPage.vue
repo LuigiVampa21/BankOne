@@ -21,6 +21,31 @@
           />
         </ion-row>
       </ion-grid>
+          <ion-modal :is-open="insuranceModal">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+            <h1>Insurance</h1> </ion-title>
+          <ion-buttons class="ion-justify-content-end">
+            <ion-button color="light" @click="setOpen(false, 'returnToFalse')">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <p class="approval-text pos-down5 ion-margin-bottom ion-padding-bottom">
+          By clicking this button you will approve our insurance policy and terms of service.
+          You will receive an email to confirm your choice, within 3days business days and the contract will start at the date of approval.
+          Please note that we only provide one insurance by account, so you don't need to apply for an insurance one some others cards you would have at Bank One. 
+        </p>
+        <ion-row class="row-button ion-justify-content-center pos-down8">
+          <ion-button @click="setOpen(false, 'none')" color="tertiary" class="custom-2">
+            <ion-text class="ion-text-capitalize">
+              apply
+            </ion-text>
+          </ion-button>
+        </ion-row>
+      </ion-content>
+    </ion-modal>
     </base-layout>
   </ion-page>
 </template>
@@ -37,7 +62,7 @@ import { useCardStore } from "../stores/cards";
 import { storeToRefs } from "pinia";
 
 
-import { IonGrid, IonRow, IonPage, IonSlides, IonSlide } from "@ionic/vue";
+import { IonGrid, IonRow, IonPage, IonSlides, IonSlide, IonModal, IonButtons, IonButton, IonHeader, IonToolbar, IonTitle } from "@ionic/vue";
 
 import CardCreditCard from "@/components/card/CardCreditCard";
 import CardOptions from "@/components/card/CardOptions";
@@ -54,10 +79,12 @@ export default defineComponent({
     IonPage,
     IonGrid,
     IonRow,
+    IonSlides,
+    IonSlide,
+    IonModal,
+    IonButtons, IonButton, IonHeader, IonToolbar, IonTitle,
     CardCreditCard,
     CardOptions,
-    IonSlides,
-    IonSlide
   },
   setup() {
     const slider = ref(null);
@@ -67,7 +94,8 @@ export default defineComponent({
     let arrayCard = ref([]);
     let cardOpts = ref(null);
     let showCardDetails = ref(false);
-    // let insurancesEnabled = ref(false);
+    let insuranceModal = ref(false);
+    let insuranceToggle = ref(false);
     const slideOpts = {
       initialSlide: 1,
       speed: 400
@@ -96,12 +124,26 @@ export default defineComponent({
         if(opt.title === 'detail'){
           showCardDetails.value = !showCardDetails.value
         }
+        if(opt.title === 'insurance' && opt.mode === true){
+          setOpen(true);
+        }
         }
       }
     }
   const getSlide = async() => {
       slide.value = await slider.value.$el.getActiveIndex();
   }
+  const setOpen = (isOpen, action) => {
+    insuranceModal.value = isOpen;
+    if(action === 'returnToFalse'){
+      for (const cardOpt of cardOpts.value){
+        if(cardOpt.title === 'insurance'){
+          console.log('hiyyas');
+          // cardOpts.value = resetCardDetails(cardDetail.detailArray);
+        }
+    }
+  }
+      }
     return {
       cardDetail,
       cardOpts,
@@ -109,14 +151,16 @@ export default defineComponent({
       loading,
       hasSecondCard,
       hasInsurances,
+      insuranceToggle,
       setOpts,
       showCardDetails,
       slideOpts,
       getSlide,
       slider,
-      slide,
+      setOpen,
+      insuranceModal,
     };
-  },
+  }
 });
 </script>
 
@@ -144,4 +188,11 @@ ion-slides{
   --bullet-background: var(--ion-color-medium);
   --bullet-background-active:   var(--ion-color-tertiary);
 }
+
+.approval-text{
+  font-size: 20px;
+  letter-spacing: 1px;
+  line-height: 30px;
+}
+
 </style>

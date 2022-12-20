@@ -10,6 +10,7 @@ export default {
         title: 'insurance', 
         text: 'insurances',
         hasInsurances: null,
+        approved: false,
         mode: false,
     },
     {  

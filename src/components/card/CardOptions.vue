@@ -23,7 +23,7 @@ export default defineComponent({
     IonCard,
     IonToggle
   },
-  props: ["data", "insurancesEnabled", "slide"],
+  props: ["data"],
   setup(props, {emit}) {
     const opt = reactive({
       title:null,
@@ -34,13 +34,13 @@ export default defineComponent({
       opt.title =  props.data.title;
       opt.text =  props.data.text;
       opt.mode = props.data.hasSecondCard || props.data.hasInsurances || false;
-      emit('setValues', opt)
+      // emit('setValues', opt)
     })
     onUpdated(() => {
       opt.title =  props.data.title;
       opt.text =  props.data.text;
-      opt.mode = props.data.hasSecondCard || props.data.hasInsurances || false;
-      emit('setValues', opt)
+      opt.mode = props.data.hasSecondCard || props.data.insuranceToggle || props.data.hasInsurances || false;
+      // emit('setValues', opt)
     })
     const emitChange = () => {
       emit('optChange', opt)

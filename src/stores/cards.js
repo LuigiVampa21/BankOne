@@ -25,7 +25,6 @@ export const useCardStore = defineStore("card", () => {
         }
         );
         const { card } = response.data;
-        console.log(card[0]);
         if(card.length > 1){
           hasSecondCard.value = true
         }
@@ -35,11 +34,9 @@ export const useCardStore = defineStore("card", () => {
         }
         if(card[0].insurances === true){
           hasInsurances.value = true
-          console.log('hasIsurance');
         }
         if(card[0].insurances === false){
           hasInsurances.value = false
-          console.log('hasNOTIsurance');
         }
         cards.value = card;
         loading.value = false;
