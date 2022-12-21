@@ -3,7 +3,7 @@
   <ion-card color="secondary" class="card-items">
     <ion-row class="ion-justify-content-between detail-container">
       <ion-text class="ion-padding text-detail ion-text-capitalize" v-model="opt.text">{{ data.text }}</ion-text>
-      <ion-toggle :checked="data.hasSecondCard || data.hasInsurances" class="toggle-detail" @ionChange="emitChange" v-model="opt.mode"></ion-toggle>
+      <ion-toggle :checked="data.hasSecondCard || data.hasInsurances" class="toggle-detail" :disabled="data.hasSecondCard || data.hasInsurances" @ionChange="emitChange" v-model="opt.mode"></ion-toggle>
     </ion-row>
   </ion-card>
 </template>
@@ -34,13 +34,11 @@ export default defineComponent({
       opt.title =  props.data.title;
       opt.text =  props.data.text;
       opt.mode = props.data.hasSecondCard || props.data.hasInsurances || false;
-      // emit('setValues', opt)
     })
     onUpdated(() => {
       opt.title =  props.data.title;
       opt.text =  props.data.text;
       opt.mode = props.data.hasSecondCard || props.data.insuranceToggle || props.data.hasInsurances || false;
-      // emit('setValues', opt)
     })
     const emitChange = () => {
       emit('optChange', opt)
@@ -63,13 +61,9 @@ export default defineComponent({
 }
 ion-toggle {
   --background: var(--ion-color-primary);
-  /* --background-checked: var(--ion-color-tertiary); */
   --background-checked: var(--ion-color-light);
-
-  /* --handle-background: var(--ion-color-tertiary); */
   --handle-background: var(--ion-color-light);
   --handle-background-checked: var(--ion-color-secondary);
-  /* --handle-background-checked: var(--ion-color-primary); */
 }
 .toggle-detail{
   margin-right: 5px

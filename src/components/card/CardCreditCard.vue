@@ -1,6 +1,11 @@
 <template>
   <!-- <div class="cardD"> -->
   <div :class="card.type === 'digital' ? 'cardD' : 'cardP'">
+    <div class="layout" v-if="!hasSecondCard && card.type === 'physical'">
+      <p>
+        Press Get Physical Card To Apply
+      </p>
+  </div>
     <ion-row class="ion-justify-content-end ion-margin-end">
       <h2>Bank One</h2>
     </ion-row>
@@ -46,7 +51,7 @@ export default defineComponent({
     IonRow,
     IonText,
   },
-  props: ['card', 'showDetails'],
+  props: ['card', 'showDetails', 'hasSecondCard'],
   setup(props){
     let cardR = ref(null);
     onMounted(() => {
@@ -78,6 +83,21 @@ export default defineComponent({
   height: 25vh;
   background: rgb(252, 176, 69);
   border-radius: 10px;
+}
+
+.layout {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: rgba(11,15,18, 0.8);
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.layout p {
+  font-size: 20px;
+  transform: translate(-10%, 20%)
 }
 .chip {
   width: 50px;

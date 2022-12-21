@@ -8,7 +8,7 @@
                   >
                   <ion-slides pager="true" ref="slider" @ionSlideDidChange="getSlide"	>
                     <ion-slide v-for="card in arrayCard.value" :key="card?.id" class="card-item-slide">
-                      <CardCreditCard :card="card" :showDetails="showCardDetails"/>
+                      <CardCreditCard :card="card" :showDetails="showCardDetails" :hasSecondCard="hasSecondCard"/>
                     </ion-slide>
 
                   </ion-slides>
@@ -17,7 +17,7 @@
         <ion-row
           class="ion-justify-content-center ion-padding-top ion-margin-top"
         >
-          <CardOptions v-for="detail in cardOpts" :key="detail.text" :data="detail" @optChange="setOpts" :slide="slide"
+          <CardOptions v-for="detail in cardOpts" :key="detail.text" :data="detail" @optChange="setOpts"
           />
         </ion-row>
       </ion-grid>
@@ -27,7 +27,7 @@
           <ion-title>
             <h1>Insurance</h1> </ion-title>
           <ion-buttons class="ion-justify-content-end">
-            <ion-button color="light" @click="setOpen(false)">Close</ion-button>
+            <ion-button color="light" @click="setOpen(false, 'insurance')">Close</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -36,6 +36,24 @@
           Please check your mailbox to approve the terms of services.
           Note that we provide only one insurance for all your cards, so you don't need to apply for any other cards you would have at Bank One.
         </p>
+      </ion-content>
+    </ion-modal>
+          <ion-modal :is-open="phyCardModal">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+            <h1>Physical Card</h1> </ion-title>
+          <ion-buttons class="ion-justify-content-end">
+            <ion-button color="light" @click="setOpen(false, 'card')">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <p class="approval-text pos-down5 ion-margin-bottom ion-padding-bottom">
+          Please check your mailbox to approve the terms of services.
+          After your approval the card will be sent to your home adress within 5 business days.
+        </p>
+        <!-- CREATE A FORM FOR HOME ADDRESS RIGHT HERE -->
       </ion-content>
     </ion-modal>
     </base-layout>
@@ -82,12 +100,12 @@ export default defineComponent({
     const slider = ref(null);
     const slide = ref(0)
     const cardStore = useCardStore();
-    const errorAPIMessage = ref(null)
-    const {cards, loading, hasSecondCard, hasInsurances} = storeToRefs(cardStore);
+    const {cards, loading, hasSecondCard, hasInsurances, errorAPIMessage} = storeToRefs(cardStore);
     let arrayCard = ref([]);
     let cardOpts = ref(null);
     let showCardDetails = ref(false);
     let insuranceModal = ref(false);
+    let phyCardModal = ref(false);
     let insuranceToggle = ref(false);
     const slideOpts = {
       initialSlide: 1,
@@ -99,15 +117,12 @@ export default defineComponent({
     })
     onMounted(async () => {
     await cardStore.getAllCards();
-    console.log(hasInsurances.value);
+    // console.log(hasInsurances.value);
     cardOpts.value = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value, hasInsurances.value);
   })
   onUpdated(async () => {
     arrayCard.value = cards;
     cardOpts.value = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value, hasInsurances.value);
-    if(errorAPIMessage.value !== null){
-      await alreadyInsured()
-    }
     })
   onUnmounted(() => {
     cardOpts.value = resetCardDetails(cardDetail.detailArray);
@@ -121,8 +136,13 @@ export default defineComponent({
           showCardDetails.value = !showCardDetails.value
         }
         if(opt.title === 'insurance' && opt.mode === true){
-          setOpen(true);
+          setOpen(true, 'insurance');
           await cardStore.applyForInsurance()
+          
+        }
+        if(opt.title === 'physicalCard' && opt.mode === true){
+          setOpen(true, 'card');
+          // await cardStore.applyForSecondCard()
         }
         }
       }
@@ -139,13 +159,17 @@ export default defineComponent({
       })
       await toast.present()
     } 
-  const setOpen = (isOpen) => {
-    insuranceModal.value = isOpen;
-  //     for (const cardOpt of cardOpts.value){
-  //       if(cardOpt.title === 'insurance'){
-  //         // cardOpts.value = resetCardDetails(cardDetail.detailArray);
-  //       }
-  // }
+  const setOpen = async (isOpen, modal) => {
+    if(modal === 'insurance'){
+
+      insuranceModal.value = isOpen;
+      if(errorAPIMessage.value !== null){
+        await alreadyInsured()
+      }
+    }else if(modal === 'card'){
+        phyCardModal.value = isOpen;
+
+    }
       }
     return {
       cardDetail,
@@ -162,6 +186,7 @@ export default defineComponent({
       slider,
       setOpen,
       insuranceModal,
+      phyCardModal,
     };
   }
 });
