@@ -27,23 +27,15 @@
           <ion-title>
             <h1>Insurance</h1> </ion-title>
           <ion-buttons class="ion-justify-content-end">
-            <ion-button color="light" @click="setOpen(false, 'returnToFalse')">Close</ion-button>
+            <ion-button color="light" @click="setOpen(false)">Close</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
         <p class="approval-text pos-down5 ion-margin-bottom ion-padding-bottom">
-          By clicking this button you will approve our insurance policy and terms of service.
-          You will receive an email to confirm your choice, within 3days business days and the contract will start at the date of approval.
-          Please note that we only provide one insurance by account, so you don't need to apply for an insurance one some others cards you would have at Bank One. 
+          Please check your mailbox to approve the terms of services.
+          Note that we provide only one insurance for all your cards, so you don't need to apply for any other cards you would have at Bank One.
         </p>
-        <ion-row class="row-button ion-justify-content-center pos-down8">
-          <ion-button @click="setOpen(false, 'none')" color="tertiary" class="custom-2">
-            <ion-text class="ion-text-capitalize">
-              apply
-            </ion-text>
-          </ion-button>
-        </ion-row>
       </ion-content>
     </ion-modal>
     </base-layout>
@@ -62,7 +54,7 @@ import { useCardStore } from "../stores/cards";
 import { storeToRefs } from "pinia";
 
 
-import { IonGrid, IonRow, IonPage, IonSlides, IonSlide, IonModal, IonButtons, IonButton, IonHeader, IonToolbar, IonTitle } from "@ionic/vue";
+import { IonGrid, IonRow, IonPage, IonSlides, IonSlide, IonModal, IonButtons, IonButton, IonHeader, IonToolbar, IonTitle, toastController, } from "@ionic/vue";
 
 import CardCreditCard from "@/components/card/CardCreditCard";
 import CardOptions from "@/components/card/CardOptions";
@@ -90,6 +82,7 @@ export default defineComponent({
     const slider = ref(null);
     const slide = ref(0)
     const cardStore = useCardStore();
+    const errorAPIMessage = ref(null)
     const {cards, loading, hasSecondCard, hasInsurances} = storeToRefs(cardStore);
     let arrayCard = ref([]);
     let cardOpts = ref(null);
@@ -109,15 +102,18 @@ export default defineComponent({
     console.log(hasInsurances.value);
     cardOpts.value = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value, hasInsurances.value);
   })
-  onUpdated(() => {
+  onUpdated(async () => {
     arrayCard.value = cards;
     cardOpts.value = hasSecondCardFn(cardDetail.detailArray, hasSecondCard.value, hasInsurances.value);
+    if(errorAPIMessage.value !== null){
+      await alreadyInsured()
+    }
     })
   onUnmounted(() => {
     cardOpts.value = resetCardDetails(cardDetail.detailArray);
     hasInsurances.value = false;
   })
-  const setOpts = opt => {
+  const setOpts = async opt => {
       for (const cardOpt of cardOpts.value){
         if(opt.title == cardOpt.title){
           cardOpt.mode = opt.mode
@@ -126,6 +122,7 @@ export default defineComponent({
         }
         if(opt.title === 'insurance' && opt.mode === true){
           setOpen(true);
+          await cardStore.applyForInsurance()
         }
         }
       }
@@ -133,16 +130,22 @@ export default defineComponent({
   const getSlide = async() => {
       slide.value = await slider.value.$el.getActiveIndex();
   }
-  const setOpen = (isOpen, action) => {
+  const alreadyInsured = async() => {
+      const toast = await toastController.create({
+        message: errorAPIMessage.value,
+        duration: 2500,
+        position: "top",
+        color: 'danger',
+      })
+      await toast.present()
+    } 
+  const setOpen = (isOpen) => {
     insuranceModal.value = isOpen;
-    if(action === 'returnToFalse'){
-      for (const cardOpt of cardOpts.value){
-        if(cardOpt.title === 'insurance'){
-          console.log('hiyyas');
-          // cardOpts.value = resetCardDetails(cardDetail.detailArray);
-        }
-    }
-  }
+  //     for (const cardOpt of cardOpts.value){
+  //       if(cardOpt.title === 'insurance'){
+  //         // cardOpts.value = resetCardDetails(cardDetail.detailArray);
+  //       }
+  // }
       }
     return {
       cardDetail,

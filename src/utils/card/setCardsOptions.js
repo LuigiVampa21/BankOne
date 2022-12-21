@@ -13,7 +13,7 @@ for (const a of array){
 }
 
 const hasInsurancesFn = (array, bool)=> {
-    console.log(array);
+    // console.log(array);
 let newArray = []
 for (const a of array){
     if(a.hasOwnProperty('hasInsurances')){
@@ -22,7 +22,7 @@ for (const a of array){
     }
     newArray = [...newArray, a]
 }
-console.log(newArray);
+// console.log(newArray);
     return newArray;
 }
 

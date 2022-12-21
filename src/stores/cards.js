@@ -3,6 +3,8 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { useAuthStore } from "./auth";
 import custormCard from "../utils/card/customCard"
+import getDigitalCard from "../utils/card/getDigitalCard";
+import getCardsInOrder from "../utils/card/cardOrder" 
 
 export const useCardStore = defineStore("card", () => {
   const authStore = useAuthStore();
@@ -11,6 +13,7 @@ export const useCardStore = defineStore("card", () => {
   let loading = ref(false);
   let hasSecondCard = ref(false);
   let hasInsurances = ref(false);
+  let errorAPIMessage = ref(null)
 
   const getAllCards = async () => {
     loading.value = true;
@@ -32,13 +35,13 @@ export const useCardStore = defineStore("card", () => {
           card.push(custormCard.secondCard)
           hasSecondCard.value = false
         }
-        if(card[0].insurances === true){
+        if(card[0].insurance === true){
           hasInsurances.value = true
         }
-        if(card[0].insurances === false){
+        if(card[0].insurance === false){
           hasInsurances.value = false
         }
-        cards.value = card;
+        cards.value = getCardsInOrder(card);
         loading.value = false;
       } catch (err) {
         console.error(err);
@@ -47,11 +50,35 @@ export const useCardStore = defineStore("card", () => {
       loading.value = false;
   };
 
+  const applyForInsurance = async () => {
+
+    if(hasInsurances.value){
+      // console.log(hasInsurances);
+      errorAPIMessage.value = "You already applied for an insurance"
+      return;
+    }
+    const cardID = getDigitalCard(cards.value)
+    console.log(cardID);
+    console.log(token.value);
+    try{
+      await axios.patch(process.env.VUE_APP_ROOT_API + '/cards/' + cardID, {},
+      {
+        headers: {
+          authorization: `Bearer ${token.value}`,
+        },
+      })
+    }catch(err){
+      console.error(err);
+    }
+  }
+
   return {
     cards,
     loading,
     hasSecondCard,
     hasInsurances,
+    errorAPIMessage,
+    applyForInsurance,
     getAllCards,
   };
 });
