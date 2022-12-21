@@ -58,8 +58,6 @@ export const useCardStore = defineStore("card", () => {
       return;
     }
     const cardID = getDigitalCard(cards.value)
-    console.log(cardID);
-    console.log(token.value);
     try{
       await axios.patch(process.env.VUE_APP_ROOT_API + '/cards/' + cardID, {},
       {
@@ -72,6 +70,23 @@ export const useCardStore = defineStore("card", () => {
     }
   }
 
+  const applyForSecondCard = async () => {
+    if(hasSecondCard.value){
+      errorAPIMessage.value = "You already applied for an insurance"
+      return;
+    }
+    try{
+      await axios.post(process.env.VUE_APP_ROOT_API + '/cards/secondCard', {}, {
+        headers: {
+          authorization: `Bearer ${token.value}`,
+        },
+      })
+
+    }catch(err){
+      console.error(err);
+    }
+  }
+
   return {
     cards,
     loading,
@@ -79,6 +94,7 @@ export const useCardStore = defineStore("card", () => {
     hasInsurances,
     errorAPIMessage,
     applyForInsurance,
+    applyForSecondCard,
     getAllCards,
   };
 });

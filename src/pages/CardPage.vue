@@ -142,7 +142,7 @@ export default defineComponent({
         }
         if(opt.title === 'physicalCard' && opt.mode === true){
           setOpen(true, 'card');
-          // await cardStore.applyForSecondCard()
+          await cardStore.applyForSecondCard()
         }
         }
       }
