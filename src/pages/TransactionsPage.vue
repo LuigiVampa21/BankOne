@@ -12,7 +12,6 @@
       </ion-row>
       <ion-grid>
         <ion-row class="ion-justify-content-center">
-          <ion-row class="ion-margin-bottom"> <TransactionSearchBar /></ion-row>
           <ion-row class="transactions-container" v-if="allTxsR">
             <base-item-row :tx="allTxsR.value"></base-item-row>
           </ion-row>
@@ -27,8 +26,6 @@ import {onMounted, onUpdated, ref, defineComponent} from 'vue'
 import { useTxStore } from "../stores/transactions"
 import { storeToRefs } from "pinia"
 
-import TransactionSearchBar from "@/components/transactions/TransactionSearchBar.vue";
-
 import Income from "../utils/transaction/income";
 import Outcome from "../utils/transaction/outcome";
 import { IonGrid, IonRow, IonPage } from "@ionic/vue";
@@ -36,7 +33,6 @@ import { useRouter } from "vue-router";
 
 export default defineComponent({
   components: {
-    TransactionSearchBar,
     IonPage,
     IonRow,
     IonGrid,

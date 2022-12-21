@@ -1,6 +1,6 @@
 <template>
   <ion-app>
-    <ion-router-outlet />
+    <ion-router-outlet></ion-router-outlet>
   </ion-app>
 </template>
 
@@ -19,9 +19,10 @@ export default {
     const authStore = useAuthStore();
     onMounted(async () => {
       await authStore.getUser();
-      // const token = await authStore.getFromStorage("token");
-      // const user = await authStore.getFromStorage("userID");
     });
   },
 };
 </script>
+
+<style scoped>
+</style>

@@ -364,9 +364,6 @@ export default defineComponent({
   width: 90vw;
   min-height: 40vh;
 }
-.auth-headers {
-  width: 90vw;
-}
 h1 {
   font-size: 40px;
 }

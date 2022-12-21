@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page class="container">
     <ion-header v-if="backLink">
       <ion-toolbar>
         <ion-buttons slot="start">
@@ -18,9 +18,10 @@
       >
         <h1 class="view-title ion-text-capitalize">{{ title }}</h1>
       </ion-row>
-      <slot />
-      <div class="router-container">
-        <ion-icon
+
+        <slot />
+        <div class="router-container">
+          <ion-icon
           @click="() => router.push('/home')"
           size="large"
           color="dark"
@@ -33,10 +34,10 @@
           :icon="swapHorizontal"
         ></ion-icon>
         <ion-icon
-          @click="() => router.push('/settings')"
-          size="large"
-          color="dark"
-          :icon="settings"
+        @click="() => router.push('/settings')"
+        size="large"
+        color="dark"
+        :icon="settings"
         ></ion-icon>
       </div>
     </ion-content>
@@ -99,12 +100,23 @@ export default {
   justify-content: space-around;
   align-items: center;
   width: 40vw;
+  max-width: 200px;
   height: 6vh;
   border-radius: 9999px;
   position: fixed;
   top: 90vh;
-  left: 50vw;
+  left: 50%;
   transform: translateX(-50%);
   z-index: 1;
+  margin: 0 auto;
 }
+
+/* .center-router-container{
+  width: 100vw;
+  border: 1px solid red;
+} */
+
+::-webkit-scrollbar {
+display: none;
+  }
 </style>

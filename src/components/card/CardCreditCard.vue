@@ -69,6 +69,7 @@ export default defineComponent({
 <style scoped>
 .cardD {
   width: 80vw;
+  max-width: 370px;
   height: 25vh;
   background: linear-gradient(
     135deg,
@@ -80,6 +81,7 @@ export default defineComponent({
 }
 .cardP {
   width: 80vw;
+  max-width: 370px;
   height: 25vh;
   background: rgb(252, 176, 69);
   border-radius: 10px;

@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page class="conntainer">
     <ion-header>
       <ion-toolbar>
         <ion-row class="ion-justify-content-end">
@@ -17,18 +17,22 @@
         >
           <ion-card class="auth-card">
             <ion-card-header class="auth-headers">
-              <ion-card-title
+              <ion-row class="ion-justify-content-center mbl32">
+                <ion-card-title
                 color="light"
                 class="ion-text-center ion-margin-bottom"
-              >
+                >
                 <h1>Bank One</h1></ion-card-title
-              >
-              <ion-card-subtitle
+                >
+              </ion-row>
+              <ion-row class="ion-justify-content-center">
+                <ion-card-subtitle
                 color="light-tint"
                 class="ion-text-capitalize ion-text-center ion-margin-bottom"
-              >
+                >
                 <h2>Login to your account</h2>
               </ion-card-subtitle>
+            </ion-row>
             </ion-card-header>
 
             <ion-card-content>
@@ -213,8 +217,9 @@ export default defineComponent({
   min-height: 40vh;
 }
 .auth-headers {
-  width: 90vw;
+  width: 100%;
 }
+
 h1 {
   font-size: 40px;
 }
@@ -228,6 +233,10 @@ h6 {
 }
 .container {
   height: 85vh;
+}
+
+.mbl32{
+  margin-bottom: -32px;
 }
 
 .errorMsg {

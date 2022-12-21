@@ -1,5 +1,7 @@
+import {card} from "ionicons/icons";
+
 export default {
   title: "Cards",
   subtitle: "Premium Card",
-  img: `<ion-icon name="card"></ion-icon>`,
+  icon: card,
 };

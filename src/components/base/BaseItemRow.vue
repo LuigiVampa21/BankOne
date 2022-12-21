@@ -37,6 +37,6 @@ export default {
 <style scoped>
 .transaction-container {
   height: 80px;
-  width: 95vw;
+  width: 100%;
 }
 </style>
