@@ -7,6 +7,7 @@ export const useDocsStore = defineStore("docs", () => {
   const authStore = useAuthStore();
   let token = ref("");
   let docs = ref(null);
+  let resultsR = ref(0);
   let loading = ref(false);
 
 
@@ -27,7 +28,6 @@ export const useDocsStore = defineStore("docs", () => {
 //   };
 
   const getDocs = async (queryObj) => {
-    console.log(queryObj);
     loading.value = true;
     try {
       token.value = await authStore.getFromStorage("token");
@@ -40,19 +40,25 @@ export const useDocsStore = defineStore("docs", () => {
           params: queryObj
         }
         );
-        console.log(response.data);
-        // const { allTxs } = response.data;
-        // docs.value = allTxs;
+        const { txs, results } = response.data;
+        docs.value = txs;
+        resultsR.value = results;
+        console.log(docs.value, resultsR.value);
         loading.value = false;
       } catch (err) {
         console.error(err);
         loading.value = false;
     }
   };
-
+  const resetDocs = () => {
+    docs.value = null;
+    resultsR.value = 0;
+  }
   return {
     loading,
     getDocs,
     docs,
+    resultsR,
+    resetDocs,
   };
 });

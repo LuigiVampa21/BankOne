@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <base-layout :title="'Documents'" :backLink="'/home'">
-      <ion-row class="ion-justify-content-center">
+      <ion-row class="ion-justify-content-center" v-if="!docs">
         <DocumentCard
           @emitAccount="accountValue"
           @emitType="typeValue"
@@ -16,6 +16,12 @@
           >Search</ion-button
         >
       </ion-row>
+      <ion-row v-else class="ion-margin ion-justify-content-between">
+        <h1 class="ion-margin-end ion-padding-end">{{ resultsR }} results</h1>
+        <ion-button class="ion-text-capitalize custom-3 ion-margin-start" color="tertiary" @click="reset">reset</ion-button>
+        <ion-button class="ion-text-capitalize custom-3" color="tertiary">print all</ion-button>
+        <base-item-row :tx="docs" :type="'doc'"></base-item-row>
+      </ion-row>
     </base-layout>
   </ion-page>
 </template>
@@ -24,8 +30,8 @@
 import { IonPage, IonButton } from "@ionic/vue";
 import { useDocsStore } from "../stores/documents";
 import DocumentCard from "@/components/documents/DocumentCard";
-import { defineComponent, ref } from "@vue/runtime-core";
-// import { storeToRefs } from "pinia";
+import { defineComponent, onUnmounted } from "@vue/runtime-core";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   components: {
@@ -34,9 +40,8 @@ export default defineComponent({
     IonButton,
   },
   setup() {
-    const docs = ref(null);
     const docsStore = useDocsStore()
-    // const {docsData} = storeToRefs(docsStore) 
+    const {docs, resultsR} = storeToRefs(docsStore) 
     let queryObj = {
       account: null,
       type: null,
@@ -62,7 +67,17 @@ export default defineComponent({
     const searchData = async() => {
       await docsStore.getDocs(queryObj)
     }
-    
+    onUnmounted(() => {
+      reset()
+    })
+    const reset = () => {
+      docsStore.resetDocs()
+      queryObj.account = null;
+      queryObj.type = null;
+      queryObj.amount = null;
+      queryObj.startDate = null;
+      queryObj.endDate = null;
+    }
     return {
       queryObj,
       accountValue,
@@ -70,8 +85,10 @@ export default defineComponent({
       amountValue,
       startDateValue,
       endDateValue,
-      docs,
       searchData,
+      reset,
+      docs,
+      resultsR,
     };
   },
 });
