@@ -11,7 +11,7 @@
         <ion-progress-bar v-if="loading || loadingUser" type="indeterminate" color="success"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content class="ctn">
       <ion-row
         v-if="title"
         class="ion-margin-start ion-margin-bottom ion-padding-bottom"
@@ -110,13 +110,4 @@ export default {
   z-index: 1;
   margin: 0 auto;
 }
-
-/* .center-router-container{
-  width: 100vw;
-  border: 1px solid red;
-} */
-
-::-webkit-scrollbar {
-display: none;
-  }
 </style>

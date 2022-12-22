@@ -1,7 +1,7 @@
 <template>
-  <ion-app>
-    <ion-router-outlet></ion-router-outlet>
-  </ion-app>
+    <ion-app>
+      <ion-router-outlet></ion-router-outlet>
+    </ion-app>
 </template>
 
 <script>
@@ -25,4 +25,7 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 </style>

@@ -1,7 +1,7 @@
 <template>
   <ion-row>
     <ion-card class="ivt-list" color="secondary">
-      <IvtAssetRow :assets="data.assets" />
+      <IvtAssetRow :assets="data" />
     </ion-card>
   </ion-row>
 </template>

@@ -1,19 +1,20 @@
 .container{
   max-width: 1000px;
   margin: 0 auto;
+
 }
 
 .ion-page{
   background: var(--ion-color-primary) ;
 }
 
-ion-content {
+/* /* ion-content {
   /* --offset-bottom: auto !important; */
-  --overflow: auto;
+  /* --overflow: auto; */
   /* background: var(--ion-secondary, var(--ion-primary, #f4f5f8)) !important; */
-  background: var(--ion-secondary) !important;
-  overflow: auto;
-}
+  /* background: var(--ion-secondary) !important; */
+  /* overflow: auto; */
+/* } */
 
 ion-content {
   --background: var(--ion-color-primary);

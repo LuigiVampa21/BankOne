@@ -185,6 +185,11 @@ export default {
 </script>
 
 <style scoped>
+.ctn{
+  overflow: scroll;
+  -webkit-scrollbar: none;  
+}
+
 .header-container {
   width: 100vw;
 }

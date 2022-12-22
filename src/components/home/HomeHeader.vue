@@ -1,6 +1,9 @@
 <template>
   <ion-row class="ion-margin-bottom ion-justify-content-around h-1">
     <!-- <ion-button color="secondary">Overview</ion-button> -->
+    <ion-button color="secondary" router-link="/investments/forex"
+      >Forex</ion-button
+    >
     <ion-button color="secondary" router-link="/investments/stocks"
       >Stocks</ion-button
     >

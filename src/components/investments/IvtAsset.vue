@@ -4,39 +4,42 @@
     v-for="asset in assets"
     :key="asset.name"
   >
-    <div class="asset ion-margin-start ion-margin-end ion-margin-bottom">
+     <div class="asset ion-margin-start ion-margin-end ion-margin-bottom">
       <ion-avatar>
         <img
           class="avatar"
           alt="Silhouette of a person's head"
-          src="https://via.placeholder.com/150C/O https://placeholder.com"
+          :src="asset.image"
         />
       </ion-avatar>
-      <h6 class="asset-title">{{ asset.name }}</h6>
+      <h6 class="asset-title ion-text-uppercase">{{ asset.id }}</h6>
       <h6
         class="asset-oneDayChange"
         :style="
-          +asset.oneDayChange > 0
+          +asset.one_day_change > 0
             ? { color: 'var(--ion-color-success)' }
             : { color: 'var(--ion-color-danger)' }
         "
       >
-        {{ asset.oneDayChange }} %
+        {{ asset.one_day_change }} %
       </h6>
     </div>
   </ion-row>
 </template>
 
 <script>
-import { IonAvatar, IonRow } from "@ionic/vue";
+import { 
+  IonAvatar,
+   IonRow } from "@ionic/vue";
+import { defineComponent } from "@vue/runtime-core";
 
-export default {
-  props: ["assets"],
+export default defineComponent({
   components: {
     IonAvatar,
     IonRow,
   },
-};
+  props: ["assets"],
+});
 </script>
 
 <style scoped>
@@ -63,7 +66,7 @@ export default {
 }
 
 ion-avatar {
-  width: 65px;
-  height: 65px;
+  width: 50px;
+  height: 50px;
 }
 </style>

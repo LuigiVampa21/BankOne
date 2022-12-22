@@ -7,11 +7,10 @@
     <ion-avatar>
       <img
         class="avatar"
-        alt="Silhouette of a person's head"
-        src="https://via.placeholder.com/150C/O https://placeholder.com"
+        :src="asset.image"
       />
     </ion-avatar>
-    <h6 class="asset-title">{{ asset.name }}</h6>
+    <h6 class="asset-title ion-text-uppercase">{{ asset.id }}</h6>
     <ion-row class="tx-amount ion-justify-content-end">
       <h6 class="asset-price">$ {{ asset.price }}</h6>
     </ion-row>
@@ -21,6 +20,9 @@
 <script>
 export default {
   props: ["assets"],
+  setup(props){
+    console.log(props.assets);
+  }
 };
 </script>
 

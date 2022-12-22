@@ -12,7 +12,7 @@
         <ion-button
           color="tertiary"
           class="custom-1 ion-padding ion-margin-bottom"
-          @click="serachData"
+          @click="searchData"
           >Search</ion-button
         >
       </ion-row>
@@ -21,17 +21,22 @@
 </template>
 
 <script>
-import DocumentCard from "@/components/documents/DocumentCard";
 import { IonPage, IonButton } from "@ionic/vue";
-import axios from "axios";
+import { useDocsStore } from "../stores/documents";
+import DocumentCard from "@/components/documents/DocumentCard";
+import { defineComponent, ref } from "@vue/runtime-core";
+// import { storeToRefs } from "pinia";
 
-export default {
+export default defineComponent({
   components: {
     DocumentCard,
     IonPage,
     IonButton,
   },
   setup() {
+    const docs = ref(null);
+    const docsStore = useDocsStore()
+    // const {docsData} = storeToRefs(docsStore) 
     let queryObj = {
       account: null,
       type: null,
@@ -54,21 +59,10 @@ export default {
     const endDateValue = date => {
       queryObj.endDate = date;
     };
-    const serachData = async () => {
-      console.log(queryObj);
-      try {
-        const docs = await axios.get(
-          process.env.VUE_APP_ROOT_API + "/transactions/documents",
-          {
-            params: 
-              queryObj,
-          }
-        );
-        console.log(docs);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    const searchData = async() => {
+      await docsStore.getDocs(queryObj)
+    }
+    
     return {
       queryObj,
       accountValue,
@@ -76,10 +70,11 @@ export default {
       amountValue,
       startDateValue,
       endDateValue,
-      serachData,
+      docs,
+      searchData,
     };
   },
-};
+});
 </script>
 
 <style scoped></style>

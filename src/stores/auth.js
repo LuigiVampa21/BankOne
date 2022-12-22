@@ -93,18 +93,24 @@ export const useAuthStore = defineStore("auth", () => {
     loadingUser.value = true;
     const id = await getFromStorage("userID");
     // maybe add headers with token and authMiddleware into getSingle user server side
-    const response = await axios.get(
-      process.env.VUE_APP_ROOT_API + "/users/" + id
-    );
-    const { user } = response.data;
-    currentUser.value = {
-      username: user.first_name,
-      id: user.id,
-    };
-    if (currentUser.value.id) {
-      isAuth.value = true;
-    }
-    loadingUser.value = false;
+    try{
+
+      const response = await axios.get(
+        process.env.VUE_APP_ROOT_API + "/users/" + id
+        );
+        const { user } = response.data;
+        currentUser.value = {
+          username: user.first_name,
+          id: user.id,
+        };
+        if (currentUser.value.id) {
+          isAuth.value = true;
+        }
+        loadingUser.value = false;
+      }catch(err){
+        console.error(err);
+        loadingUser = false;
+      }
   };
 
   const setToStorage = async (key, value) => {
