@@ -20,11 +20,6 @@ export default defineComponent({
     IonCard,
     IonText,
   },
-  setup(props){
-    console.log(props.data);
-    return{
-    }
-  }
 });
 </script>
 

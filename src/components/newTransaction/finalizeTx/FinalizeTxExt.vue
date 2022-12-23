@@ -81,6 +81,7 @@ export default {
     IonInput,
   },
   setup(props, { emit }) {
+    // ADD KNOW ACCOUNTS FROM OVERVIEW HERE
     let knowAccountsArray = [];
     const amount = ref();
     const existingBeneficiary = ref(props.exinexFparent);

@@ -43,7 +43,6 @@ export default defineComponent({
       investments: null,
     });
     const objEmitted = ref(null);
-    // const accTxsR = ref(null);
     const accTxsR = reactive({
       type: ref(""),
       txs: ref(null),

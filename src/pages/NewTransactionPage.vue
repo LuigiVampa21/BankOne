@@ -2,7 +2,7 @@
   <ion-page>
     <base-layout :title="'new transfer'" :backLink="'/transactions'">
       <ReactiveTxCp
-        :accounts="accounts"
+        :accounts="bankAccounts"
         :newTransaction="newTransaction"
         :intext="intext"
         @accountSender="accountSender"
@@ -10,7 +10,7 @@
       />
       <FinalizeTxInt
         v-if="newTransaction.intext == 'internal'"
-        :accounts="accounts"
+        :accounts="bankAccounts"
         :newTransaction="newTransaction"
         @accountToReceive="accountToReceive"
         @amountToSend="amountToSend"
@@ -58,9 +58,16 @@ import FinalizeTxExt from "@/components/newTransaction/finalizeTx/FinalizeTxExt"
 import { ref } from "vue";
 import { IonPage } from "@ionic/vue";
 import ReactiveTxCp from "@/components/newTransaction/reactiveTxCp";
-import AccountChecking from "../utils/bank_account/account_checking.js";
-import AccountSavings from "../utils/bank_account/account_savings.js";
-import AccountInvestments from "../utils/bank_account/account_investments.js";
+
+// import accounts && knownAccounts data from overview
+import { useOverviewStore } from "../stores/overview";
+import { useTxStore } from "../stores/transactions";
+import { storeToRefs } from "pinia";
+
+// import AccountChecking from "../utils/bank_account/account_checking.js";
+// import AccountSavings from "../utils/bank_account/account_savings.js";
+// import AccountInvestments from "../utils/bank_account/account_investments.js";
+
 import intext from "../utils/newTransferData/intext.js";
 
 export default {
@@ -71,7 +78,10 @@ export default {
     FinalizeTxExt,
   },
   setup() {
-    const accounts = [AccountChecking, AccountSavings, AccountInvestments];
+    // const accounts = [AccountChecking, AccountSavings, AccountInvestments];
+    const overviewStore = useOverviewStore();
+    const txStore = useTxStore();
+    const { bankAccounts, siblings } = storeToRefs(overviewStore);
     const newTransaction = ref({
       // accountSending: "pR2mS$#7p71pOogHxfV$",
       // intext: "external",
@@ -93,14 +103,17 @@ export default {
       // console.log(newTransaction.value);
     };
     const accountToReceive = account => {
-      newTransaction.value.accountReceiving = account.id;
+      // newTransaction.value.accountReceiving = account.id;
+      newTransaction.value.accountReceiving = account.iban;
     };
     const amountToSend = amount => {
       newTransaction.value.amount = +amount;
       // console.log(newTransaction.value);
     };
-    const sendTx = () => {
+    const sendTx = async() => {
       // SEND newTransaction To DB and reset newTransaction Obj
+      await txStore.postNewTX(newTransaction.value)
+      // console.log(newTransaction.value);
       newTransaction.value.accountSending = null;
       newTransaction.value.intext = null;
       newTransaction.value.accountReceiving = null;
@@ -145,11 +158,11 @@ export default {
         newTransaction.value.amount == 0
       ) {
         newTransaction.value.accountReceiving = null;
-        console.log(newTransaction.value);
+        // console.log(newTransaction.value);
       }
     };
     return {
-      accounts,
+      // accounts,
       newTransaction,
       intext,
       accountSender,
@@ -159,6 +172,8 @@ export default {
       backFn,
       sendTx,
       exinexFn,
+      bankAccounts,
+      siblings,
     };
   },
 };

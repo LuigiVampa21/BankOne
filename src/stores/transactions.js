@@ -30,9 +30,23 @@ export const useTxStore = defineStore("tx", () => {
     }
   };
 
+  const postNewTX = async obj => {
+    try{
+    const response = await axios.post(process.env.VUE_APP_ROOT_API + "/transactions", obj, {
+        headers: {
+          authorization: `Bearer ${token.value}`,
+        },
+      })
+      console.log(response);
+    }catch(err){
+      console.error(err);
+    }
+  }
+
   return {
     transactions,
     loading,
     getAllTxs,
+    postNewTX,
   };
 });

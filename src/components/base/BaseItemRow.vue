@@ -31,10 +31,6 @@ export default {
     IonText,
     },
     props:["tx","type"],
-    setup(props){
-      console.log(props.tx);
-      return{}
-    }
 }
 </script>
 

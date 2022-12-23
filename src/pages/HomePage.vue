@@ -1,5 +1,5 @@
 <template>
-  <ion-page @scroll="hideEl">
+  <ion-page>
     <ion-content>
       <base-layout>
         <ion-row class="ion-justify-content-end">
@@ -51,7 +51,7 @@
 
             <!--  SIBLINGS  -->
 
-            <HomeSiblings />
+            <HomeSiblings :siblings="siblings"/>
 
             <!--  WALLETS  -->
 
@@ -149,7 +149,7 @@ export default {
     const authStore = useAuthStore();
     const overviewStore = useOverviewStore();
     // Those will needs to be passed as arguments to components
-    const { lastTX, bankAccounts, beneficiary } = storeToRefs(overviewStore);
+    const { lastTX, bankAccounts, beneficiary, siblings } = storeToRefs(overviewStore);
     // let lastTXRef = ref(null);
     // let bankAccountsRef = ref(null);
     const { isAuth, currentUser } = storeToRefs(authStore);
@@ -165,9 +165,6 @@ export default {
     onMounted(async () => {
       await overviewStore.getOverview();
     });
-    const hideEl = () => {
-      console.log('hhhhh');
-    }
     return {
       ellipsisHorizontalOutline,
       document,
@@ -180,9 +177,9 @@ export default {
       lastTX,
       bankAccounts,
       beneficiary,
+      siblings,
       // overview,
       logout,
-      hideEl,
     };
   },
 };
