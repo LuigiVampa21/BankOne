@@ -69,7 +69,6 @@ export default defineComponent({
       newBeneficiary.fullName = fullName.value;
       newBeneficiary.country = country.value;
       newBeneficiary.iban = iban.value;
-      console.log(newBeneficiary);
       emit("accountReceiving", newBeneficiary);
     };
     return {

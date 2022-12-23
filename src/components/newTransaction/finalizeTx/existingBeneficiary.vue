@@ -6,7 +6,7 @@
       >
       <ion-card color="secondary" class="pos-down10">
         <ion-row
-          v-for="account in knownAccounts.array"
+          v-for="account in siblings"
           :key="account.id"
           class="options"
           @click="chooseBeneficiary(account)"
@@ -15,7 +15,8 @@
             <base-avatar></base-avatar>
           </ion-col>
           <ion-col>
-            {{ account.holder_name }}
+            {{ account.firstName }}
+            {{ account.lastName }}
           </ion-col>
           <ion-col></ion-col>
         </ion-row>
@@ -26,6 +27,10 @@
 
 <script>
 import { IonRow, IonCard, IonText, IonCol } from "@ionic/vue";
+
+// Use sibling from overViewStore to display knowAccounts
+import { useOverviewStore } from "../../../stores/overview";
+import { storeToRefs } from "pinia";
 import knownAccounts from "../../../utils/bank_account/knownAccountsArray/knownAccounts";
 export default {
   components: {
@@ -35,11 +40,15 @@ export default {
     IonCol,
   },
   setup(props, { emit }) {
+    const overViewStore = useOverviewStore();
+    const { siblings } = storeToRefs(overViewStore);
     const chooseBeneficiary = account => {
+      console.log(account);
       emit("accountReceiving", account);
     };
     return {
       knownAccounts,
+      siblings,
       chooseBeneficiary,
     };
   },
