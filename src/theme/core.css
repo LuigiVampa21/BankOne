@@ -1,7 +1,6 @@
 .container{
   max-width: 1000px;
   margin: 0 auto;
-
 }
 
 .ion-page{
@@ -114,6 +113,13 @@ ion-card {
 
 ion-card-content {
   padding: 20px 0;
+}
+
+ion-toggle {
+  --background: var(--ion-color-primary);
+  --background-checked: var(--ion-color-light);
+  --handle-background: var(--ion-color-light);
+  --handle-background-checked: var(--ion-color-secondary);
 }
 
 h1.view-title {

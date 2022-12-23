@@ -10,7 +10,7 @@
     <ion-button color="secondary" router-link="/investments/crypto"
       >Crypto</ion-button
     >
-    <ion-button color="secondary" router-link="/investments/commodities"
+    <ion-button color="secondary" router-link="/investments/commoditties"
       >Commodities</ion-button
     >
   </ion-row>

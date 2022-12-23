@@ -1,5 +1,5 @@
 <template>
-    <ion-app>
+    <ion-app class="ion-page">
       <ion-router-outlet></ion-router-outlet>
     </ion-app>
 </template>
@@ -25,7 +25,4 @@ export default {
 </script>
 
 <style scoped>
-
-
-
 </style>

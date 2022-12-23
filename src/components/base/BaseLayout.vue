@@ -1,5 +1,5 @@
 <template>
-  <ion-page class="container">
+  <ion-page class="container" @scroll="hideEl">
     <ion-header v-if="backLink">
       <ion-toolbar>
         <ion-buttons slot="start">
@@ -11,7 +11,7 @@
         <ion-progress-bar v-if="loading || loadingUser" type="indeterminate" color="success"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ctn">
+    <ion-content class="ctn" @scroll="hideEl">
       <ion-row
         v-if="title"
         class="ion-margin-start ion-margin-bottom ion-padding-bottom"
@@ -20,7 +20,7 @@
       </ion-row>
 
         <slot />
-        <div class="router-container">
+        <div v-show="isVisible" class="router-container">
           <ion-icon
           @click="() => router.push('/home')"
           size="large"
@@ -59,10 +59,11 @@ import { swapHorizontal } from "ionicons/icons";
 import { home } from "ionicons/icons";
 import { useRouter } from "vue-router";
 import {useAuthStore} from "../../stores/auth"
-import {useOverviewStore} from "../../stores/overview"
+import {useOverviewStore} from "../../stores/overview";
+import {defineComponent, ref} from "vue";
 import {storeToRefs} from "pinia";
 
-export default {
+export default defineComponent({
   name: "HomePage",
   props: ["backLink", "title"],
   components: {
@@ -75,21 +76,27 @@ export default {
     IonProgressBar
   },
   setup() {
+    const isVisible = ref(true);
     const router = useRouter();
     const authStore = useAuthStore();
     const overviewStore = useOverviewStore();
     const {loadingUser} = storeToRefs(authStore);
-    const {loading} = storeToRefs(overviewStore)
+    const {loading} = storeToRefs(overviewStore);
+    const hideEl = () => {
+      console.log('hide');
+    }
     return {
       settings,
       swapHorizontal,
       home,
       router,
       loadingUser,
-      loading
+      loading,
+      isVisible,
+      hideEl,
     };
   },
-};
+});
 </script>
 
 <style scoped>

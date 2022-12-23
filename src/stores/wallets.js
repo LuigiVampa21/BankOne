@@ -3,26 +3,26 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { useAuthStore } from "./auth";
 
-export const useTxStore = defineStore("tx", () => {
+export const useWalletStore = defineStore("wallet", () => {
   const authStore = useAuthStore();
   let token = ref("");
-  let transactions = ref(null);
+let accountsArray = ref(null);
   let loading = ref(false);
 
-  const getAllTxs = async () => {
+  const getAllAccounts = async () => {
     loading.value = true;
     try {
       token.value = await authStore.getFromStorage("token");
       const response = await axios.get(
-        process.env.VUE_APP_ROOT_API + "/transactions/user",
+        process.env.VUE_APP_ROOT_API + "/users/accounts",
         {
           headers: {
             authorization: `Bearer ${token.value}`,
           },
         }
         );
-        const { allTxs } = response.data;
-        transactions.value = allTxs;
+        const { accounts } = response.data;
+        accountsArray.value = accounts;
         loading.value = false;
       } catch (err) {
         console.error(err);
@@ -31,8 +31,8 @@ export const useTxStore = defineStore("tx", () => {
   };
 
   return {
-    transactions,
+    accountsArray,
     loading,
-    getAllTxs,
+    getAllAccounts,
   };
 });

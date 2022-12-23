@@ -30,8 +30,8 @@ import {
   IonText,
   IonRow,
 } from "@ionic/vue";
-import {ref, onUpdated} from "vue";
-export default {
+import {ref, onUpdated, defineComponent} from "vue";
+export default defineComponent({
   components: {
     IonText,
     IonRow,
@@ -49,7 +49,7 @@ export default {
   accountsOrder
     }
   }
-};
+});
 </script>
 
 <style></style>

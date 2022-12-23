@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page @scroll="hideEl">
     <ion-content>
       <base-layout>
         <ion-row class="ion-justify-content-end">
@@ -165,6 +165,9 @@ export default {
     onMounted(async () => {
       await overviewStore.getOverview();
     });
+    const hideEl = () => {
+      console.log('hhhhh');
+    }
     return {
       ellipsisHorizontalOutline,
       document,
@@ -179,6 +182,7 @@ export default {
       beneficiary,
       // overview,
       logout,
+      hideEl,
     };
   },
 };

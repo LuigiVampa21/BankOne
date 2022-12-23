@@ -2,39 +2,53 @@
   <ion-card color="secondary" class="ion-padding-bottom ion-padding-start">
     <ion-row>
       <ion-text class="card-title">
-        <h3>{{ data.title }}</h3></ion-text
+        <h3 class="ion-text-capitalize" color="light">{{ data?.type }}</h3>
+        </ion-text
       >
     </ion-row>
     <ion-row class="ion-justify-content-between">
-      <h5>{{ data.amount }}$</h5>
-      <ion-icon class="ion-padding" :src="toggleOutline"></ion-icon>
-    </ion-row>
-  </ion-card>
-</template>
+        <ion-text color="medium">
+          <h6>
+            {{ data?.amount }}$</h6>
+          </ion-text>
+          <div class="toggle-container">
+            <ion-toggle></ion-toggle>
+          </div>
+      </ion-row>
+    </ion-card>
+  </template>
 
+<!-- <ion-icon class="ion-padding" :src="toggleOutline"></ion-icon> -->
 <script>
 import {
   IonText,
   IonRow,
   IonCard,
-  IonIcon,
+  // IonIcon,
+  IonToggle,
 } from "@ionic/vue";
-import { toggleOutline } from "ionicons/icons";
+import { defineComponent } from "vue";
+// import { toggleOutline } from "ionicons/icons";
 
-export default {
+export default defineComponent({
   props: ["data"],
   components: {
     IonText,
     IonRow,
     IonCard,
-    IonIcon,
+    // IonIcon,
+    IonToggle,
   },
   setup() {
     return {
-      toggleOutline,
+      // toggleOutline,
     };
   },
-};
+});
 </script>
 
-<style></style>
+<style scoped>
+.toggle-container{
+  margin-top: -16px
+}
+</style>

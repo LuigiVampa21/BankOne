@@ -59,12 +59,7 @@ export default defineComponent({
 .text-detail{
   font-size: 18px;
 }
-ion-toggle {
-  --background: var(--ion-color-primary);
-  --background-checked: var(--ion-color-light);
-  --handle-background: var(--ion-color-light);
-  --handle-background-checked: var(--ion-color-secondary);
-}
+
 .toggle-detail{
   margin-right: 5px
 }
