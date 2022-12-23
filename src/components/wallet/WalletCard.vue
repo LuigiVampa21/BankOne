@@ -12,36 +12,39 @@
             {{ data?.amount }}$</h6>
           </ion-text>
           <div class="toggle-container">
-            <ion-toggle></ion-toggle>
+            <ion-toggle :checked="showTxs && accTxs && data && accTxs.type === data.type" @ionChange="emitChange"></ion-toggle>
           </div>
-      </ion-row>
-    </ion-card>
+        </ion-row>
+      </ion-card>
+      <base-card class="fullW" v-if="showTxs && accTxs.txs" :data="accTxs.txs" :type="'wallet'"></base-card>
   </template>
 
-<!-- <ion-icon class="ion-padding" :src="toggleOutline"></ion-icon> -->
 <script>
 import {
   IonText,
   IonRow,
   IonCard,
-  // IonIcon,
   IonToggle,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
-// import { toggleOutline } from "ionicons/icons";
+import { defineComponent,ref } from "vue";
 
 export default defineComponent({
-  props: ["data"],
+  props: ["data", "accTxs"],
   components: {
     IonText,
     IonRow,
     IonCard,
-    // IonIcon,
     IonToggle,
   },
-  setup() {
+  setup(props, {emit}) {
+    const showTxs = ref(false);
+    const emitChange = () => {
+      showTxs.value = !showTxs.value;
+      emit('showTxsFn', {type: props.data.type, bool:showTxs.value})
+    }
     return {
-      // toggleOutline,
+      showTxs,
+      emitChange,
     };
   },
 });
@@ -50,5 +53,8 @@ export default defineComponent({
 <style scoped>
 .toggle-container{
   margin-top: -16px
+}
+.fullW{
+  width: 100%;
 }
 </style>
