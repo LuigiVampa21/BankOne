@@ -12,8 +12,11 @@
       </ion-row>
       <ion-grid>
         <ion-row class="ion-justify-content-center">
-          <ion-row class="transactions-container" v-if="allTxsR">
-            <base-item-row :tx="allTxsR.value"></base-item-row>
+          <ion-row class="transactions-container red" v-if="transactions">
+            <base-item-row :tx="allTxsR"></base-item-row>
+          </ion-row>
+          <ion-row class="transactions-container" v-else>
+            <ion-text color="medium" class="no-history pos-down10">No transaction history</ion-text>
           </ion-row>
         </ion-row>
       </ion-grid>
@@ -28,7 +31,7 @@ import { storeToRefs } from "pinia"
 
 import Income from "../utils/transaction/income";
 import Outcome from "../utils/transaction/outcome";
-import { IonGrid, IonRow, IonPage } from "@ionic/vue";
+import { IonGrid, IonRow, IonPage, IonText } from "@ionic/vue";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
@@ -36,14 +39,15 @@ export default defineComponent({
     IonPage,
     IonRow,
     IonGrid,
+    IonText,
   },
   setup() {
     const router = useRouter();
     const txStore = useTxStore();
     const {transactions, loading} = storeToRefs(txStore);
     let allTxsR = ref(null);
-    onMounted(() => {
-     txStore.getAllTxs()
+    onMounted(async () => {
+     await txStore.getAllTxs()
     })
     onUpdated(() => {
       allTxsR.value = transactions;
@@ -63,5 +67,9 @@ export default defineComponent({
 .transactions-container {
   position: relative;
   top: 5vh;
+}
+
+.no-history{
+  font-size: 25px;
 }
 </style>

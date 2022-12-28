@@ -1,25 +1,14 @@
 <template>
   <ion-card color="secondary" class="sibling-accounts-container ion-padding-bottom">
-    <ion-row class="sibling-accounts-row">
+    <ion-row v-if="siblings?.length" class="sibling-accounts-row">
 
       <HomeItemSibling  v-for="sibling of siblings" :key="sibling.id" :data="sibling"/>
-
-      <!-- <ion-grid>
-        <ion-row class="ion-justify-content-center ion-margin-bottom">
-          <ion-item color="secondary">
-            <ion-avatar slot="start" class="sibling-avatar">
-              <img
-                alt="Silhouette of a person's head"
-                src="https://ionicframework.com/docs/img/demos/avatar.svg"
-              />
-            </ion-avatar>
-          </ion-item>
-        </ion-row>
-        <ion-row class="ion-justify-content-center ion-margin-end">
-          <ion-text class="">John</ion-text>
-        </ion-row>
-      </ion-grid> -->
       
+    </ion-row>
+    <ion-row v-else class="ion-justify-content-center">
+      <ion-text color="medium" class="ion-margin ion-padding-top">
+        No known account
+      </ion-text>
     </ion-row>
   </ion-card>
 </template>
@@ -31,6 +20,7 @@ import {
   // IonGrid,
   IonRow,
   IonCard,
+  IonText,
   // IonText,
 } from "@ionic/vue";
 import HomeItemSibling from "./HomeItemSibling.vue";
@@ -43,6 +33,7 @@ export default defineComponent({
     // IonGrid,
     IonRow,
     IonCard,
+    IonText,
     // IonText,
     HomeItemSibling,
   },

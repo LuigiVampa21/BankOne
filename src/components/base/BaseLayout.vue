@@ -8,7 +8,7 @@
             color="medium"
           ></ion-back-button>
         </ion-buttons>
-        <ion-progress-bar v-if="loadingO || loadingA || loadingT || loadingC || loadingW || loadingD || loadingUser" type="indeterminate" color="success"></ion-progress-bar>
+        <ion-progress-bar v-if="loadingO || loadingA || loadingT || loadingC || loadingW || loadingD || loadingL" type="indeterminate" color="success"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ctn" @scroll="hideEl">
@@ -65,6 +65,7 @@ import {useTxStore} from "../../stores/transactions";
 import {useCardStore} from "../../stores/cards";
 import {useWalletStore} from "../../stores/wallets";
 import {useDocsStore} from "../../stores/documents";
+import {useLoanStore} from "../../stores/loans";
 import {defineComponent, ref } from "vue";
 import {storeToRefs} from "pinia";
 
@@ -90,6 +91,7 @@ export default defineComponent({
     const cardStore = useCardStore()
     const walletStore = useWalletStore()
     const docsStore = useDocsStore()
+    const loanStore = useLoanStore()
     const {loadingUser} = storeToRefs(authStore);
 
 
@@ -100,6 +102,7 @@ export default defineComponent({
      const {loading: loadingC} = storeToRefs(cardStore);
      const {loading: loadingW} = storeToRefs(walletStore);
      const {loading: loadingD} = storeToRefs(docsStore);
+     const {loading: loadingL} = storeToRefs(loanStore);
 
     const hideEl = () => {
       console.log('hide');
@@ -117,6 +120,7 @@ export default defineComponent({
       loadingC,
       loadingW,
       loadingD,
+      loadingL,
       isVisible,
       hideEl,
     };

@@ -102,6 +102,7 @@ export const useAuthStore = defineStore("auth", () => {
     expirationTokenMilliSec.value = 0;
     removeFromStorage("token");
     removeFromStorage("userID");
+    removeFromStorage("tokenExpiration");
     clearAuthTimer();
     router.push('/login');
     loading.value = false;

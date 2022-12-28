@@ -55,8 +55,8 @@
 <script>
 import FinalizeTxInt from "@/components/newTransaction/finalizeTx/FinalizeTxInt";
 import FinalizeTxExt from "@/components/newTransaction/finalizeTx/FinalizeTxExt";
-import { ref } from "vue";
-import { IonPage } from "@ionic/vue";
+import { defineComponent, ref } from "vue";
+import { IonPage, toastController } from "@ionic/vue";
 import ReactiveTxCp from "@/components/newTransaction/reactiveTxCp";
 
 // import accounts && knownAccounts data from overview
@@ -70,7 +70,7 @@ import { storeToRefs } from "pinia";
 
 import intext from "../utils/newTransferData/intext.js";
 
-export default {
+export default defineComponent({
   components: {
     IonPage,
     ReactiveTxCp,
@@ -82,6 +82,7 @@ export default {
     const overviewStore = useOverviewStore();
     const txStore = useTxStore();
     const { bankAccounts, siblings } = storeToRefs(overviewStore);
+    const {message, color} = storeToRefs(txStore)
     const newTransaction = ref({
       // accountSending: "pR2mS$#7p71pOogHxfV$",
       // intext: "external",
@@ -118,7 +119,20 @@ export default {
       newTransaction.value.intext = null;
       newTransaction.value.accountReceiving = null;
       newTransaction.value.amount = 0;
+      await txToast(message.value, color.value);
+
     };
+
+    const txToast = async(message, color) => {
+      const toast = await toastController.create({
+        message,
+        duration: 2500,
+        position: "top",
+        color,
+      })
+      await toast.present()
+    } 
+
     const backFn = () => {
       if (
         newTransaction.value.accountSending != null &&
@@ -176,7 +190,7 @@ export default {
       siblings,
     };
   },
-};
+});
 </script>
 
 <style scoped>

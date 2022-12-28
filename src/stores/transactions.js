@@ -9,6 +9,9 @@ export const useTxStore = defineStore("tx", () => {
   let transactions = ref(null);
   let loading = ref(false);
 
+  let message = ref("");
+  let color = ref("");
+
   const getAllTxs = async () => {
     loading.value = true;
     try {
@@ -38,14 +41,22 @@ export const useTxStore = defineStore("tx", () => {
         },
       })
       console.log(response);
+      message.value = "Please check your mailbox to approve the transaction";
+      color.value = "success";
     }catch(err){
       console.error(err);
+      message.value = err.response.data.message;
+      color.value = "danger";
     }
   }
 
   return {
     transactions,
     loading,
+
+    message,
+    color,
+
     getAllTxs,
     postNewTX,
   };

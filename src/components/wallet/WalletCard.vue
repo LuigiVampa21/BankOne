@@ -16,7 +16,8 @@
           </div>
         </ion-row>
       </ion-card>
-      <base-card class="fullW" v-if="showTxs && accTxs.txs" :data="accTxs.txs" :type="'wallet'"></base-card>
+      <base-card class="fullW" v-if="showTxs && accTxs?.txs.length" :data="accTxs.txs" :type="'wallet'"></base-card>
+      <base-card class="fullW" v-else-if="showTxs && !accTxs?.txs.length" :data="'no transaction history'" :type="'no data'"></base-card>
   </template>
 
 <script>

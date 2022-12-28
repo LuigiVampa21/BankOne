@@ -28,7 +28,7 @@
         <h6 @click="() => router.push('/transactions')">See All</h6>
       </ion-text>
     </ion-row>
-    <ion-card-content class="ion-justify-content-center">
+    <ion-card-content v-if="lastTXR" class="ion-justify-content-center">
       <ion-row class="ion-justify-content-between last-transaction-container">
         <ion-item color="secondary">
           <ion-avatar>
@@ -48,6 +48,11 @@
         <ion-row class="tx-amount ion-justify-content-end">
           <ion-text :color="lastTXR?.inflow ? 'success' : 'danger'"> {{lastTXR?.inflow ? '+' : '-'}} {{lastTXR?.amount}}€</ion-text> 
         </ion-row>
+      </ion-row>
+    </ion-card-content>
+    <ion-card-content v-else>
+      <ion-row class="ion-justify-content-center ion-margin-bottom">
+        <ion-text color="medium">No transaction</ion-text>
       </ion-row>
     </ion-card-content>
   </ion-card>

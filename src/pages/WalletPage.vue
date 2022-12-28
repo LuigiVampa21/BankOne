@@ -15,9 +15,9 @@
 <script>
 import WalletCard from "../components/wallet/WalletCard.vue";
 
-import CheckingWallet from "../utils/wallet/CheckingWallet";
-import SavingWallet from "../utils/wallet/SavingWallet";
-import InvestmentsWallet from "../utils/wallet/InvestmentsWallet";
+// import CheckingWallet from "../utils/wallet/CheckingWallet";
+// import SavingWallet from "../utils/wallet/SavingWallet";
+// import InvestmentsWallet from "../utils/wallet/InvestmentsWallet";
 import { useWalletStore } from "../stores/wallets";
 import { storeToRefs } from "pinia";
 
@@ -62,9 +62,9 @@ export default defineComponent({
       }
     }
     return {
-      CheckingWallet,
-      SavingWallet,
-      InvestmentsWallet,
+      // CheckingWallet,
+      // SavingWallet,
+      // InvestmentsWallet,
       accountsR,
       loading,
       accTxsR,
