@@ -19,6 +19,7 @@ export const useAuthStore = defineStore("auth", () => {
   let loadingUser = ref(false);
   let errorAPIMessage = ref("");
   let expirationTokenMilliSec = ref(0);
+  let expirationTime = ref(null);
   let tokenTimer = ref(null);
 
   const ionicStorage = new Storage();
@@ -42,11 +43,13 @@ export const useAuthStore = defineStore("auth", () => {
       };
       // console.log(expiry);
       expirationTokenMilliSec.value = expiry * 1000;
-      // console.log(expirationTokenMilliSec.value)
+      expirationTime.value = new Date(new Date().getTime() + expirationTokenMilliSec.value).getTime();
+      console.log(expirationTime.value)
       currentToken.value = token;
       isAuth.value = true;
       await setToStorage("token", token);
       await setToStorage("userID", user.id);
+      await setToStorage("tokenExpiration", expirationTime.value)
       authTimer(expirationTokenMilliSec.value)
       loading.value = false;
     } catch (err) {
@@ -86,7 +89,6 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   const handleLogout = async () => {
-    console.log('logout');
     loading.value = true;
     currentToken.value = await getFromStorage("token");
     await axios.get(process.env.VUE_APP_ROOT_API + '/auth/logout', {
@@ -108,6 +110,10 @@ export const useAuthStore = defineStore("auth", () => {
 
   const getUser = async () => {
     loadingUser.value = true;
+    if(!isTokenValid(new Date().getTime())){
+      handleLogout();
+      return;
+    }
     const id = await getFromStorage("userID");
     // maybe add headers with token and authMiddleware into getSingle user server side
     try{
@@ -136,6 +142,15 @@ export const useAuthStore = defineStore("auth", () => {
     tokenTimer.value = setTimeout(() => {
       handleLogout()
     }, duration)
+  }
+
+  const isTokenValid = async(now) => {
+    const expiryToken = await getFromStorage('tokenExpiration')
+    // console.log(expiryToken);
+    // console.log(now);
+    const isValid = expiryToken > now;
+    // console.log(isValid);
+    return isValid;
   }
 
   const clearAuthTimer = () => {
