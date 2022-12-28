@@ -13,7 +13,7 @@
     </ion-row>
     <ion-row>
       <ion-text color="medium" class="ion-margin-start">Total</ion-text>
-      <ion-text class="ion-margin-start wallet-total-amount">25 780 €</ion-text>
+      <ion-text class="ion-margin-start wallet-total-amount">{{ walletTotal }}€</ion-text>
     </ion-row>
 
     <HomeWalletRow v-for="account in accountsOrder" :key="account.id" :account="account" />
@@ -30,6 +30,8 @@ import {
   IonText,
   IonRow,
 } from "@ionic/vue";
+import { useAuthStore } from "../../stores/auth";
+import { storeToRefs } from "pinia";
 import {ref, onUpdated, defineComponent} from "vue";
 export default defineComponent({
   components: {
@@ -39,10 +41,13 @@ export default defineComponent({
     IonCardTitle,
     HomeWalletRow,
   },
-  props:["accounts"],
+  props:["accounts", "walletTotal"],
   setup(props){
-    let accountsOrder = ref(null)
+    let accountsOrder = ref(null);
+    const authStore = useAuthStore();
+    const {isAuth} = storeToRefs(authStore)
     onUpdated( () => {
+      if(!isAuth.value) return;
       accountsOrder.value = order(props.accounts);
     });
     return{

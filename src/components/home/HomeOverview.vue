@@ -61,6 +61,8 @@
 <script>
  import { useRouter } from "vue-router";
 import sum from "../../utils/home/computor";
+import { useAuthStore } from "../../stores/auth";
+import { storeToRefs } from "pinia";
 import {
   IonAvatar,
   IonCard,
@@ -85,14 +87,22 @@ export default defineComponent({
     IonCard,
     IonCardTitle,
   },
-  props: ["bankAccounts", "lastTX", "beneficiary"],
+  props: ["bankAccounts", "lastTX", "beneficiary",
+  //  "isAuth", "loading"
+  ],
   setup(props) {
     const router = useRouter();
-    let overviewTotal = ref(null);
+    const authStore = useAuthStore();
+    const {isAuth} = storeToRefs(authStore)
+    let overviewTotal = ref(0);
     let lastTXR = ref(null);
     let beneficiaryR = ref('');
     onBeforeUpdate(() => {
-      sum(props.bankAccounts);
+      // sum(props.bankAccounts);
+      if(!isAuth.value) {
+        return
+      }
+      // console.log(isAuth.value);
       overviewTotal.value = sum(props.bankAccounts);
       lastTXR.value = props.lastTX;
       beneficiaryR = props.beneficiary;
@@ -101,7 +111,7 @@ export default defineComponent({
       overviewTotal,
       lastTXR,
       beneficiaryR,
-      router
+      router,
     };
   },
 });

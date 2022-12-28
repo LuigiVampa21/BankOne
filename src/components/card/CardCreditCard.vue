@@ -88,18 +88,18 @@ export default defineComponent({
 }
 
 .layout {
-  width: 100%;
-  height: 100%;
+  width: 80vw;
+  max-width: 370px;
+  height: 25vh;
   position: absolute;
   background: rgba(11,15,18, 0.8);
   display: flex;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
 }
 
 .layout p {
   font-size: 20px;
-  transform: translate(-10%, 20%)
 }
 .chip {
   width: 50px;

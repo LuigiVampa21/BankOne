@@ -3,9 +3,9 @@
     <base-layout :title="'Wallets'" :loading="loading" :backLink="'/home'">
       <ion-grid>
         <ion-row class="box-container" >
-          <WalletCard :data="accountsR.checking" :accTxs="accTxsR" @showTxsFn="emitChange" />
-          <WalletCard :data="accountsR.savings" :accTxs="accTxsR" @showTxsFn="emitChange" />
-          <WalletCard :data="accountsR.investments" :accTxs="accTxsR" @showTxsFn="emitChange" />
+          <WalletCard :data="accountsR.checking" :loading="loading" :accTxs="accTxsR" @showTxsFn="emitChange" />
+          <WalletCard :data="accountsR.savings" :loading="loading" :accTxs="accTxsR" @showTxsFn="emitChange" />
+          <WalletCard :data="accountsR.investments" :loading="loading" :accTxs="accTxsR" @showTxsFn="emitChange" />
         </ion-row>
       </ion-grid>
     </base-layout>

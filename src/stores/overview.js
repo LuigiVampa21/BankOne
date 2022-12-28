@@ -18,6 +18,7 @@ export const useOverviewStore = defineStore("overview", () => {
     loading.value = true;
     try {
       token.value = await authStore.getFromStorage("token");
+      console.log(token.value);
       const response = await axios.get(
         process.env.VUE_APP_ROOT_API + "/users/overview",
         {
@@ -38,6 +39,21 @@ export const useOverviewStore = defineStore("overview", () => {
     }
   };
 
+  const resetStore = () =>  {
+    token.value = "";
+    bankAccounts.value = null;
+    siblings.value = null;
+    allTxs.value = null;
+    lastTX.value = null;
+    loading.value = false;
+    beneficiary.value = "";
+  }
+
+
+  // const resetOverview = () => {
+
+  // }
+
   // maybe stock id of accounts into storage that would avoid that make request every time user wants to reload to another component
 
   // const ionicOverviewStorage = new Storage();
@@ -51,5 +67,6 @@ export const useOverviewStore = defineStore("overview", () => {
     siblings,
     beneficiary,
     getOverview,
+    resetStore,
   };
 });

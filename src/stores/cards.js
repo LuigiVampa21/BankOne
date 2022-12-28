@@ -13,7 +13,7 @@ export const useCardStore = defineStore("card", () => {
   let loading = ref(false);
   let hasSecondCard = ref(false);
   let hasInsurances = ref(false);
-  let errorAPIMessage = ref(null)
+  let errorAPIMessage = ref(null);
 
   const getAllCards = async () => {
     loading.value = true;
@@ -86,7 +86,15 @@ export const useCardStore = defineStore("card", () => {
       console.error(err);
     }
   }
-
+  const resetStore = () => {
+    token.value = "";
+    cards.value = null;
+    loading.value = false;
+    hasSecondCard.value = false;
+    hasInsurances.value = false;
+    errorAPIMessage.value = null;
+  }
+  
   return {
     cards,
     loading,
@@ -96,5 +104,6 @@ export const useCardStore = defineStore("card", () => {
     applyForInsurance,
     applyForSecondCard,
     getAllCards,
+    resetStore,
   };
 });

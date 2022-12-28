@@ -54,11 +54,18 @@ export const useDocsStore = defineStore("docs", () => {
     docs.value = null;
     resultsR.value = 0;
   }
+  const resetStore = () => {
+    token.value = "";
+    docs.value = null;
+    resultsR.value = 0;
+    loading.value = false;
+  }
   return {
     loading,
-    getDocs,
     docs,
     resultsR,
+    getDocs,
     resetDocs,
+    resetStore,
   };
 });

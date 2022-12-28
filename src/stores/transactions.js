@@ -50,6 +50,15 @@ export const useTxStore = defineStore("tx", () => {
     }
   }
 
+  const resetStore = () => {
+    token.value = "";
+    transactions.value = null;
+    loading.value = false;
+  
+    message.value = "";
+    color.value = "";
+  }
+
   return {
     transactions,
     loading,
@@ -59,5 +68,6 @@ export const useTxStore = defineStore("tx", () => {
 
     getAllTxs,
     postNewTX,
+    resetStore,
   };
 });

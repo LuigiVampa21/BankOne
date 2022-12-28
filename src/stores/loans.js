@@ -30,9 +30,16 @@ export const useLoanStore = defineStore("loan", () => {
         loading.value = false;
     }
   }
+  const resetStore = () => {
+    token.value = "";
+    message.value = "";
+    color.value = "";
+    loading.value = false;
+  }
 
   return {
     postNewLoan,
+    resetStore,
     loading,
     message,
     color

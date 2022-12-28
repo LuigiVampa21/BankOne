@@ -55,7 +55,7 @@
 <script>
 import FinalizeTxInt from "@/components/newTransaction/finalizeTx/FinalizeTxInt";
 import FinalizeTxExt from "@/components/newTransaction/finalizeTx/FinalizeTxExt";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onUnmounted } from "vue";
 import { IonPage, toastController } from "@ionic/vue";
 import ReactiveTxCp from "@/components/newTransaction/reactiveTxCp";
 
@@ -114,14 +114,12 @@ export default defineComponent({
     const sendTx = async() => {
       // SEND newTransaction To DB and reset newTransaction Obj
       await txStore.postNewTX(newTransaction.value)
-      // console.log(newTransaction.value);
-      newTransaction.value.accountSending = null;
-      newTransaction.value.intext = null;
-      newTransaction.value.accountReceiving = null;
-      newTransaction.value.amount = 0;
       await txToast(message.value, color.value);
-
+      resetTxObj();
     };
+    onUnmounted(() => {
+      resetTxObj()
+    })
 
     const txToast = async(message, color) => {
       const toast = await toastController.create({
@@ -175,6 +173,13 @@ export default defineComponent({
         // console.log(newTransaction.value);
       }
     };
+
+    const resetTxObj = () => {
+      newTransaction.value.accountSending = null;
+      newTransaction.value.intext = null;
+      newTransaction.value.accountReceiving = null;
+      newTransaction.value.amount = 0;
+    }
     return {
       // accounts,
       newTransaction,

@@ -4,7 +4,7 @@
       <ion-text class="ion-text-center ion-text-capitalize pos-down5"
         >choose beneficiary</ion-text
       >
-      <ion-card color="secondary" class="pos-down10">
+      <ion-card v-if="siblings?.length" color="secondary" class="pos-down10">
         <ion-row
           v-for="account in siblings"
           :key="account.id"
@@ -21,6 +21,8 @@
           <ion-col></ion-col>
         </ion-row>
       </ion-card>
+      <!-- <ion-card v-else color="secondary" class="pos-down10"></ion-card> -->
+      <base-card class="fullW pos-down10 " v-else :data="'no known accounts'" :type="'no data'"></base-card>
     </ion-row>
   </div>
 </template>
@@ -43,7 +45,6 @@ export default {
     const overViewStore = useOverviewStore();
     const { siblings } = storeToRefs(overViewStore);
     const chooseBeneficiary = account => {
-      console.log(account);
       emit("accountReceiving", account);
     };
     return {
@@ -72,5 +73,8 @@ export default {
 .pos-down10 {
   position: relative;
   top: 10vh;
+}
+.fullW{
+  width: 100%;
 }
 </style>

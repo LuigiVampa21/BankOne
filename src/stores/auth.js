@@ -1,8 +1,18 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import { Storage } from "@ionic/storage";
-// import { Router } from "@ionic/router";
-// import { Router } from "@ionic/vue-router";
+// import { useOverviewStore } from "./overview"
+
+import {useAssetsStore} from "./assets"
+import {useCardStore} from "./cards"
+import {useDocsStore} from "./documents"
+import {useLoanStore} from "./loans"
+import {useOverviewStore} from "./overview"
+import {useTxStore} from "./transactions"
+import {useWalletStore} from "./wallets"
+
+
+
 import { useRouter } from "vue-router";
 import axios from "axios";
 
@@ -10,6 +20,17 @@ import axios from "axios";
 export const useAuthStore = defineStore("auth", () => {
 
   const router = useRouter();
+
+const assetsStore = useAssetsStore();
+const cardStore = useCardStore();
+const docsStore = useDocsStore();
+const loanStore = useLoanStore();
+const overviewStore = useOverviewStore();
+const txStore = useTxStore();
+const walletStore = useWalletStore();
+
+const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore, txStore, walletStore]
+
   let currentUser = ref(null);
   let currentToken = ref("");
   //   isAuth = testing purposes => after prod just use if(currentUser.value !== null)
@@ -44,13 +65,14 @@ export const useAuthStore = defineStore("auth", () => {
       // console.log(expiry);
       expirationTokenMilliSec.value = expiry * 1000;
       expirationTime.value = new Date(new Date().getTime() + expirationTokenMilliSec.value).getTime();
-      console.log(expirationTime.value)
+      // console.log(expirationTime.value)
       currentToken.value = token;
       isAuth.value = true;
       await setToStorage("token", token);
       await setToStorage("userID", user.id);
       await setToStorage("tokenExpiration", expirationTime.value)
       authTimer(expirationTokenMilliSec.value)
+      await overviewStore.getOverview();
       loading.value = false;
     } catch (err) {
       errorAPIMessage.value = err;
@@ -90,23 +112,29 @@ export const useAuthStore = defineStore("auth", () => {
 
   const handleLogout = async () => {
     loading.value = true;
+    try{
     currentToken.value = await getFromStorage("token");
     await axios.get(process.env.VUE_APP_ROOT_API + '/auth/logout', {
       headers: {
         authorization: `Bearer ${currentToken.value}`,
       },
     })
-    currentUser.value = null;
-    currentToken.value = "";
-    isAuth.value = false;
-    expirationTokenMilliSec.value = 0;
     removeFromStorage("token");
     removeFromStorage("userID");
     removeFromStorage("tokenExpiration");
-    clearAuthTimer();
-    router.push('/login');
-    loading.value = false;
-    loadingUser.value = false;
+
+      isAuth.value = false;
+      currentUser.value = null;
+      currentToken.value = "";
+      expirationTokenMilliSec.value = 0;
+      clearAuthTimer();
+      storesArray.forEach(store => store.resetStore())
+    }catch(err){
+      console.error(err);
+    }finally{
+      loading.value = false;
+      router.push('/login');
+    }
   };
 
   const getUser = async () => {

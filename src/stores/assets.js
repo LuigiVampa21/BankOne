@@ -30,11 +30,18 @@ export const useAssetsStore = defineStore("assets", () => {
     }
   };
 
+  const resetStore = () => {
+    token.value = "";
+    loading.value = false;
+    assets.value = null
+  }
+
 // maybe store assets directly into ionic storage and then only change the price when it is being updated
 
   return {
     getAssets,
     loading,
     assets,
+    resetStore,
   };
 });

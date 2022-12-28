@@ -6,8 +6,8 @@ import { useAuthStore } from "./auth";
 export const useWalletStore = defineStore("wallet", () => {
   const authStore = useAuthStore();
   let token = ref("");
-let accountsArray = ref(null);
-let accTxs = ref(null);
+  let accountsArray = ref(null);
+  let accTxs = ref(null);
   let loading = ref(false);
 
   const getAllAccounts = async () => {
@@ -55,11 +55,19 @@ let accTxs = ref(null);
     }
   }
 
+  const resetStore = () => {
+    token.value = "";
+    accountsArray.value = null;
+    accTxs.value = null;
+    loading.value = false;
+  }
+
   return {
     accountsArray,
     accTxs,
     loading,
     getAllAccounts,
     getAllAccountTxs,
+    resetStore,
   };
 });

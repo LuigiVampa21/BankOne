@@ -8,7 +8,7 @@
             color="medium"
           ></ion-back-button>
         </ion-buttons>
-        <ion-progress-bar v-if="loadingO || loadingA || loadingT || loadingC || loadingW || loadingD || loadingL" type="indeterminate" color="success"></ion-progress-bar>
+        <ion-progress-bar v-if="loadingO || loadingA || loadingT || loadingC || loadingW || loadingD || loadingL" type="indeterminate" color="tertiary"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ctn" @scroll="hideEl">

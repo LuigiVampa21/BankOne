@@ -55,7 +55,7 @@
 
             <!--  WALLETS  -->
 
-            <HomeWallet :accounts="bankAccounts" router-link="/wallet" />
+            <HomeWallet :accounts="bankAccounts" :walletTotal="walletTotal" router-link="/wallet" />
 
             <ion-grid>
               <ion-row
@@ -89,7 +89,8 @@ import {
   // reactive,
   onMounted,
   // onBeforeMount,
-  // ref,
+  // onUpdated,
+  ref,
 } from "vue";
 import {
   IonPage,
@@ -117,6 +118,7 @@ import homeLoan from "../utils/home/homeLoan";
 import homeDocuments from "../utils/home/homeDocuments";
 import homeInvestments from "../utils/home/homeIvt";
 
+import sum from "../utils/home/computor";
 import { ellipsisHorizontalOutline, document } from "ionicons/icons";
 
 export default {
@@ -141,6 +143,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    let walletTotal = ref(0);
     // const ionRouter = useIonRouter();
     // const overview = reactive({
     //   lastTx: null,
@@ -153,7 +156,7 @@ export default {
     // let lastTXRef = ref(null);
     // let bankAccountsRef = ref(null);
     const { 
-      // isAuth, 
+      isAuth, 
       currentUser } = storeToRefs(authStore);
     const logout = async () => {
       await authStore.handleLogout();
@@ -164,9 +167,19 @@ export default {
     // const navigateToLoginPage = () => {
     //   ionRouter.navigate("/login", "backward", "replace");
     // };
+    // onMounted(async () => {
+    //   onBeforeMount(async () => {
+    //   await overviewStore.getOverview();
+    //   walletTotal.value = sum(bankAccounts.value, true)
+    // });
+    // onUpdated(async () => {
     onMounted(async () => {
+      if(!isAuth.value) {
+        return
+      }
       await overviewStore.getOverview();
-    });
+      walletTotal.value = sum(bankAccounts.value, true)
+    })
     return {
       ellipsisHorizontalOutline,
       document,
@@ -180,12 +193,15 @@ export default {
       bankAccounts,
       beneficiary,
       siblings,
+      walletTotal,
+      isAuth,
       // overview,
       logout,
     };
   },
 };
 </script>
+
 
 <style scoped>
 .ctn{
