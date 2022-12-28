@@ -20,9 +20,6 @@
 <script>
 export default {
   props: ["assets"],
-  setup(props){
-    console.log(props.assets);
-  }
 };
 </script>
 

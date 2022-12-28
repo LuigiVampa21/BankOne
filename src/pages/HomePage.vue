@@ -102,7 +102,7 @@ import {
   IonCol,
   IonContent,
   // IonToolbar,
-  useIonRouter,
+  // useIonRouter,
   IonButton,
 } from "@ionic/vue";
 
@@ -141,7 +141,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const ionRouter = useIonRouter();
+    // const ionRouter = useIonRouter();
     // const overview = reactive({
     //   lastTx: null,
     //   accounts: null,
@@ -152,16 +152,18 @@ export default {
     const { lastTX, bankAccounts, beneficiary, siblings } = storeToRefs(overviewStore);
     // let lastTXRef = ref(null);
     // let bankAccountsRef = ref(null);
-    const { isAuth, currentUser } = storeToRefs(authStore);
+    const { 
+      // isAuth, 
+      currentUser } = storeToRefs(authStore);
     const logout = async () => {
       await authStore.handleLogout();
-      if (!isAuth.value) {
-        navigateToLoginPage();
-      }
+      // if (!isAuth.value) {
+      //   navigateToLoginPage();
+      // }
     };
-    const navigateToLoginPage = () => {
-      ionRouter.navigate("/login", "backward", "replace");
-    };
+    // const navigateToLoginPage = () => {
+    //   ionRouter.navigate("/login", "backward", "replace");
+    // };
     onMounted(async () => {
       await overviewStore.getOverview();
     });

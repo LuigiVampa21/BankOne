@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, onUnmounted } from "vue";
 import { useAuthStore } from "../stores/auth";
 import { storeToRefs } from "pinia";
 import * as yup from "yup";
@@ -174,7 +174,7 @@ export default defineComponent({
           return
         }
           navigateToHomePage()
-          clearCredentials()
+          // clearCredentials()
           //clear error messages
       }catch(err){
         console.error(err);
@@ -196,6 +196,9 @@ export default defineComponent({
       })
       await toast.present()
     } 
+    onUnmounted(() => {
+      clearCredentials()
+    })
     const { value: email } = useField("credentials.email");
     const { value: password } = useField("credentials.password");
     return{

@@ -8,7 +8,7 @@
             color="medium"
           ></ion-back-button>
         </ion-buttons>
-        <ion-progress-bar v-if="loading || loadingUser" type="indeterminate" color="success"></ion-progress-bar>
+        <ion-progress-bar v-if="loadingO || loadingA || loadingT || loadingC || loadingW || loadingD || loadingUser" type="indeterminate" color="success"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ctn" @scroll="hideEl">
@@ -60,7 +60,12 @@ import { home } from "ionicons/icons";
 import { useRouter } from "vue-router";
 import {useAuthStore} from "../../stores/auth"
 import {useOverviewStore} from "../../stores/overview";
-import {defineComponent, ref} from "vue";
+import {useAssetsStore} from "../../stores/assets";
+import {useTxStore} from "../../stores/transactions";
+import {useCardStore} from "../../stores/cards";
+import {useWalletStore} from "../../stores/wallets";
+import {useDocsStore} from "../../stores/documents";
+import {defineComponent, ref } from "vue";
 import {storeToRefs} from "pinia";
 
 export default defineComponent({
@@ -80,8 +85,22 @@ export default defineComponent({
     const router = useRouter();
     const authStore = useAuthStore();
     const overviewStore = useOverviewStore();
+    const assetsStore = useAssetsStore()
+    const txStore = useTxStore()
+    const cardStore = useCardStore()
+    const walletStore = useWalletStore()
+    const docsStore = useDocsStore()
     const {loadingUser} = storeToRefs(authStore);
-    const {loading} = storeToRefs(overviewStore);
+
+
+
+     const {loading: loadingO} = storeToRefs(overviewStore);
+     const {loading: loadingA} = storeToRefs(assetsStore);
+     const {loading: loadingT} = storeToRefs(txStore);
+     const {loading: loadingC} = storeToRefs(cardStore);
+     const {loading: loadingW} = storeToRefs(walletStore);
+     const {loading: loadingD} = storeToRefs(docsStore);
+
     const hideEl = () => {
       console.log('hide');
     }
@@ -91,7 +110,13 @@ export default defineComponent({
       home,
       router,
       loadingUser,
-      loading,
+      // loading,
+      loadingO,
+      loadingA,
+      loadingT,
+      loadingC,
+      loadingW,
+      loadingD,
       isVisible,
       hideEl,
     };

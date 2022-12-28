@@ -1,9 +1,15 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import { Storage } from "@ionic/storage";
+// import { Router } from "@ionic/router";
+// import { Router } from "@ionic/vue-router";
+import { useRouter } from "vue-router";
 import axios from "axios";
 
+
 export const useAuthStore = defineStore("auth", () => {
+
+  const router = useRouter();
   let currentUser = ref(null);
   let currentToken = ref("");
   //   isAuth = testing purposes => after prod just use if(currentUser.value !== null)
@@ -12,6 +18,8 @@ export const useAuthStore = defineStore("auth", () => {
   let loading = ref(false);
   let loadingUser = ref(false);
   let errorAPIMessage = ref("");
+  let expirationTokenMilliSec = ref(0);
+  let tokenTimer = ref(null);
 
   const ionicStorage = new Storage();
   ionicStorage.create();
@@ -27,15 +35,19 @@ export const useAuthStore = defineStore("auth", () => {
           password,
         }
       );
-      const { user, token } = response.data;
+      const { user, token, expiry } = response.data;
       currentUser.value = {
         username: user.first_name,
         id: user.id,
       };
+      // console.log(expiry);
+      expirationTokenMilliSec.value = expiry * 1000;
+      // console.log(expirationTokenMilliSec.value)
       currentToken.value = token;
       isAuth.value = true;
       await setToStorage("token", token);
       await setToStorage("userID", user.id);
+      authTimer(expirationTokenMilliSec.value)
       loading.value = false;
     } catch (err) {
       errorAPIMessage.value = err;
@@ -74,6 +86,7 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   const handleLogout = async () => {
+    console.log('logout');
     loading.value = true;
     currentToken.value = await getFromStorage("token");
     await axios.get(process.env.VUE_APP_ROOT_API + '/auth/logout', {
@@ -84,9 +97,13 @@ export const useAuthStore = defineStore("auth", () => {
     currentUser.value = null;
     currentToken.value = "";
     isAuth.value = false;
+    expirationTokenMilliSec.value = 0;
     removeFromStorage("token");
     removeFromStorage("userID");
+    clearAuthTimer();
+    router.push('/login');
     loading.value = false;
+    loadingUser.value = false;
   };
 
   const getUser = async () => {
@@ -110,8 +127,20 @@ export const useAuthStore = defineStore("auth", () => {
       }catch(err){
         console.error(err);
         loadingUser = false;
+      }finally{
+        loadingUser = false;
       }
   };
+
+  const authTimer = (duration) => {
+    tokenTimer.value = setTimeout(() => {
+      handleLogout()
+    }, duration)
+  }
+
+  const clearAuthTimer = () => {
+    clearTimeout(tokenTimer.value)
+  }
 
   const setToStorage = async (key, value) => {
     await ionicStorage.set(key, value);
@@ -132,6 +161,7 @@ export const useAuthStore = defineStore("auth", () => {
     registerSuccess,
     errorAPIMessage,
     isAuth,
+    expirationTokenMilliSec,
     setToStorage,
     getFromStorage,
     handleLogin,

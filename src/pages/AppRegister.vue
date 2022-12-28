@@ -166,7 +166,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onUnmounted } from "vue";
 import { useAuthStore } from "../stores/auth";
 // Store To Refs is imported for loading here
 import { storeToRefs } from "pinia";
@@ -290,8 +290,8 @@ export default defineComponent({
          if(registerSuccess.value){
            const message = 'Please check your email, to verify your account 😊';
            await registerToast(message, 'success');
-           clearCredentials();
            navigateToLoginPage();
+          //  clearCredentials();
           }
         // }
         else if(errorAPIMessage.value){
@@ -336,6 +336,9 @@ export default defineComponent({
       })
       await toast.present()
     } 
+    onUnmounted(() => {
+      clearCredentials()
+    })
     return {
       lastName,
       firstName,

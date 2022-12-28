@@ -143,11 +143,17 @@ h1.view-title {
 
 ion-item.account-type {
   --border-radius: 8px;
+  /* --border-radius: 8%; */
   --background: var(--ion-color-primary);
+}
+
+.account-type{
+  background: var(--ion-color-primary);
 }
 
 .account-type.ios.list-ios {
   border-radius: 10px;
+  /* border-radius: 10%; */
   background-color: var(--ion-color-primary);
 }
 
