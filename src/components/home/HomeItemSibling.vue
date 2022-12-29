@@ -11,7 +11,7 @@
           </ion-item>
         </ion-row>
         <ion-row class="ion-justify-content-center ion-margin-end">
-          <ion-text class="ion-text-capitalize">{{ data.firstName }}</ion-text>
+          <ion-text class="ion-text-capitalize" color="medium">{{ data.firstName }}</ion-text>
         </ion-row>
       </ion-grid>
 </template>

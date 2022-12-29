@@ -13,13 +13,13 @@ import {useWalletStore} from "./wallets"
 
 
 
-import { useRouter } from "vue-router";
+
+import router from '../router'
 import axios from "axios";
 
 
 export const useAuthStore = defineStore("auth", () => {
 
-  const router = useRouter();
 
 const assetsStore = useAssetsStore();
 const cardStore = useCardStore();

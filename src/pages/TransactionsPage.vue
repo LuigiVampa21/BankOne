@@ -13,7 +13,7 @@
       <ion-grid>
         <ion-row class="ion-justify-content-center">
           <ion-row class="transactions-container red" v-if="transactions">
-            <base-item-row :tx="allTxsR"></base-item-row>
+            <base-item-row :tx="transactions"></base-item-row>
           </ion-row>
           <ion-row class="transactions-container" v-else>
             <ion-text color="medium" class="no-history pos-down10">No transaction history</ion-text>
@@ -25,7 +25,11 @@
 </template>
 
 <script>
-import {onMounted, onUpdated, ref, defineComponent} from 'vue'
+import {
+  onBeforeMount,
+  // onMounted,
+  //  onUpdated, ref, 
+   defineComponent} from 'vue'
 import { useTxStore } from "../stores/transactions"
 import { storeToRefs } from "pinia"
 
@@ -45,19 +49,22 @@ export default defineComponent({
     const router = useRouter();
     const txStore = useTxStore();
     const {transactions, loading} = storeToRefs(txStore);
-    let allTxsR = ref(null);
-    onMounted(async () => {
+    // let allTxsR = ref(null);
+    // onMounted(async () => {
+      onBeforeMount(async () => {
      await txStore.getAllTxs()
+     console.log(transactions.value);
     })
-    onUpdated(() => {
-      allTxsR.value = transactions;
-    })
+    // onUpdated(() => {
+    //   allTxsR.value = transactions;
+    // })
     return {
       Income,
       Outcome,
       router,
-      allTxsR,
-      loading
+      // allTxsR,
+      loading,
+      transactions,
     };
   },
 });

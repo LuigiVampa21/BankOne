@@ -1,7 +1,7 @@
 <template>
   <ion-icon
         class="home-cards-icons"
-        color="light"
+        color="medium"
         :icon="icon"
       ></ion-icon>
   

@@ -43,7 +43,6 @@ export const useDocsStore = defineStore("docs", () => {
         const { txs, results } = response.data;
         docs.value = txs;
         resultsR.value = results;
-        console.log(docs.value, resultsR.value);
         loading.value = false;
       } catch (err) {
         console.error(err);
