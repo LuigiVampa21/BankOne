@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
+import { defineComponent, onMounted } from "vue";
 import { useAuthStore } from "./stores/auth";
 import { IonApp, IonRouterOutlet } from "@ionic/vue";
 
-export default {
+export default defineComponent({
   name: "App",
   components: {
     IonApp,
@@ -21,7 +21,7 @@ export default {
       await authStore.getUser();
     });
   },
-};
+});
 </script>
 
 <style scoped>

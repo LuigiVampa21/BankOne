@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import HomePage from "../pages/HomePage.vue";
 
+// import { useAuthStore } from "../stores/auth";
+// import { storeToRefs } from "pinia";
+
+// const authStore = useAuthStore();
+// const {isAuth} = storeToRefs(authStore);
+
 const routes = [
   {
     path: "/",
@@ -78,9 +84,28 @@ const routes = [
   { path: '/:catchAll(.*)', redirect: '/404' },  
 ];
 
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+// pinia.use(store => {
+//   // Define the isAuthenticated function using the Pinia store
+//   const isAuthenticated = () => {
+//     return store.state.isAuthenticated;
+//   }
+
+//   // Add the beforeEnter route guard to your routes
+//   routes.forEach(route => {
+//     route.beforeEnter = (to, from, next) => {
+//       if (isAuthenticated()) {
+//         next();
+//       } else {
+//         next('/login');
+//       }
+//     }
+//   });
+// });
 
 export default router;

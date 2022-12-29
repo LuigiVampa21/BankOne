@@ -32,8 +32,26 @@ import BaseLayout from "@/components/base/BaseLayout.vue";
 import BaseCard from "@/components/base/BaseCard.vue";
 import BaseAvatar from "@/components/base/BaseAvatar.vue";
 import BaseItemRow from "@/components/base/BaseItemRow.vue";
+import { useAuthStore } from "./stores/auth";
+
+
 
 const app = createApp(App).use(IonicVue).use(createPinia()).use(router);
+
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore()
+  const id = await authStore.getFromStorage("userID");
+  if (to.path === '/login' || to.path === '/register' || to.path === '/404') {
+    next();
+    return;
+  }
+  if (id) {
+    next();
+  } else {
+    next('/login');
+  }
+});
+
 
 app.config.warnHandler = () => null;
 
@@ -41,6 +59,7 @@ app.component("base-layout", BaseLayout);
 app.component("base-card", BaseCard);
 app.component("base-avatar", BaseAvatar);
 app.component("base-item-row", BaseItemRow);
+
 
 router.isReady().then(() => {
   app.mount("#app");

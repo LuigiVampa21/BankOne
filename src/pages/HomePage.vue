@@ -174,7 +174,8 @@ export default {
     // });
     // onUpdated(async () => {
     onMounted(async () => {
-      if(!isAuth.value) {
+      const id = await authStore.getFromStorage("userID");
+      if(!id) {
         return
       }
       await overviewStore.getOverview();

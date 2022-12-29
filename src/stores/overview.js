@@ -18,7 +18,6 @@ export const useOverviewStore = defineStore("overview", () => {
     loading.value = true;
     try {
       token.value = await authStore.getFromStorage("token");
-      console.log(token.value);
       const response = await axios.get(
         process.env.VUE_APP_ROOT_API + "/users/overview",
         {
