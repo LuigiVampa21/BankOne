@@ -107,14 +107,11 @@ export default {
                 console.error(err);
             }
             })
-        // const user = ref(userData);
         const now = new Date();
         const date = now.getMonth() + '-' + now.getDate() + '-' + now.getFullYear()
-        // console.log(user)
         return{
             date,
-            userR
-
+            userR,
         }
     }
 }
@@ -123,10 +120,13 @@ export default {
 <style scoped>
 
             body {
+                width: 100%;
+                height: 100%;
                 font-size: 0.75rem;
                 font-family: 'Inter', sans-serif;
                 font-weight: 400;
-                color: #000000;
+                color: var(--ion-color-light);
+                background: var(--ion-color-secondary);
                 margin: 0 auto;
                 position: relative;
             }
@@ -318,7 +318,7 @@ export default {
             }
 
             .table-box table tr.item td, .summary-box table tr.item td {
-                border-bottom: 1px solid #D7DCE4;
+                /* border-bottom: 1px solid #D7DCE4; */
                 height: 1.5rem;
             }
 
