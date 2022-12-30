@@ -10,6 +10,7 @@ import {useLoanStore} from "./loans"
 import {useOverviewStore} from "./overview"
 import {useTxStore} from "./transactions"
 import {useWalletStore} from "./wallets"
+import { useSettingStore } from "./settings";
 
 
 
@@ -28,8 +29,9 @@ const loanStore = useLoanStore();
 const overviewStore = useOverviewStore();
 const txStore = useTxStore();
 const walletStore = useWalletStore();
+const settingStore = useSettingStore()
 
-const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore, txStore, walletStore]
+const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore, txStore, walletStore, settingStore]
 
   let currentUser = ref(null);
   let currentToken = ref("");

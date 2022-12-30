@@ -93,6 +93,7 @@ export default defineComponent({
     })
     const reset = () => {
       docsStore.resetDocs()
+      showPreview.value = false;
       queryObj.account = null;
       queryObj.type = null;
       queryObj.amount = null;
