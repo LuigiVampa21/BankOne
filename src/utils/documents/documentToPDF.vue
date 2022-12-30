@@ -38,15 +38,19 @@
             <div class="table-box">
                 <table cellpadding="0" cellspacing="0">
                     <tbody>
+                        <div class="line">
                         <tr class="heading">
                          <td>Transaction ID</td>
                          <td>Amount</td>
                          <td>Beneficiary</td>  
                         </tr>
+                    </div>
+                        <br>
+                        <hr>
                         <div class="item-container" v-for="tx in txs" :key="tx.id">
                             <tr class="item">
                                 <td>{{ tx.id.slice(-20) }}</td>
-                                <td>$ {{ tx.amount }}</td>
+                                <td class="item-amount">$ {{ tx.amount }}</td>
                                 <td>{{ tx.beneficiary }}</td>
                             </tr>
                         </div>
@@ -70,15 +74,15 @@
                 </div>
 
                 <div class="form signer-item">
-                    <label for="signature" class="label">Issued by: Bank One Ltd.</label>
-                    <input type="text" id="signature" class="border" value="Sign Here">
+                    <label for="signature" class="label">Signature</label>
+                    <input type="text" id="signature" class="border">
                 </div>
             </div>
         </div>
 
         <div id="pspdfkit-footer">
             <div class="footer-columns">
-                <span>Bank One Ltd - Confidential</span>
+                <span>Issued by Bank One Ltd.</span>
                 <!-- <span>Page {{ pageNumber }} of {{ pageCount }}</span> -->
             </div>
         </div>
@@ -125,11 +129,32 @@ export default {
                 font-size: 0.75rem;
                 font-family: 'Inter', sans-serif;
                 font-weight: 400;
-                color: var(--ion-color-light);
-                background: var(--ion-color-secondary);
+                color: var(--ion-color-primary);
+                /* background: var(--ion-color-secondary); */
+                background: white;
                 margin: 0 auto;
                 position: relative;
             }
+
+            .line{
+                height: 100%;
+                border: 1px solid black;
+            }
+
+            .line > * {
+                line-height: 20px;
+            }
+
+            .heading > *{
+                margin-left: 5px ;
+            }
+            
+            .heading :nth-child(3){
+                position: relative;
+                right: -50px;
+            }
+
+
 
             #pspdfkit-header {
                 font-size: 0.625rem;
@@ -195,6 +220,10 @@ export default {
 
             .intro-form:last-child {
                 border-right: none;
+            }
+
+            .item-amount {
+                margin-left: -75px;
             }
 
             .intro-table-title {
@@ -300,8 +329,8 @@ export default {
             }
 
             .table-box table tr.heading td {
-                border-top: 1px solid #000000;
-                border-bottom: 1px solid #000000;
+                /* border-top: 1px solid #000000;
+                border-bottom: 1px solid #000000; */
                 height: 1.5rem;
             }
 
@@ -346,7 +375,7 @@ export default {
                 color: #717885;
                 margin-top: 2.5rem;
                 bottom: 2.5rem;
-                position: absolute;
+                position: relative;
                 width: 100%;
             }
 
