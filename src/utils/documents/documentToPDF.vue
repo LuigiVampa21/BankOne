@@ -1,5 +1,6 @@
 <template>
     <body>
+
         <div id="pspdfkit-header">
             <div class="header-columns">
                 <div class="logotype">
@@ -83,14 +84,15 @@
         <div id="pspdfkit-footer">
             <div class="footer-columns">
                 <span>Issued by Bank One Ltd.</span>
-                <!-- <span>Page {{ pageNumber }} of {{ pageCount }}</span> -->
             </div>
         </div>
+
     </body>
 </template>
 
 <script>
 // import userData from "../../utils/user/user";
+// import { getPlatforms } from '@ionic/vue';
 import axios from 'axios';
 import {onBeforeMount, ref} from 'vue';
 import {useAuthStore} from '../../stores/auth';
@@ -99,6 +101,7 @@ export default {
     props:["txs", "dateInterval"],
     setup(){
         const userR = ref(null);
+        // console.log(getPlatforms());
         onBeforeMount(async() => {
             const authStore = useAuthStore();
             const {currentUser} = storeToRefs(authStore);
@@ -123,18 +126,20 @@ export default {
 
 <style scoped>
 
-            body {
-                width: 100%;
-                height: 100%;
-                font-size: 0.75rem;
-                font-family: 'Inter', sans-serif;
-                font-weight: 400;
-                color: var(--ion-color-primary);
-                /* background: var(--ion-color-secondary); */
-                background: white;
-                margin: 0 auto;
-                position: relative;
-            }
+
+body {
+    width: 100%;
+    height: 100%;
+    min-width: 780px;
+    min-height: 1122px;
+    font-size: 0.75rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: var(--ion-color-primary);
+    background: white;
+    margin: 0 auto;
+    position: relative;
+}
 
             .line{
                 height: 100%;
@@ -205,7 +210,6 @@ export default {
 
             .intro-table {
                 display: flex;
-                /* justify-content: space-between; */
                 margin: 3rem 0 5rem 0;
                 border-top: 1px solid #000000;
                 border-bottom: 1px solid #000000;
@@ -213,9 +217,7 @@ export default {
 
             .intro-form {
                 display: flex;
-                /* flex-direction: column; */
                 border-right: 1px solid #000000;
-                /* width: 33%; */
             }
 
             .intro-form:last-child {
@@ -329,8 +331,6 @@ export default {
             }
 
             .table-box table tr.heading td {
-                /* border-top: 1px solid #000000;
-                border-bottom: 1px solid #000000; */
                 height: 1.5rem;
             }
 
@@ -347,7 +347,6 @@ export default {
             }
 
             .table-box table tr.item td, .summary-box table tr.item td {
-                /* border-bottom: 1px solid #D7DCE4; */
                 height: 1.5rem;
             }
 
@@ -385,4 +384,5 @@ export default {
                 padding-left: 2.5rem;
                 padding-right: 2.5rem;
             }
+
         </style>

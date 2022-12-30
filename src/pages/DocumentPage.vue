@@ -19,12 +19,10 @@
       <ion-row v-else class="ion-margin ion-justify-content-between">
         <h1 class="ion-margin-end ion-padding-end">{{ resultsR }} results</h1>
         <ion-button class="ion-text-capitalize custom-3 ion-margin-start" color="tertiary" @click="reset">reset</ion-button>
-        <ion-button class="ion-text-capitalize custom-3" color="tertiary" @click="generatePDF">export</ion-button>
-
-        
-            <documentToPDFVue class="preview" ref="document" :txs="docs" :dateInterval="{startDate: queryObj.startDate, endDate: queryObj.endDate}"/>
-  
-        <base-item-row :tx="docs" :type="'doc'"></base-item-row>
+        <ion-button class="ion-text-capitalize custom-3" v-if="!showPreview" color="tertiary" @click="showPreview = !showPreview">preview</ion-button>
+        <ion-button class="ion-text-capitalize custom-3" v-if="showPreview" color="tertiary" @click="generatePDF">export</ion-button>
+        <base-item-row v-if="!showPreview" :tx="docs" :type="'doc'"></base-item-row>
+        <documentToPDFVue class="preview" ref="document" v-if="showPreview" :txs="docs" :dateInterval="{startDate: queryObj.startDate, endDate: queryObj.endDate}"/>
       </ion-row>
     </base-layout>
   </ion-page>
@@ -78,24 +76,17 @@ export default defineComponent({
       await docsStore.getDocs(queryObj)
     }
     const generatePDF = () => {
-      // let doc = new jsPDF();
       let doc = new jsPDF({
         orientation: 'p', 
-        unit: 'px', 
+        unit: 'px',
         format: 'a4'
 });
       const contentHTML = document.value.$el;
-      console.log(contentHTML);
-      // console.log(document.value);
-      // const content = document.value.innerHTML;
-      // console.log(doc);
-      // doc.setFontSize(8)
       doc.html(contentHTML, { 
        callback: function(doc){
-        doc.save('transactions.pdf')
+        doc.save(`transactions-${new Date().getTime()}.pdf`)
        } 
       })
-      // doc.save('transaction.pdf')
     }
     onUnmounted(() => {
       reset()
