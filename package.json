@@ -32,7 +32,8 @@
     "vue": "^3.2.21",
     "vue-router": "^4.0.12",
     "vue-virtual-scroller": "^2.0.0-beta.7",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "yup-password": "^0.2.2"
   },
   "devDependencies": {
     "@capacitor/cli": "^4.6.1",

@@ -98,14 +98,12 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons class="ion-justify-content-start">
-            <ion-button color="tertiary" @click="showModal = !showModal">Cancel</ion-button>
+            <ion-button color="tertiary" @click="cancel">Cancel</ion-button>
           </ion-buttons>
           <ion-title class="ion-text-capitalize">forgot password</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content color="primary" class="ion-padding">
-        <!-- <ion-row> -->
-          <!-- <ion-card color="primary" class="pos-down10 input-container-modal"> -->
           <ion-row color="primary" class="pos-down10 input-container-modal">
             <ion-text>Please enter the email linked to your account</ion-text>
             <ion-input type="email" class="custom-3 ion-padding" v-model="emailInput" placeholder="Email"></ion-input>
@@ -114,8 +112,6 @@
             </div>
             <ion-button type="button" class="custom-1" color="tertiary" @click="confirm()">Confirm</ion-button>
           </ion-row>
-          <!-- </ion-card> -->
-        <!-- </ion-row> -->
       </ion-content>
     </ion-modal>
     </ion-content>
@@ -206,8 +202,6 @@ export default defineComponent({
           return
         }
           navigateToHomePage()
-          // clearCredentials()
-          //clear error messages
       }catch(err){
         console.error(err);
       }
@@ -240,6 +234,10 @@ export default defineComponent({
           sendFgtEmail();
       }
     }
+    const cancel = () =>{
+      showModal.value = !showModal.value;
+      emailInput.value = ""
+    }
     const validateEmail = (email) => {
       return String(email)
         .toLowerCase()
@@ -252,6 +250,7 @@ const sendFgtEmail = async() => {
   if(res){
     await loginToast(responseAPIMessage.value, 'success')
     showModal.value = false;
+    emailInput.value = ""
   }else{
     await loginToast(responseAPIMessage.value, 'danger')
   }
@@ -280,6 +279,7 @@ const loginToast = async(message, color) => {
       errors: useFormErrors(),
       sendLogin,
       confirm,
+      cancel,
     }
   }
 });

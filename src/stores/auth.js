@@ -213,6 +213,22 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     }
   }
 
+  const resetPwdFn = async(token, email, password) => {
+    loading.value = true;
+    try{
+      const resp = await axios.post(`${process.env.VUE_APP_ROOT_API}/auth/reset-password/?token=${token}&email=${email}`, {password}) 
+        const {msg} = resp.data;
+        responseAPIMessage.value = msg; 
+        return true;
+      }catch(err){
+        console.error(err);
+        responseAPIMessage.value = err.response.data.message; 
+        return false;
+    }finally{
+      loading.value = false;
+    }
+  }
+
   return {
     currentUser,
     currentToken,
@@ -230,5 +246,6 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     handleLogout,
     getUser,
     forgotPasswordFn,
+    resetPwdFn,
   };
 });

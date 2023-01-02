@@ -77,6 +77,11 @@ const routes = [
     component: () => import("@/pages/HelpPage"),
   },
   {
+    path: "/reset-password",
+    name: "ResetPwd",
+    component: () => import("@/pages/ResetPwd"),
+  },
+  {
     path: '/404',
     name: 'NotFound',
     component: () => import ('@/pages/NotFoundPage')

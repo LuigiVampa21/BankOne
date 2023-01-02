@@ -41,7 +41,7 @@ const app = createApp(App).use(IonicVue).use(createPinia()).use(router);
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   const id = await authStore.getFromStorage("userID");
-  if (to.path === '/login' || to.path === '/register' || to.path === '/404') {
+  if (to.path === '/login' || to.path === '/register' || to.path === '/404' || to.path.startsWith('/reset-password')) {
     next();
     return;
   }

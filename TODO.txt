@@ -1,7 +1,4 @@
-SPINNER FOR REQUESTS
-SWIPER JS
+SWIPER JS ASSETS
 disappear footer when scrolling down
 change from eur to usd
-imgs for home cards
 make container for big screen eg.instagramLike
-pinia for state management authentication
