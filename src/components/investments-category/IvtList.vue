@@ -21,6 +21,6 @@ export default {
 <style scoped>
 ion-card.ivt-list {
   position: relative;
-  top: 5vh;
+  top: 2.5vh;
 }
 </style>

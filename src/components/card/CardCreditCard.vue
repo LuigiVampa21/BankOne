@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="cardD"> -->
   <div :class="card.type === 'digital' ? 'cardD' : 'cardP'">
     <div class="layout" v-if="!hasSecondCard && card.type === 'physical'">
       <p>

@@ -10,7 +10,6 @@
                     <ion-slide v-for="card in arrayCard.value" :key="card?.id" class="card-item-slide">
                       <CardCreditCard :card="card" :showDetails="showCardDetails" :hasSecondCard="hasSecondCard"/>
                     </ion-slide>
-
                   </ion-slides>
 
         </ion-row>
@@ -61,6 +60,7 @@
 </template>
 
 <script>
+
 import { 
   onMounted,
    onUpdated, ref, defineComponent, onBeforeMount,
@@ -92,7 +92,11 @@ export default defineComponent({
     IonSlides,
     IonSlide,
     IonModal,
-    IonButtons, IonButton, IonHeader, IonToolbar, IonTitle,
+    IonButtons, 
+    IonButton, 
+    IonHeader, 
+    IonToolbar, 
+    IonTitle,
     CardCreditCard,
     CardOptions,
   },
@@ -179,14 +183,14 @@ export default defineComponent({
       hasSecondCard,
       hasInsurances,
       insuranceToggle,
-      setOpts,
       showCardDetails,
       slideOpts,
-      getSlide,
       slider,
-      setOpen,
       insuranceModal,
       phyCardModal,
+      getSlide,
+      setOpen,
+      setOpts,
     };
   }
 });

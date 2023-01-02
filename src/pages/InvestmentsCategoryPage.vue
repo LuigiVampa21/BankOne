@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <base-layout :title="$route.params.category" :backLink="'/investments'">
-      <IvtList
+      <!-- <IvtList
         :data="
           $route.params.category == 'stocks'
             ? assetsR.stocks
@@ -11,6 +11,21 @@
             ? assetsR.commoditties
             : assetsR.forex
             "
+      /> 
+    add default assets which is an empty array of assets otherwise everytime user presses back link it would have hit the last array and the show up ivt list with assetsR.forex
+    -->
+      <IvtList
+        :data="
+          $route.params.category == 'stocks'
+            ? assetsR.stocks
+            : $route.params.category == 'crypto'
+            ? assetsR.crypto
+            : $route.params.category == 'commoditties'
+            ? assetsR.commoditties
+            : $route.params.category == 'forex'
+            ? assetsR.forex
+            : defaultAssets.assetsBlank
+            "
       />
     </base-layout>
   </ion-page>
@@ -18,6 +33,7 @@
 
 <script>
 import IvtList from "@/components/investments-category/IvtList";
+import defaultAssets from "../utils/investments/blank" 
 import {defineComponent,
    onMounted, reactive, ref
 } from "vue";
@@ -55,6 +71,7 @@ export default defineComponent({
       // CryptoIndex,
       // StocksIndex,
       assetsR,
+      defaultAssets,
     };
   },
 });
