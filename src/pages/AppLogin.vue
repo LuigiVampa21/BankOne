@@ -75,7 +75,7 @@
                 <ion-row>
                   <ion-col>
                     <div class="ion-text-center">
-                      <ion-text color="tertiary"> Forgot Password? </ion-text>
+                      <ion-text color="tertiary" @click="showModal = !showModal"> Forgot Password? </ion-text>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -93,12 +93,37 @@
           </ion-card>
         </ion-row>
       </ion-grid>
+
+      <ion-modal ref="modal" :is-open="showModal">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons class="ion-justify-content-start">
+            <ion-button color="tertiary" @click="showModal = !showModal">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title class="ion-text-capitalize">forgot password</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content color="primary" class="ion-padding">
+        <!-- <ion-row> -->
+          <!-- <ion-card color="primary" class="pos-down10 input-container-modal"> -->
+          <ion-row color="primary" class="pos-down10 input-container-modal">
+            <ion-text>Please enter the email linked to your account</ion-text>
+            <ion-input type="email" class="custom-3 ion-padding" v-model="emailInput" placeholder="Email"></ion-input>
+            <div class="errorMsg forgot-container-error" v-if="showForgotError">
+              <ion-text color="danger">Invalid email format</ion-text>
+            </div>
+            <ion-button type="button" class="custom-1" color="tertiary" @click="confirm()">Confirm</ion-button>
+          </ion-row>
+          <!-- </ion-card> -->
+        <!-- </ion-row> -->
+      </ion-content>
+    </ion-modal>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import { defineComponent, onUnmounted } from "vue";
+import { defineComponent, onUnmounted, ref } from "vue";
 import { useAuthStore } from "../stores/auth";
 import { storeToRefs } from "pinia";
 import * as yup from "yup";
@@ -122,7 +147,9 @@ import {
   IonCol,
   useIonRouter,
   IonProgressBar,
-  toastController
+  toastController,
+  IonModal,
+  IonTitle,
 } from "@ionic/vue";
 
 const credentialsComponentSchema = yup
@@ -154,15 +181,20 @@ export default defineComponent({
     IonText,
     IonCol,
     IonProgressBar, 
+    IonModal,
+    IonTitle,
   },
   setup(){
     const loginForm = useForm({
       validationSchema: credentialsComponentSchema,
     });
+    const showModal = ref(false);
+    const emailInput = ref("");
+    const showForgotError = ref(false);
     const ionRouter = useIonRouter();
     const authStore = useAuthStore();
     const {currentUser, errorAPIMessage,
-       loading
+       loading, responseAPIMessage
     } = storeToRefs(authStore)
     const sendLogin = async() => {
       try{
@@ -188,11 +220,48 @@ export default defineComponent({
       ionRouter.navigate('/home', 'forward', 'replace')
     }
     const loginToastFail = async() => {
+      await loginToast(errorAPIMessage.value, 'danger')
+      // const toast = await toastController.create({
+      //   message: errorAPIMessage.value,
+      //   duration: 2500,
+      //   position: "top",
+      //   color: 'danger',
+      // })
+      // await toast.present()
+    } 
+    const confirm = () => {
+      if(validateEmail(emailInput.value) === null || !emailInput.value){
+        showForgotError.value = true;
+        setTimeout(() => {
+            showForgotError.value = false;
+          }, 2000)
+        }else{
+          showForgotError.value = false;
+          sendFgtEmail();
+      }
+    }
+    const validateEmail = (email) => {
+      return String(email)
+        .toLowerCase()
+        .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+const sendFgtEmail = async() => {
+  const res = await authStore.forgotPasswordFn(emailInput.value);
+  if(res){
+    await loginToast(responseAPIMessage.value, 'success')
+    showModal.value = false;
+  }else{
+    await loginToast(responseAPIMessage.value, 'danger')
+  }
+}
+const loginToast = async(message, color) => {
       const toast = await toastController.create({
-        message: errorAPIMessage.value,
+        message,
         duration: 2500,
         position: "top",
-        color: 'danger',
+        color,
       })
       await toast.present()
     } 
@@ -204,9 +273,13 @@ export default defineComponent({
     return{
       email,
       password,
+      loading,
+      showModal,
+      emailInput,
+      showForgotError,
       errors: useFormErrors(),
       sendLogin,
-      loading
+      confirm,
     }
   }
 });
@@ -245,5 +318,25 @@ h6 {
 .errorMsg {
   margin-top: -8px;
   margin-bottom: 8px;
+}
+
+.input-container-modal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-container-modal > *:not(.errorMsg) {
+  max-width: 80vw;
+  margin: 20px 0 20px
+}
+
+.custom-3{
+  height: 60px;
+}
+
+.forgot-container-error{
+  align-self: start;
+  margin-left: 32px;
 }
 </style>

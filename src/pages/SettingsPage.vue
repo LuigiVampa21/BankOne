@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Settings'" :backLink="'/home'">
+    <base-layout :title="'Settings'" :loading="loading" :backLink="'/home'">
       <ion-grid>
         <ion-row class="ion-justidy-content-center settings-container" v-if="!showUpdateAccountComponent">
           <SettingCard :data="SettingsAccount" @click="toggleAccountComponent"/>
@@ -72,7 +72,7 @@ export default defineComponent({
   setup() {
     const authStore = useAuthStore();
     const settingStore = useSettingStore();
-    const {APImessage} = storeToRefs(settingStore)
+    const {APImessage, loading} = storeToRefs(settingStore)
     const showModal = ref(false);
     const showUpdateAccountComponent = ref(false);
     const logout = async() => {
@@ -114,8 +114,9 @@ export default defineComponent({
       SettingsLogOut,
       SettingsPrivacy,
       showModal,
-      toggleAccountComponent,
       showUpdateAccountComponent,
+      loading,
+      toggleAccountComponent,
       logout,
       closeAccount,
       credEmitted,

@@ -41,6 +41,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
   let loading = ref(false);
   let loadingUser = ref(false);
   let errorAPIMessage = ref("");
+  let responseAPIMessage = ref("")
   let expirationTokenMilliSec = ref(0);
   let expirationTime = ref(null);
   let tokenTimer = ref(null);
@@ -177,10 +178,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
 
   const isTokenValid = async(now) => {
     const expiryToken = await getFromStorage('tokenExpiration')
-    // console.log(expiryToken);
-    // console.log(now);
     const isValid = expiryToken > now;
-    // console.log(isValid);
     return isValid;
   }
 
@@ -199,6 +197,22 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     await ionicStorage.remove(key);
   };
 
+  const forgotPasswordFn = async(email) => {
+    loading.value = true;
+    try{
+      const response = await axios.post(process.env.VUE_APP_ROOT_API + '/auth/forgot-password', {email});
+      const {msg} = response.data;
+      responseAPIMessage.value = msg;
+      return true;
+    }catch(err){
+      console.error(err);
+      responseAPIMessage.value = err.response.data.message;
+      return false;
+    }finally{
+      loading.value = false;
+    }
+  }
+
   return {
     currentUser,
     currentToken,
@@ -208,11 +222,13 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     errorAPIMessage,
     isAuth,
     expirationTokenMilliSec,
+    responseAPIMessage,
     setToStorage,
     getFromStorage,
     handleLogin,
     handleRegister,
     handleLogout,
     getUser,
+    forgotPasswordFn,
   };
 });
