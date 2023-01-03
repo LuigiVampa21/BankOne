@@ -28,6 +28,7 @@
     "jspdf": "^2.5.1",
     "pinia": "^2.0.28",
     "pspdfkit": "^2022.5.5",
+    "socket.io-client": "^4.5.4",
     "vee-validate": "^4.7.3",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12",

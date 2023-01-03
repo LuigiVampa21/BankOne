@@ -5,7 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 
 import { IonicVue } from "@ionic/vue";
-
+import socket from './webSocket/socket'
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/vue/css/core.css";
@@ -34,8 +34,6 @@ import BaseAvatar from "@/components/base/BaseAvatar.vue";
 import BaseItemRow from "@/components/base/BaseItemRow.vue";
 import { useAuthStore } from "./stores/auth";
 
-
-
 const app = createApp(App).use(IonicVue).use(createPinia()).use(router);
 
 router.beforeEach(async (to, from, next) => {
@@ -54,6 +52,7 @@ router.beforeEach(async (to, from, next) => {
 
 
 app.config.warnHandler = () => null;
+app.config.globalProperties.$sockets = socket;
 
 app.component("base-layout", BaseLayout);
 app.component("base-card", BaseCard);
