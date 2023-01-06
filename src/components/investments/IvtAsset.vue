@@ -41,23 +41,34 @@
                 <h6 class="asset-title ion-text-uppercase">{{ asset.id }}</h6>
                 <h6
                 class="asset-oneDayChange"
-                :style="
-                    +asset.one_day_change > 0
+                 :style="
+                    isUpdating 
+                    ? {  color: '#0000FF' }
+                    : +asset.one_day_change > 0
                     ? { color: 'var(--ion-color-success)' }
                     : { color: 'var(--ion-color-danger)' }
                     "
                 >
-                {{ asset.one_day_change }} %
+                 <!-- :style="
+                    +asset.one_day_change > 0
+                    ? { color: 'var(--ion-color-success)' }
+                    : { color: 'var(--ion-color-danger)' }
+                    " -->
+                <!-- {{ asset.one_day_change }} % -->
+                {{ asset.price }}
               </h6>
             </div>
           </ion-row>
-  </ion-slide>
-</template>
-</ion-slides>
+        </ion-slide>
+      </template>
+    </ion-slides>
 </template>
 
+
 <script>
-  import { defineComponent, onBeforeMount, ref } from "vue";
+  import { defineComponent, onBeforeMount, ref, watch } from "vue";
+  import {useAssetsStore} from '../../stores/assets';
+  import {storeToRefs} from 'pinia';
   import divideArray from "../../utils/investments/divideArray";
 import { 
   IonAvatar,
@@ -75,7 +86,10 @@ export default defineComponent({
   },
   props: ["assets"],
   setup(props){
+    const assetStore = useAssetsStore();
+    const {loading} = storeToRefs(assetStore);
     const assetSlide = ref(null); 
+    const isUpdating = ref(false); 
     const slideOpts = {
       initialSlide: 0,
       speed: 400
@@ -83,9 +97,18 @@ export default defineComponent({
     onBeforeMount(() => {
       assetSlide.value = divideArray(props.assets);
     })
+    watch(loading, () => {
+      // console.log('---------------------YOUNGER CHILD---------------------');
+      // console.log(props.assets);
+      isUpdating.value = true;
+      setTimeout(() => {
+        isUpdating.value= false;
+      },300)
+    })
     return{
       assetSlide,
       slideOpts,
+      isUpdating,
     }
   }
 });

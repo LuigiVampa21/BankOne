@@ -1,6 +1,5 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-// import { Storage } from "@ionic/storage";
 import { useAuthStore } from "./auth";
 import axios from "axios";
 
@@ -22,6 +21,7 @@ export const useAssetsStore = defineStore("assets", () => {
           },
         }
         );
+        // console.log(response.data.assets);
         assets.value = response.data.assets;
         loading.value = false;
       } catch (err) {

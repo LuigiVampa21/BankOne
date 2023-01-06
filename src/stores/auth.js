@@ -51,6 +51,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
 
   const handleLogin = async credentials => {
     loading.value = true;
+    console.log(process.env.VUE_APP_ROOT_API);
     try {
       const { email, password } = credentials;
       const response = await axios.post(

@@ -8,14 +8,22 @@
       <h6 class="asset-type-title ion-text-capitalize" >{{ type }}</h6>
     </ion-row>
     <ion-row class="ion-justify-content-between row-container">
-      <IvtAsset v-if="data" :assets="data" />
+      <IvtAsset v-if="data.array != null" :assets="data.array" />
+      <!-- <IvtAsset v-if="dataR" :assets="dataR" /> -->
     </ion-row>
   </ion-card>
 </template>
 
 <script>
+// import {useAssetsStore} from '../../stores/assets';
+// import {storeToRefs} from 'pinia';
 import { IonCard, IonRow } from "@ionic/vue";
-import { defineComponent } from "@vue/runtime-core";
+import { 
+  // toRef, 
+defineComponent, 
+// watch
+// , ref
+ } from "vue";
 
 import IvtAsset from "./IvtAsset.vue";
 
@@ -26,6 +34,22 @@ export default defineComponent({
     IonCard,
     IonRow,
   },
+  setup(){
+    // const assetStore = useAssetsStore();
+    // const {loading} = storeToRefs(assetStore);
+    // const dataR = toRef(props, 'data');
+    // console.log(dataR.value);
+    // console.log(props.data);
+    // watch(loading, () => {
+    //   if(props.type == 'crypto' && loading.value == true){
+    //     console.log('---------------------OLDER CHILD---------------------');
+    //   console.log(props.data.array)
+    //   }
+    // })
+      // return{
+      //   data
+      // }
+  }
 });
 </script>
 
