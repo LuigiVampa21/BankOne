@@ -103,7 +103,7 @@ export default defineComponent({
       isUpdating.value = true;
       setTimeout(() => {
         isUpdating.value= false;
-      },300)
+      },200)
     })
     return{
       assetSlide,

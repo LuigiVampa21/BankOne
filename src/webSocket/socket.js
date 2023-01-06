@@ -12,10 +12,10 @@ socket.on('connect', () => {
 });
 
 socket.on('prices updated', async () => {
-  // console.log('hiiya')
+  console.log('hiiya')
   //   console.log('----------------------------------------------------------------------------------------');
   const assetsStore = useAssetsStore();
-await assetsStore.getAssets()
+  await assetsStore.getAssets()
 });
 
 

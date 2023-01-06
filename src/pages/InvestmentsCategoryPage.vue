@@ -35,7 +35,8 @@
 import IvtList from "@/components/investments-category/IvtList";
 import defaultAssets from "../utils/investments/blank" 
 import {defineComponent,
-   onMounted, reactive, ref
+   onMounted, reactive, ref,
+   watch
 } from "vue";
 import {useAssetsStore} from "../stores/assets"
 import { storeToRefs } from "pinia";
@@ -44,6 +45,7 @@ import { IonPage } from "@ionic/vue";
 // import CommoditiesIndex from "../utils/investments/commodities";
 // import CryptoIndex from "../utils/investments/crypto";
 // import StocksIndex from "../utils/investments/stock";
+
 export default defineComponent({
   components: {
     IvtList,
@@ -65,7 +67,21 @@ export default defineComponent({
       assetsR.commoditties = assets.value.commoditties;
       assetsR.forex = assets.value.forex;
     })
+      watch(assets, newValueAsset => {
+      // assetsR.crypto.array = newValueAsset.crypto;
+      // console.log('Value BEFORE');
+      // console.log(assets.value.crypto);
+      // assets.value = newValueAsset
+      // console.log('Value AFTER');
+      // console.log(newValueAsset.crypto);
 
+      assetsR.crypto = newValueAsset.crypto;
+      assetsR.stocks = newValueAsset.stocks;
+      assetsR.commoditties = newValueAsset.commoditties;
+      assetsR.forex = newValueAsset.forex;
+
+
+      })
     return {
       // CommoditiesIndex,
       // CryptoIndex,

@@ -8,12 +8,12 @@
         <IvtCard :data="CommoditiesIndex" /> -->
 
 
-        <!-- <IvtCard :data="assetsR?.stocks" :type="'stocks'" /> -->
+        <IvtCard :data="assetsR?.stocks" :type="'stocks'" />
         <!-- <IvtCard :data="assetsR?.crypto" :type="'crypto'" /> -->
 
          <IvtCard :data="assetsR?.crypto" :type="'crypto'" />
-        <!-- <IvtCard :data="assetsR?.commoditties" :type="'commoditties'" />
-        <IvtCard :data="assetsR?.forex" :type="'forex'"/> -->
+        <IvtCard :data="assetsR?.commoditties" :type="'commoditties'" />
+        <IvtCard :data="assetsR?.forex" :type="'forex'"/>
 
       </ion-row>
     </base-layout>
@@ -51,6 +51,9 @@ export default defineComponent({
     let assetsR = reactive({
       // crypto: ref(null),
       crypto: reactive({array: null}),
+      stocks: reactive({array: null}),
+      commoditties: reactive({array: null}),
+      forex: reactive({array: null}),
       // stocks: ref(null),
       // commoditties: ref(null),
       // forex: ref(null),
@@ -59,6 +62,9 @@ export default defineComponent({
       await assetsStore.getAssets()
       // assetsR.crypto = assets.value.crypto;
       assetsR.crypto.array = assets.value.crypto;
+      assetsR.stocks.array = assets.value.stocks;
+      assetsR.commoditties.array = assets.value.commoditties;
+      assetsR.forex.array = assets.value.forex;
       // console.log(assetsR.crypto);
 
       // assetsR.stocks = assets.value.stocks;
@@ -73,6 +79,9 @@ export default defineComponent({
     // });
     watch(assets, newValueAsset => {
       assetsR.crypto.array = newValueAsset.crypto;
+      assetsR.stocks.array = newValueAsset.stocks;
+      assetsR.commoditties.array = newValueAsset.commoditties;
+      assetsR.forex.array = newValueAsset.forex;
       // console.log('---------------------PARENT---------------------');
       // console.log(assetsR.crypto.array);
       // assetsR.stocks = newValueAsset.stocks;
