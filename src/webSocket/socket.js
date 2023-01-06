@@ -8,12 +8,9 @@ const socket = manager.socket("/"); // main namespace
 
 socket.on('connect', () => {
   console.log(socket.id)
-  //   console.log('----------------------------------------------------------------------------------------');
 });
 
 socket.on('prices updated', async () => {
-  console.log('hiiya')
-  //   console.log('----------------------------------------------------------------------------------------');
   const assetsStore = useAssetsStore();
   await assetsStore.getAssets()
 });
@@ -21,7 +18,6 @@ socket.on('prices updated', async () => {
 
 socket.on("connect_error", (err) => {
     console.log(err);
-    // console.log(`connect_error due to ${err.message}`);
   });
 
 export default socket

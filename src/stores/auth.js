@@ -45,13 +45,13 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
   let expirationTokenMilliSec = ref(0);
   let expirationTime = ref(null);
   let tokenTimer = ref(null);
+  let logoutMsg = ref("");
 
   const ionicStorage = new Storage();
   ionicStorage.create();
 
   const handleLogin = async credentials => {
     loading.value = true;
-    console.log(process.env.VUE_APP_ROOT_API);
     try {
       const { email, password } = credentials;
       const response = await axios.post(
@@ -114,7 +114,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     }
   };
 
-  const handleLogout = async () => {
+  const handleLogout = async (cause) => {
     loading.value = true;
     try{
     currentToken.value = await getFromStorage("token");
@@ -132,6 +132,14 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       currentToken.value = "";
       expirationTokenMilliSec.value = 0;
       clearAuthTimer();
+    // switch()
+    if(cause === 'timer'){
+      logoutMsg.value = 'Session expired. Please log in again'
+      console.log('timer');
+    }else{
+      logoutMsg.value = 'Log out successfull'
+      console.log('user');
+    }
       storesArray.forEach(store => store.resetStore())
     }catch(err){
       console.error(err);
@@ -143,14 +151,13 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
 
   const getUser = async () => {
     loadingUser.value = true;
-    if(!isTokenValid(new Date().getTime())){
-      handleLogout();
+    const valid = await isTokenValid(new Date().getTime());
+    if(!valid){
+      handleLogout('timer');
       return;
     }
     const id = await getFromStorage("userID");
-    // maybe add headers with token and authMiddleware into getSingle user server side
     try{
-
       const response = await axios.get(
         process.env.VUE_APP_ROOT_API + "/users/" + id
         );
@@ -165,6 +172,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
         loadingUser.value = false;
       }catch(err){
         console.error(err);
+        handleLogout('timer');
         loadingUser = false;
       }finally{
         loadingUser = false;
@@ -173,8 +181,8 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
 
   const authTimer = (duration) => {
     tokenTimer.value = setTimeout(() => {
-      handleLogout()
-    }, duration)
+      handleLogout('timer')
+    }, +duration - 1000)
   }
 
   const isTokenValid = async(now) => {
@@ -240,6 +248,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     isAuth,
     expirationTokenMilliSec,
     responseAPIMessage,
+    logoutMsg,
     setToStorage,
     getFromStorage,
     handleLogin,

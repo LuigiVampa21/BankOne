@@ -21,7 +21,6 @@ export const useAssetsStore = defineStore("assets", () => {
           },
         }
         );
-        console.log(response.data.assets);
         assets.value = response.data.assets;
         loading.value = false;
       } catch (err) {

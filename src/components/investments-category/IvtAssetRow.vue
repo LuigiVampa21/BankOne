@@ -55,7 +55,7 @@ export default defineComponent({
       isUpdating.value = true;
       setTimeout(() => {
         isUpdating.value = false;
-      }, 200)
+      }, 500)
     })
     return{
       isUpdating

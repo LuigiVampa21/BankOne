@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { defineComponent, onUnmounted, ref } from "vue";
+import { defineComponent, onUnmounted, ref, watch } from "vue";
 import { useAuthStore } from "../stores/auth";
 import { storeToRefs } from "pinia";
 import * as yup from "yup";
@@ -190,7 +190,7 @@ export default defineComponent({
     const ionRouter = useIonRouter();
     const authStore = useAuthStore();
     const {currentUser, errorAPIMessage,
-       loading, responseAPIMessage
+       loading, responseAPIMessage, logoutMsg
     } = storeToRefs(authStore)
     const sendLogin = async() => {
       try{
@@ -267,6 +267,13 @@ const loginToast = async(message, color) => {
     onUnmounted(() => {
       clearCredentials()
     })
+    // watch(logoutMsg.value, async () => {
+    //   console.log(logoutMsg.value);
+    //   // console.log(newMsg);
+    //   if(logoutMsg.value != ""){
+    //     await loginToast(logoutMsg.value, "secondary")
+    //   }
+    // })
     const { value: email } = useField("credentials.email");
     const { value: password } = useField("credentials.password");
     return{

@@ -54,8 +54,7 @@
                     ? { color: 'var(--ion-color-success)' }
                     : { color: 'var(--ion-color-danger)' }
                     " -->
-                <!-- {{ asset.one_day_change }} % -->
-                {{ asset.price }}
+                {{ asset.one_day_change }} %
               </h6>
             </div>
           </ion-row>
@@ -103,7 +102,7 @@ export default defineComponent({
       isUpdating.value = true;
       setTimeout(() => {
         isUpdating.value= false;
-      },200)
+      },500)
     })
     return{
       assetSlide,
