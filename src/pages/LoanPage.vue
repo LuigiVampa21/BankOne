@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Loans'" :backLink="'/home'">
+    <base-layout :title="'Loans'" :backLink="'/home'" :containerDisturb="true">
       <ion-row class="ion-justify-content-center">
         <LoanApply
           @emitAmount="loanAmount"

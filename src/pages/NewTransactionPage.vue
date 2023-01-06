@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'new transfer'" :backLink="'/transactions'">
+    <base-layout :title="'new transfer'" :backLink="'/transactions'" :containerDisturb="true">
       <ReactiveTxCp
         :accounts="bankAccounts"
         :newTransaction="newTransaction"

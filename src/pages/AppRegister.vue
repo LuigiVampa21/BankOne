@@ -10,7 +10,7 @@
         <ion-progress-bar v-if="loading" type="indeterminate" color="success"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content class="template-content">
       <ion-grid>
         <ion-row
           class="container ion-justify-content-center ion-align-items-center"
@@ -361,6 +361,28 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+@media only screen and(min-width: 500px) { 
+  *::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  *::-webkit-scrollbar {
+    width: 0; 
+    /* // set the width to 0 and remove the rest to completely hide the scrollbar */
+  }
+
+  /* *::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+  } */
+}
+
+
+
 .auth-card {
   background: var(--ion-color-primary);
   color: var(--ion-color-white);

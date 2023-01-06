@@ -45,6 +45,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
   let expirationTokenMilliSec = ref(0);
   let expirationTime = ref(null);
   let tokenTimer = ref(null);
+  let showLogoutToastr = ref(false);
   let logoutMsg = ref("");
 
   const ionicStorage = new Storage();
@@ -114,7 +115,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     }
   };
 
-  const handleLogout = async (cause) => {
+  const handleLogout = async (reason) => {
     loading.value = true;
     try{
     currentToken.value = await getFromStorage("token");
@@ -126,21 +127,25 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     removeFromStorage("token");
     removeFromStorage("userID");
     removeFromStorage("tokenExpiration");
+    
+    showLogoutToastr.value = true;
+
+    if(reason == 'timer'){
+      logoutMsg.value = 'Session expired.'
+    }else{
+      logoutMsg.value = 'Log out successful'
+    }
 
       isAuth.value = false;
       currentUser.value = null;
       currentToken.value = "";
       expirationTokenMilliSec.value = 0;
       clearAuthTimer();
-    // switch()
-    if(cause === 'timer'){
-      logoutMsg.value = 'Session expired. Please log in again'
-      console.log('timer');
-    }else{
-      logoutMsg.value = 'Log out successfull'
-      console.log('user');
-    }
       storesArray.forEach(store => store.resetStore())
+      setTimeout(() => {
+        showLogoutToastr.value = false;
+        logoutMsg.value = "";
+      }, 3000)
     }catch(err){
       console.error(err);
     }finally{
@@ -249,6 +254,8 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     expirationTokenMilliSec,
     responseAPIMessage,
     logoutMsg,
+    showLogoutToastr,
+    tokenTimer,
     setToStorage,
     getFromStorage,
     handleLogin,

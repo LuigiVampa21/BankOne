@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <base-layout :title="'Documents'" :backLink="'/home'">
+    <base-layout :title="'Documents'" :backLink="'/home'" :containerDisturb="true">
       <ion-row class="ion-justify-content-center" v-if="!docs">
         <DocumentCard
           @emitAccount="accountValue"

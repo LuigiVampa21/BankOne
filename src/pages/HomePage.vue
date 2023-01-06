@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-content>
+    <ion-content ref="el">
       <base-layout>
         <ion-row class="ion-justify-content-end">
           <ion-button @click="logout">
@@ -173,6 +173,9 @@ export default {
     //   walletTotal.value = sum(bankAccounts.value, true)
     // });
     // onUpdated(async () => {
+
+
+
     onMounted(async () => {
       const id = await authStore.getFromStorage("userID");
       if(!id) {

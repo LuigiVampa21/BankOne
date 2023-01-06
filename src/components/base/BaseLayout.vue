@@ -1,5 +1,5 @@
 <template>
-  <ion-page class="container" @scroll="hideEl">
+  <ion-page class="container">
     <ion-header v-if="backLink">
       <ion-toolbar>
         <ion-buttons slot="start">
@@ -11,7 +11,7 @@
         <ion-progress-bar v-if="loadingO || loadingA || loadingT || loadingC || loadingW || loadingD || loadingL" type="indeterminate" color="tertiary"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ctn" @scroll="hideEl">
+    <ion-content class="ctn" :scroll-events="true" @ionScroll="handleScroll($event)">
       <ion-row
         v-if="title"
         class="ion-margin-start ion-margin-bottom ion-padding-bottom"
@@ -20,7 +20,7 @@
       </ion-row>
 
         <slot />
-        <div v-show="isVisible" class="router-container">
+        <div v-show="isVisible && !containerDisturb" class="router-container">
           <ion-icon
           @click="() => router.push('/home')"
           size="large"
@@ -66,12 +66,13 @@ import {useCardStore} from "../../stores/cards";
 import {useWalletStore} from "../../stores/wallets";
 import {useDocsStore} from "../../stores/documents";
 import {useLoanStore} from "../../stores/loans";
-import {defineComponent, ref } from "vue";
+import {defineComponent, ref} from "vue";
 import {storeToRefs} from "pinia";
+
 
 export default defineComponent({
   name: "HomePage",
-  props: ["backLink", "title"],
+  props: ["backLink", "title", "containerDisturb"],
   components: {
     IonPage,
     IonContent,
@@ -92,9 +93,8 @@ export default defineComponent({
     const walletStore = useWalletStore()
     const docsStore = useDocsStore()
     const loanStore = useLoanStore()
+    const scrollTop = ref(0)
     const {loadingUser} = storeToRefs(authStore);
-
-
 
      const {loading: loadingO} = storeToRefs(overviewStore);
      const {loading: loadingA} = storeToRefs(assetsStore);
@@ -104,9 +104,16 @@ export default defineComponent({
      const {loading: loadingD} = storeToRefs(docsStore);
      const {loading: loadingL} = storeToRefs(loanStore);
 
-    const hideEl = () => {
-      console.log('hide');
+     const handleScroll = (ev) => {
+      scrollTop.value = ev.detail.scrollTop
+      console.log(ev.detail);
+        if(scrollTop.value >= 100){
+          isVisible.value = false
+          }else{
+            isVisible.value = true
+        }
     }
+
     return {
       settings,
       swapHorizontal,
@@ -122,7 +129,7 @@ export default defineComponent({
       loadingD,
       loadingL,
       isVisible,
-      hideEl,
+      handleScroll,
     };
   },
 });
@@ -136,7 +143,7 @@ export default defineComponent({
   justify-content: space-around;
   align-items: center;
   width: 40vw;
-  max-width: 200px;
+  max-width: 160px;
   height: 6vh;
   border-radius: 9999px;
   position: fixed;

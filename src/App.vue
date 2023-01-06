@@ -1,13 +1,17 @@
 <template>
-    <ion-app class="ion-page">
+    <ion-app>
       <ion-router-outlet></ion-router-outlet>
     </ion-app>
 </template>
 
 <script>
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, watch,
+//  ref
+  } from "vue";
 import { useAuthStore } from "./stores/auth";
-import { IonApp, IonRouterOutlet } from "@ionic/vue";
+import {storeToRefs} from "pinia";
+import { IonApp, IonRouterOutlet, toastController } from "@ionic/vue";
+// import { useScroll } from '@vueuse/core'
 
 export default defineComponent({
   name: "App",
@@ -17,9 +21,24 @@ export default defineComponent({
   },
   setup() {
     const authStore = useAuthStore();
+    const {showLogoutToastr, logoutMsg} = storeToRefs(authStore);
     onMounted(async () => {
       await authStore.getUser();
     });
+    watch(showLogoutToastr, async() => {
+      if(showLogoutToastr.value){
+        await logOutToast(logoutMsg.value)
+      }
+    })
+    const logOutToast = async(message) => {
+      const toast = await toastController.create({
+        message,
+        duration: 2500,
+        position: "top",
+        color: 'medium',
+      })
+      await toast.present()
+    } 
   },
 });
 </script>
