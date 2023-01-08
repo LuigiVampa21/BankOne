@@ -128,7 +128,9 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     removeFromStorage("userID");
     removeFromStorage("tokenExpiration");
     
-    showLogoutToastr.value = true;
+    setTimeout(() =>{
+      showLogoutToastr.value = true;
+    },1000)
 
     if(reason == 'timer'){
       logoutMsg.value = 'Session expired.'
@@ -145,7 +147,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       setTimeout(() => {
         showLogoutToastr.value = false;
         logoutMsg.value = "";
-      }, 3000)
+      }, 3500)
     }catch(err){
       console.error(err);
     }finally{

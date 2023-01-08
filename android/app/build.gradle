@@ -1,8 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-
-    namespace 'com.one.bank.MyBank'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.one.bank.MyBank"
