@@ -1,13 +1,6 @@
-{
-  "appId": "com.one.bank.MyBankingApp",
-  "appName": "Bank One",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
+{  
+  "appId": "com.one.bank",
+  "appName": "myBankingApp-01",
   "webDir": "public",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {}
+  "bundledWebRuntime": false
 }
