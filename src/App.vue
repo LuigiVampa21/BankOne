@@ -5,13 +5,10 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, watch,
-//  ref
-  } from "vue";
+import { defineComponent, onMounted, watch } from "vue";
 import { useAuthStore } from "./stores/auth";
 import {storeToRefs} from "pinia";
 import { IonApp, IonRouterOutlet, toastController } from "@ionic/vue";
-// import { useScroll } from '@vueuse/core'
 
 export default defineComponent({
   name: "App",
