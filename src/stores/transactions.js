@@ -35,12 +35,12 @@ export const useTxStore = defineStore("tx", () => {
 
   const postNewTX = async obj => {
     try{
-    const response = await axios.post(process.env.VUE_APP_ROOT_API + "/transactions", obj, {
+    token.value = await authStore.getFromStorage("token");
+    await axios.post(process.env.VUE_APP_ROOT_API + "/transactions", obj, {
         headers: {
           authorization: `Bearer ${token.value}`,
         },
       })
-      console.log(response);
       message.value = "Please check your mailbox to approve the transaction";
       color.value = "success";
     }catch(err){

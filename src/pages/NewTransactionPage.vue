@@ -2,7 +2,7 @@
   <ion-page>
     <base-layout :title="'new transfer'" :backLink="'/transactions'" :containerDisturb="true">
       <ReactiveTxCp
-        :accounts="bankAccounts"
+        :accounts="bankAccountsR"
         :newTransaction="newTransaction"
         :intext="intext"
         @accountSender="accountSender"
@@ -10,7 +10,7 @@
       />
       <FinalizeTxInt
         v-if="newTransaction.intext == 'internal'"
-        :accounts="bankAccounts"
+        :accounts="bankAccountsR"
         :newTransaction="newTransaction"
         @accountToReceive="accountToReceive"
         @amountToSend="amountToSend"
@@ -43,6 +43,7 @@
         <ion-button
           color="tertiary"
           class="ion-text-capitalize back-btn"
+          :class="{ 'back-btn-up' : moveUpBackBtn}"
           @click="backFn"
         >
           <ion-text class="ion-padding"> back </ion-text>
@@ -55,7 +56,9 @@
 <script>
 import FinalizeTxInt from "@/components/newTransaction/finalizeTx/FinalizeTxInt";
 import FinalizeTxExt from "@/components/newTransaction/finalizeTx/FinalizeTxExt";
-import { defineComponent, ref, onUnmounted } from "vue";
+import { defineComponent, ref, onUnmounted, 
+onMounted
+ } from "vue";
 import { IonPage, toastController } from "@ionic/vue";
 import ReactiveTxCp from "@/components/newTransaction/reactiveTxCp";
 
@@ -69,6 +72,7 @@ import { storeToRefs } from "pinia";
 // import AccountInvestments from "../utils/bank_account/account_investments.js";
 
 import intext from "../utils/newTransferData/intext.js";
+import orderingAccount from '../utils/bank_account/orderingAccounts';
 
 export default defineComponent({
   components: {
@@ -82,7 +86,9 @@ export default defineComponent({
     const overviewStore = useOverviewStore();
     const txStore = useTxStore();
     const { bankAccounts, siblings } = storeToRefs(overviewStore);
-    const {message, color} = storeToRefs(txStore)
+    const {message, color} = storeToRefs(txStore);
+    const bankAccountsR = ref(null);
+    const moveUpBackBtn = ref(false);
     const newTransaction = ref({
       // accountSending: "pR2mS$#7p71pOogHxfV$",
       // intext: "external",
@@ -92,6 +98,7 @@ export default defineComponent({
       accountReceiving: null,
       amount: 0,
       exinex: null,
+      newBeneficiaryName: null,
     });
     const accountSender = account => {
       newTransaction.value.accountSending = account.id;
@@ -102,10 +109,17 @@ export default defineComponent({
     const exinexFn = i => {
       newTransaction.value.exinex = i;
       // console.log(newTransaction.value);
+      if(i === 'new beneficiary'){
+        moveUpBackBtn.value = true;
+      }
     };
     const accountToReceive = account => {
       // newTransaction.value.accountReceiving = account.id;
       newTransaction.value.accountReceiving = account.iban;
+        moveUpBackBtn.value = false;
+         if( newTransaction.value.exinex === 'new beneficiary'){
+          newTransaction.value.newBeneficiaryName = account.fullName;
+         }
     };
     const amountToSend = amount => {
       newTransaction.value.amount = +amount;
@@ -117,6 +131,10 @@ export default defineComponent({
       await txToast(message.value, color.value);
       resetTxObj();
     };
+    onMounted(async()=> {
+      await overviewStore.getOverview();
+      bankAccountsR.value = orderingAccount(bankAccounts.value);
+    } )
     onUnmounted(() => {
       resetTxObj()
     })
@@ -182,8 +200,6 @@ export default defineComponent({
     }
     return {
       // accounts,
-      newTransaction,
-      intext,
       accountSender,
       accountIE,
       accountToReceive,
@@ -191,7 +207,10 @@ export default defineComponent({
       backFn,
       sendTx,
       exinexFn,
-      bankAccounts,
+      newTransaction,
+      intext,
+      moveUpBackBtn,
+      bankAccountsR,
       siblings,
     };
   },
@@ -202,5 +221,11 @@ export default defineComponent({
 .back-btn {
   position: relative;
   top: 45vh;
+}
+.back-btn-up {
+  position: relative;
+  top: 10vh;
+  --background: var(--ion-color-tertiary);
+  --color: var(--ion-color-primary);
 }
 </style>

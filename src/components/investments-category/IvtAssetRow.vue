@@ -10,11 +10,16 @@
         :src="asset.image"
       />
     </ion-avatar>
+    <div class="asset-info">
     <h6 class="asset-title ion-text-uppercase">
       <ion-text color="light">
       {{ asset.id }}
     </ion-text>
     </h6>
+      <ion-text color="medium ion-text-capitalize">
+      {{ asset.name }}
+    </ion-text>
+    </div>
     <ion-row class="tx-amount ion-justify-content-end">
       <h6 class="asset-price">
     <ion-text color="medium">
@@ -65,4 +70,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.asset-info{
+  /* border: 1px solid white; */
+  width: 30%;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: flex-start; */
+  margin-top: -16px;
+  }
 </style>

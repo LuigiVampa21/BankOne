@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <!-- FIRST STEP: Choose account to sen from -->
+    <!-- FIRST STEP: Choose account to send from -->
     <ion-row v-if="newTransaction.accountSending === null">
       <ion-card color="secondary" class="ion-padding ion-text-center">
         <ion-text>Select an account to debit</ion-text>

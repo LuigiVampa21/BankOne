@@ -68,19 +68,10 @@ export default defineComponent({
       assetsR.forex = assets.value.forex;
     })
       watch(assets, newValueAsset => {
-      // assetsR.crypto.array = newValueAsset.crypto;
-      // console.log('Value BEFORE');
-      // console.log(assets.value.crypto);
-      // assets.value = newValueAsset
-      // console.log('Value AFTER');
-      // console.log(newValueAsset.crypto);
-
       assetsR.crypto = newValueAsset.crypto;
       assetsR.stocks = newValueAsset.stocks;
       assetsR.commoditties = newValueAsset.commoditties;
       assetsR.forex = newValueAsset.forex;
-
-
       })
     return {
       // CommoditiesIndex,

@@ -1,4 +1,4 @@
-package com.one.bank.MyBank;
+package com.one.bank.MyBankingApp;
 
 import com.getcapacitor.BridgeActivity;
 

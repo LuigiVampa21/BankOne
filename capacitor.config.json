@@ -1,5 +1,5 @@
 {
-  "appId": "com.one.bank.MyBank",
+  "appId": "com.one.bank.MyBankingApp",
   "appName": "Bank One",
   "bundledWebRuntime": false,
   "npmClient": "npm",

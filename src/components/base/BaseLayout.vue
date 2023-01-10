@@ -106,7 +106,6 @@ export default defineComponent({
 
      const handleScroll = (ev) => {
       scrollTop.value = ev.detail.scrollTop
-      console.log(ev.detail);
         if(scrollTop.value >= 100){
           isVisible.value = false
           }else{
@@ -120,7 +119,6 @@ export default defineComponent({
       home,
       router,
       loadingUser,
-      // loading,
       loadingO,
       loadingA,
       loadingT,
@@ -137,6 +135,7 @@ export default defineComponent({
 
 <style scoped>
 .router-container {
+  transition: all 0.2s ease;
   background: var(--ion-color-tertiary);
   border: 1px solid white;
   display: flex;
