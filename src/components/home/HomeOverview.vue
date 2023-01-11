@@ -87,8 +87,7 @@ export default defineComponent({
     IonCard,
     IonCardTitle,
   },
-  props: ["bankAccounts", "lastTX", "beneficiary",
-  //  "isAuth", "loading"
+  props: ["bankAccounts", "lastTX"//  "isAuth", "loading"
   ],
   setup(props) {
     const router = useRouter();
@@ -96,7 +95,6 @@ export default defineComponent({
     const {isAuth} = storeToRefs(authStore)
     let overviewTotal = ref(0);
     let lastTXR = ref(null);
-    let beneficiaryR = ref('');
     onBeforeUpdate(() => {
       // sum(props.bankAccounts);
       if(!isAuth.value) {
@@ -105,12 +103,10 @@ export default defineComponent({
       // console.log(isAuth.value);
       overviewTotal.value = sum(props.bankAccounts);
       lastTXR.value = props.lastTX;
-      beneficiaryR = props.beneficiary;
     });
     return {
       overviewTotal,
       lastTXR,
-      beneficiaryR,
       router,
     };
   },

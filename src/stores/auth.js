@@ -180,9 +180,9 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       }catch(err){
         console.error(err);
         handleLogout('timer');
-        loadingUser = false;
+        loadingUser.value = false;
       }finally{
-        loadingUser = false;
+        loadingUser.value = false;
       }
   };
 

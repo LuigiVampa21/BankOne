@@ -25,7 +25,7 @@ export const useLoanStore = defineStore("loan", () => {
     }catch(err){
       console.error(err);
       message.value = err.response.data.message;
-      color = "danger";
+      color.value = "danger";
     }finally{
         loading.value = false;
     }
