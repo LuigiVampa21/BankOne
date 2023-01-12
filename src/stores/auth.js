@@ -12,6 +12,8 @@ import {useTxStore} from "./transactions"
 import {useWalletStore} from "./wallets"
 import { useSettingStore } from "./settings";
 
+// import { useRoute, useRouter } from 'vue-router'
+
 
 
 
@@ -20,6 +22,11 @@ import axios from "axios";
 
 
 export const useAuthStore = defineStore("auth", () => {
+
+  // const route = useRoute()
+  // const router = useRouter()
+
+  const allowedPath = ["/login", "/register", "/404", "/reset-password"];
 
 
 const assetsStore = useAssetsStore();
@@ -159,7 +166,8 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
   const getUser = async () => {
     loadingUser.value = true;
     const valid = await isTokenValid(new Date().getTime());
-    if(!valid){
+    const validPath = isPathAllowed();
+    if(!valid && !validPath){
       handleLogout('timer');
       return;
     }
@@ -179,7 +187,9 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
         loadingUser.value = false;
       }catch(err){
         console.error(err);
-        handleLogout('timer');
+        if(!validPath()){
+          handleLogout('timer');
+        }
         loadingUser.value = false;
       }finally{
         loadingUser.value = false;
@@ -196,6 +206,11 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
     const expiryToken = await getFromStorage('tokenExpiration')
     const isValid = expiryToken > now;
     return isValid;
+  }
+
+  const isPathAllowed = () => {
+    const isAllowed = allowedPath.includes(router.currentRoute.value.path);
+    return isAllowed;
   }
 
   const clearAuthTimer = () => {

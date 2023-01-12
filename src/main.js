@@ -47,6 +47,7 @@ router.beforeEach(async (to, from, next) => {
     next();
   } else {
     next('/login');
+    // console.log(to.path);
   }
 });
 
