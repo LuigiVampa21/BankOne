@@ -74,10 +74,8 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
         username: user.first_name,
         id: user.id,
       };
-      // console.log(expiry);
       expirationTokenMilliSec.value = expiry * 1000;
       expirationTime.value = new Date(new Date().getTime() + expirationTokenMilliSec.value).getTime();
-      // console.log(expirationTime.value)
       currentToken.value = token;
       isAuth.value = true;
       await setToStorage("token", token);

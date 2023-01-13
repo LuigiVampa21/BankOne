@@ -1,8 +1,8 @@
 // module.exports = {
 //   preset: '@vue/cli-plugin-unit-jest',
-//   transformIgnorePatterns: [
-//     "/node_modules/(?!@ionic/vue|@ionic/vue-router|@ionic/core|@stencil/core|ionicons)",
-//   ],
+//   // transformIgnorePatterns: [
+//   //   "/node_modules/(?!@ionic/vue|@ionic/vue-router|@ionic/core|@stencil/core|ionicons)",
+//   // ]
 // };
 
 
@@ -18,7 +18,8 @@ module.exports = {
     'vue'
   ],
   transform: {
-    '^.+\\.vue$': 'vue-jest',
+    // '^.+\\.vue$': 'vue-jest',
+    // '^.+\\.vue$': 'vue3-jest',
     '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
     '^.+\\.jsx?$': 'babel-jest'
   },
@@ -36,7 +37,7 @@ module.exports = {
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname'
   ],
-  collectCoverage: true,
+  // collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{js,vue}',
     '!src/main.js',

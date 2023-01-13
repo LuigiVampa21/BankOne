@@ -4,9 +4,10 @@
       <ion-row class="ion-justify-content-between">
         <ion-col>
           <ion-card-title class="fontWeight100" v-if="overviewTotal">
+          <!-- commented for unit test = import fake bank Accounts -->
+          <!-- <ion-card-title class="fontWeight100"> -->
             {{ overviewTotal }} €
           </ion-card-title>
-          <!-- CURRENCY DEPENDS ON COUNTRY -->
           <ion-text>EUR</ion-text>
         </ion-col>
         <ion-item color="secondary">
@@ -63,6 +64,14 @@
 import sum from "../../utils/home/computor";
 import { useAuthStore } from "../../stores/auth";
 import { storeToRefs } from "pinia";
+
+// Commented for unit test = import fake bank Accounts
+// import account_checking from "../../utils/bank_account/account_checking";
+// import account_savings from "../../utils/bank_account/account_savings";
+// import account_investments from "../../utils/bank_account/account_investments";
+
+
+
 import {
   IonAvatar,
   IonCard,
@@ -75,6 +84,8 @@ import {
 import {
   defineComponent,
   onBeforeUpdate,
+  // Comment for unit tests
+  // onBeforeMount,
   ref,
 } from "vue";
 export default defineComponent({
@@ -87,8 +98,9 @@ export default defineComponent({
     IonCard,
     IonCardTitle,
   },
-  props: ["bankAccounts", "lastTX"//  "isAuth", "loading"
+  props: ["bankAccounts", "lastTX"
   ],
+  // setup() {
   setup(props) {
     const router = useRouter();
     const authStore = useAuthStore();
@@ -96,14 +108,16 @@ export default defineComponent({
     let overviewTotal = ref(0);
     let lastTXR = ref(null);
     onBeforeUpdate(() => {
-      // sum(props.bankAccounts);
       if(!isAuth.value) {
         return
       }
-      // console.log(isAuth.value);
       overviewTotal.value = sum(props.bankAccounts);
       lastTXR.value = props.lastTX;
     });
+    // Commented for unit test = import fake bank Accounts
+    // onBeforeMount(() => {
+    //   overviewTotal.value = sum([account_checking, account_savings, account_investments], true);
+    // })
     return {
       overviewTotal,
       lastTXR,
