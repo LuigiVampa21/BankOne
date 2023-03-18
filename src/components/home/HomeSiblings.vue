@@ -15,32 +15,21 @@
 
 <script>
 import {
-  // IonAvatar,
-  // IonItem,
-  // IonGrid,
   IonRow,
   IonCard,
   IonText,
-  // IonText,
 } from "@ionic/vue";
 import HomeItemSibling from "./HomeItemSibling.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   components: {
-    // IonAvatar,
-    // IonItem,
-    // IonGrid,
     IonRow,
     IonCard,
     IonText,
-    // IonText,
     HomeItemSibling,
   },
   props:['siblings'],
-  // setup(props){
-  //   console.log(props.siblings);
-  // }
 });
 </script>
 

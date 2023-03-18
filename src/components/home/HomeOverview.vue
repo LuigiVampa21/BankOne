@@ -4,21 +4,15 @@
       <ion-row class="ion-justify-content-between">
         <ion-col>
           <ion-card-title class="fontWeight100" v-if="overviewTotal">
-          <!-- commented for unit test = import fake bank Accounts -->
-          <!-- <ion-card-title class="fontWeight100"> -->
-            {{ overviewTotal }} €
+            {{ overviewTotal }} {{currentUserR?.currency === 'EURO' ? '€'
+                    : currentUserR?.currency === 'POUND' ? '£'
+                    : '$' }}
           </ion-card-title>
-          <ion-text>EUR</ion-text>
+          <ion-text>{{currentUserR?.currency === 'EURO' ? 'EUR'
+                    : currentUserR?.currency === 'POUND' ? 'GBP'
+                    : 'USD' }}</ion-text>
         </ion-col>
-        <ion-item color="secondary">
-          <ion-avatar>
-            <img
-              class="avatar"
-              alt="Silhouette of a person's head"
-              src="https://via.placeholder.com/150C/O https://placeholder.com"
-            />
-          </ion-avatar>
-        </ion-item>
+          <base-flag :currentUserR="currentUserR"></base-flag>
       </ion-row>
     </ion-card-header>
     <ion-row class="ion-justify-content-between">
@@ -31,15 +25,18 @@
     </ion-row>
     <ion-card-content v-if="lastTXR" class="ion-justify-content-center">
       <ion-row class="ion-justify-content-between last-transaction-container">
-        <ion-item color="secondary">
+        <base-flag :currentUserR="currentUserR"></base-flag>
+        <!-- <ion-item color="secondary">
           <ion-avatar>
             <img
               class="avatar"
-              alt="Silhouette of a person's head"
-              src="https://via.placeholder.com/150C/O https://placeholder.com"
+              :alt="'flag ' + currentUserR?.currency"
+              :src="currentUserR?.currency === 'EURO' ? require('../../../public/assets/flags/flag.europe.png') 
+                    : currentUserR?.currency === 'POUND' ? require('../../../public/assets/flags/flag.united-kingdom.png')
+                    : require('../../../public/assets/flags/flag.united-states.png')"
             />
           </ion-avatar>
-        </ion-item>
+        </ion-item> -->
         <div class="last-transaction">
           <ion-text class="ion-text-capitalize"
             >{{ lastTXR?.type }} transfer</ion-text
@@ -47,7 +44,10 @@
           <ion-text color="medium" class="ion-text-uppercase"><h6> <span v-if="lastTXR.beneficiary_name !== 'Bank One Ltd.'">M. </span> {{ lastTXR.beneficiary_name }}</h6></ion-text>
         </div>
         <ion-row class="tx-amount ion-justify-content-end">
-          <ion-text :color="lastTXR?.inflow ? 'success' : 'danger'"> {{lastTXR?.inflow ? '+' : '-'}} {{lastTXR?.amount}}€</ion-text> 
+          <ion-text :color="lastTXR?.inflow ? 'success' : 'danger'"> {{lastTXR?.inflow ? '+' : '-'}} {{lastTXR?.amount}} 
+                    {{currentUserR?.currency === 'EURO' ? '€'
+                    : currentUserR?.currency === 'POUND' ? '£'
+                    : '$' }} </ion-text> 
         </ion-row>
       </ion-row>
     </ion-card-content>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
- import { useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import sum from "../../utils/home/computor";
 import { useAuthStore } from "../../stores/auth";
 import { storeToRefs } from "pinia";
@@ -73,10 +73,8 @@ import { storeToRefs } from "pinia";
 
 
 import {
-  IonAvatar,
   IonCard,
   IonCardTitle,
-  IonItem,
   IonText,
   IonRow,
   IonCol,
@@ -90,16 +88,13 @@ import {
 } from "vue";
 export default defineComponent({
   components: {
-    IonAvatar,
-    IonItem,
     IonText,
     IonRow,
     IonCol,
     IonCard,
     IonCardTitle,
   },
-  props: ["bankAccounts", "lastTX"
-  ],
+  props: ["bankAccounts", "lastTX", "currentUser"],
   // setup() {
   setup(props) {
     const router = useRouter();
@@ -107,12 +102,15 @@ export default defineComponent({
     const {isAuth} = storeToRefs(authStore)
     let overviewTotal = ref(0);
     let lastTXR = ref(null);
+    let currentUserR = ref(null);
     onBeforeUpdate(() => {
       if(!isAuth.value) {
         return
       }
       overviewTotal.value = sum(props.bankAccounts);
       lastTXR.value = props.lastTX;
+      currentUserR.value = props.currentUser;
+      console.log(currentUserR.value);
     });
     // Commented for unit test = import fake bank Accounts
     // onBeforeMount(() => {
@@ -121,7 +119,8 @@ export default defineComponent({
     return {
       overviewTotal,
       lastTXR,
-      router,
+      currentUserR,
+      router
     };
   },
 });

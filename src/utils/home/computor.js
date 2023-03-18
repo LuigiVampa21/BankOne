@@ -4,8 +4,8 @@
 
 
 const sum = (arg, all = false) => {
+  if(!arg) return;
   let accounts = [...arg];
-  console.log(accounts);
   if(!all){
     accounts = [...arg].filter(a => a.type !== "investments");
   }
@@ -14,7 +14,6 @@ const sum = (arg, all = false) => {
   const total = [...accounts].reduce((acc, curr) => {
     return +acc + +curr.amount;
   }, 0);
-  console.log(total);
   return total;
 };
 

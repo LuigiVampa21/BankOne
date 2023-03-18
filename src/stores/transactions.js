@@ -8,7 +8,6 @@ export const useTxStore = defineStore("tx", () => {
   let token = ref("");
   let transactions = ref(null);
   let loading = ref(false);
-
   let message = ref("");
   let color = ref("");
 
@@ -35,8 +34,9 @@ export const useTxStore = defineStore("tx", () => {
 
   const postNewTX = async obj => {
     try{
-    token.value = await authStore.getFromStorage("token");
-    await axios.post(process.env.VUE_APP_ROOT_API + "/transactions", obj, {
+      loading.value = true;
+      token.value = await authStore.getFromStorage("token");
+      await axios.post(process.env.VUE_APP_ROOT_API + "/transactions", obj, {
         headers: {
           authorization: `Bearer ${token.value}`,
         },
@@ -47,6 +47,8 @@ export const useTxStore = defineStore("tx", () => {
       console.error(err);
       message.value = err.response.data.message;
       color.value = "danger";
+    }finally{
+      loading.value = false;
     }
   }
 
@@ -54,7 +56,6 @@ export const useTxStore = defineStore("tx", () => {
     token.value = "";
     transactions.value = null;
     loading.value = false;
-  
     message.value = "";
     color.value = "";
   }
@@ -62,10 +63,8 @@ export const useTxStore = defineStore("tx", () => {
   return {
     transactions,
     loading,
-
     message,
     color,
-
     getAllTxs,
     postNewTX,
     resetStore,

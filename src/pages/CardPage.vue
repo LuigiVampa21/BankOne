@@ -142,7 +142,6 @@ export default defineComponent({
         if(opt.title === 'insurance' && opt.mode === true){
           setOpen(true, 'insurance');
           await cardStore.applyForInsurance()
-          
         }
         if(opt.title === 'physicalCard' && opt.mode === true){
           setOpen(true, 'card');

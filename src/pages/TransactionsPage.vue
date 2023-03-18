@@ -13,7 +13,7 @@
       <ion-grid>
         <ion-row class="ion-justify-content-center">
           <ion-row class="transactions-container red" v-if="transactions">
-            <base-item-row :tx="transactions"></base-item-row>
+            <base-item-row :currentUser="currentUser" :tx="transactions"></base-item-row>
           </ion-row>
           <ion-row class="transactions-container" v-else>
             <ion-text color="medium" class="no-history pos-down10">No transaction history</ion-text>
@@ -30,11 +30,12 @@ import {
   // onMounted,
   //  onUpdated, ref, 
    defineComponent} from 'vue'
+import { useAuthStore } from "../stores/auth"
 import { useTxStore } from "../stores/transactions"
 import { storeToRefs } from "pinia"
 
-import Income from "../utils/transaction/income";
-import Outcome from "../utils/transaction/outcome";
+// import Income from "../utils/transaction/income";
+// import Outcome from "../utils/transaction/outcome";
 import { IonGrid, IonRow, IonPage, IonText } from "@ionic/vue";
 import { useRouter } from "vue-router";
 
@@ -47,22 +48,25 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
+    const authStore = useAuthStore();
     const txStore = useTxStore();
     const {transactions, loading} = storeToRefs(txStore);
+    const { currentUser } = storeToRefs(authStore);
     // let allTxsR = ref(null);
     // onMounted(async () => {
       onBeforeMount(async () => {
-     await txStore.getAllTxs()
-     console.log(transactions.value);
+     await authStore.getUser(); 
+     await txStore.getAllTxs();
     })
     // onUpdated(() => {
     //   allTxsR.value = transactions;
     // })
     return {
-      Income,
-      Outcome,
+      // Income,
+      // Outcome,
       router,
       // allTxsR,
+      currentUser,
       loading,
       transactions,
     };

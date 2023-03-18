@@ -1,4 +1,0 @@
-SWIPER JS ASSETS
-disappear footer when scrolling down
-change from eur to usd
-make container for big screen eg.instagramLike

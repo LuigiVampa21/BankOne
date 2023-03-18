@@ -1,6 +1,5 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-// import { Storage } from "@ionic/storage";
 import { useAuthStore } from "./auth";
 import axios from "axios";
 
@@ -31,11 +30,11 @@ export const useOverviewStore = defineStore("overview", () => {
         lastTX.value = lastTx;
         beneficiary.value = beneficiaryName;
         siblings.value = knownAccounts
-        loading.value = false;
       } catch (err) {
         console.error(err);
+      }finally {
         loading.value = false;
-    }
+      }
   };
 
   const resetStore = () =>  {
@@ -47,16 +46,6 @@ export const useOverviewStore = defineStore("overview", () => {
     loading.value = false;
     beneficiary.value = "";
   }
-
-
-  // const resetOverview = () => {
-
-  // }
-
-  // maybe stock id of accounts into storage that would avoid that make request every time user wants to reload to another component
-
-  // const ionicOverviewStorage = new Storage();
-  // ionicOverviewStorage.create();
 
   return {
     bankAccounts,

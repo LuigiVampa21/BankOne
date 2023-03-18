@@ -1,9 +1,9 @@
 <template>
     <!-- Unit test has no second Card -->
-    <div class="cardP">
-  <!-- <div :class="card.type === 'digital' ? 'cardD' : 'cardP'"> -->
-    <!-- <div class="layout" v-if="!hasSecondCard && card.type === 'physical'"> -->
-      <div class="layout">
+    <!-- <div class="cardP"> -->
+      <!-- <div class="layout"> -->
+  <div :class="card.type === 'digital' ? 'cardD' : 'cardP'">
+    <div class="layout" v-if="!hasSecondCard && card.type === 'physical'">
       <p>
         Press Get Physical Card To Apply
       </p>
@@ -45,7 +45,7 @@
 <script>
 import { IonRow, IonText } from "@ionic/vue";
 import { defineComponent, ref, onMounted } from "vue";
-// import { formatter, dateFormatter } from "../../utils/card/formatCardNumbers";
+import { formatter, dateFormatter } from "../../utils/card/formatCardNumbers";
 
 export default defineComponent({
   name: "CardCreditCard",
@@ -58,8 +58,8 @@ export default defineComponent({
     let cardR = ref(null);
     onMounted(() => {
       cardR.value = props.card; 
-      // cardR.value.formattedCardNumbers = formatter(props.card.card_numbers);
-      // cardR.value.formattedDateNumbers = dateFormatter(props.card.expiration_date);
+      cardR.value.formattedCardNumbers = formatter(props.card.card_numbers);
+      cardR.value.formattedDateNumbers = dateFormatter(props.card.expiration_date);
     })
     return{
       cardR,
