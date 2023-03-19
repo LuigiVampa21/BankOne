@@ -3,17 +3,18 @@
     <ion-card-content class="ion-justify-content-center">
 
  <ion-row class="ion-justify-content-between last-transaction-container">
-        <base-flag :currentUserR="currentUser"></base-flag>
+        <base-flag class="flag" :currentUserR="currentUser"></base-flag>
         <div class="last-transaction">
           <ion-text class="ion-text-capitalize"
             >{{ txI?.type }} transfer</ion-text
           >
-          <ion-text color="medium" class="ion-text-uppercase" v-if="!type"><h6> <span v-if="txI.beneficiary_name !== 'Bank One Ltd.'">M. </span> {{ txI.beneficiary_name }}</h6></ion-text>
+          <ion-text color="medium" class="ion-text-uppercase" v-if="!type"><h6> <span v-if="txI.beneficiary_name !== 'Bank One Ltd.'"></span> {{ txI.type === "loan" ? "Bank One Ltd." : "M. " + txI.beneficiary_name }}</h6></ion-text>
         </div>
         <ion-row class="tx-amount ion-justify-content-end">
-          <ion-text :color="txI?.inflow ? 'success' : 'danger'"> {{txI?.inflow ? '+' : '-'}} {{txI?.amount}} {{currentUser?.currency === 'EURO' ? '€'
+          <ion-text class="amount" :color="txI?.inflow ? 'success' : 'danger'"> {{txI?.inflow ? '+' : '-'}} {{txI?.amount}} 
+          <span class="currency">{{currentUser?.currency === 'EURO' ? '€'
                     : currentUser?.currency === 'POUND' ? '£'
-                    : '$' }}</ion-text> 
+                    : '$' }}</span></ion-text> 
         </ion-row>
       </ion-row>
           </ion-card-content>
@@ -51,4 +52,14 @@ export default {
   height: 80px;
   width: 100%;
 }
+
+.amount{
+  font-size: 15px;
+}
+
+.currency{
+  font-size: 10px;
+}
+
+
 </style>

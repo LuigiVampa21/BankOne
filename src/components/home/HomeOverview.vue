@@ -26,22 +26,11 @@
     <ion-card-content v-if="lastTXR" class="ion-justify-content-center">
       <ion-row class="ion-justify-content-between last-transaction-container">
         <base-flag :currentUserR="currentUserR"></base-flag>
-        <!-- <ion-item color="secondary">
-          <ion-avatar>
-            <img
-              class="avatar"
-              :alt="'flag ' + currentUserR?.currency"
-              :src="currentUserR?.currency === 'EURO' ? require('../../../public/assets/flags/flag.europe.png') 
-                    : currentUserR?.currency === 'POUND' ? require('../../../public/assets/flags/flag.united-kingdom.png')
-                    : require('../../../public/assets/flags/flag.united-states.png')"
-            />
-          </ion-avatar>
-        </ion-item> -->
         <div class="last-transaction">
           <ion-text class="ion-text-capitalize"
             >{{ lastTXR?.type }} transfer</ion-text
           >
-          <ion-text color="medium" class="ion-text-uppercase"><h6> <span v-if="lastTXR.beneficiary_name !== 'Bank One Ltd.'">M. </span> {{ lastTXR.beneficiary_name }}</h6></ion-text>
+          <ion-text color="medium" class="ion-text-uppercase"><h6> <span v-if="lastTXR.beneficiary_name !== 'Bank One Ltd.'"></span> {{ isLoan ? "Bank One Ltd." : "M. " + lastTXR.beneficiary_name }}</h6></ion-text>
         </div>
         <ion-row class="tx-amount ion-justify-content-end">
           <ion-text :color="lastTXR?.inflow ? 'success' : 'danger'"> {{lastTXR?.inflow ? '+' : '-'}} {{lastTXR?.amount}} 
@@ -82,8 +71,6 @@ import {
 import {
   defineComponent,
   onBeforeUpdate,
-  // Comment for unit tests
-  // onBeforeMount,
   ref,
 } from "vue";
 export default defineComponent({
@@ -94,8 +81,7 @@ export default defineComponent({
     IonCard,
     IonCardTitle,
   },
-  props: ["bankAccounts", "lastTX", "currentUser"],
-  // setup() {
+  props: ["bankAccounts", "lastTX", "currentUser", "isLoan"],
   setup(props) {
     const router = useRouter();
     const authStore = useAuthStore();
@@ -109,13 +95,9 @@ export default defineComponent({
       }
       overviewTotal.value = sum(props.bankAccounts);
       lastTXR.value = props.lastTX;
+      console.log(lastTXR.value);
       currentUserR.value = props.currentUser;
-      console.log(currentUserR.value);
     });
-    // Commented for unit test = import fake bank Accounts
-    // onBeforeMount(() => {
-    //   overviewTotal.value = sum([account_checking, account_savings, account_investments], true);
-    // })
     return {
       overviewTotal,
       lastTXR,

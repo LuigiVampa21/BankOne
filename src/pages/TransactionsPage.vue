@@ -76,6 +76,7 @@ export default defineComponent({
 
 <style scoped>
 .transactions-container {
+  width: 100%;
   position: relative;
   top: 5vh;
 }

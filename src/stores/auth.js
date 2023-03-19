@@ -9,7 +9,7 @@ import {useLoanStore} from "./loans"
 import {useOverviewStore} from "./overview"
 import {useTxStore} from "./transactions"
 import {useWalletStore} from "./wallets"
-import { useSettingStore } from "./settings";
+import {useSettingStore} from "./settings";
 
 import router from '../router'
 import axios from "axios";
@@ -63,7 +63,6 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
         id: user.id,
         currency: user.currency
       };
-      console.log(currentUser.value);
       expirationTokenMilliSec.value = expiry * 1000;
       expirationTime.value = new Date(new Date().getTime() + expirationTokenMilliSec.value).getTime();
       currentToken.value = token;
@@ -87,6 +86,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       confirmPassword,
       email,
       firstName,
+      currency,
       lastName,
       password,
       phone,
@@ -97,6 +97,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
         lastName: lastName.toLowerCase(),
         phone,
         birthDate,
+        currency,
         confirmPassword,
         email,
         password,

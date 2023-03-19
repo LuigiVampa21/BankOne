@@ -1,10 +1,10 @@
 <template>
   <ion-item color="secondary">
-    <ion-avatar>
+    <ion-avatar>      
       <img
         class="avatar"
         alt="Silhouette of a person's head"
-        src="https://via.placeholder.com/150C/O https://placeholder.com"
+        src="https://ionicframework.com/docs/img/demos/avatar.svg"
       />
     </ion-avatar>
   </ion-item>

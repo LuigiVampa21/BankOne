@@ -41,6 +41,8 @@
         exinexFparent !== null
       "
       @accountReceiving="accountToReceive"
+      @backBtnDown="backBtnDownEmit"
+      @backBtnUp="backBtnUpEmit"
     />
     <ion-row
       v-if="newTransaction.accountReceiving !== null"
@@ -94,10 +96,19 @@ export default {
     const existingBeneficiaryFn = i => {
       emit("exinexBeneficiaryEmit", i);
     };
+    const backBtnDownEmit = () => {
+      emit('backBtnDown')
+    }
+    const backBtnUpEmit = () => {
+      console.log("up new beneficiary layer 2");
+      emit('backBtnUp')
+    }
     return {
       accountToReceive,
       updateAmount,
       existingBeneficiaryFn,
+      backBtnDownEmit,
+      backBtnUpEmit,
       amount,
       knowAccountsArray,
       existingBeneficiary,

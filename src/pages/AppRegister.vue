@@ -86,6 +86,7 @@
 
                     <ion-item color="secondary" class="account-type ion-margin-bottom ion-margin-top">
                       <ion-select color="secondary" v-model="currency" aria-label="Fruit" interface="action-sheet" placeholder="Preferred Currency">
+                      <!-- <ion-select color="secondary" v-model="currency" aria-label="Fruit" interface="action-sheet" placeholder="Preferred Currency" @ionChange="currencyChange"> -->
                         <template v-for="(enumCurrency, index) in enumCurrencies" :key="index">
                             <ion-select-option :value="enumCurrency" color="secondary">{{ enumCurrency }}</ion-select-option>
                           </template>
@@ -266,10 +267,9 @@ export default defineComponent({
       registerForm.values.credentials.email = "";
       registerForm.values.credentials.password = "";
     }
-    const currencyChange = currency => {
-      console.log("change");
-       console.log(currency);
-    }
+    // const currencyChange = currency => {
+    //   registerForm.values.credentials.currency = currency.detail.value;
+    // }
     const navigateToLoginPage = () => {
       ionRouter.navigate('/login', 'backward', 'replace')
     }
@@ -306,7 +306,7 @@ export default defineComponent({
       errors: useFormErrors(),
       sendRegister,
       showCred,
-      currencyChange
+      // currencyChange
     };
   },
 });

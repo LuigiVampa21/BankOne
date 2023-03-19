@@ -12,6 +12,7 @@ export const useOverviewStore = defineStore("overview", () => {
   let lastTX = ref(null);
   let loading = ref(false);
   let beneficiary = ref('');
+  let isLoan = ref(false);
 
   const getOverview = async () => {
     loading.value = true;
@@ -28,6 +29,9 @@ export const useOverviewStore = defineStore("overview", () => {
         const { accounts, lastTx, beneficiaryName, knownAccounts } = response.data;
         bankAccounts.value = accounts;
         lastTX.value = lastTx;
+        if(lastTX.value.type === "loan"){
+          isLoan.value = true;
+        }
         beneficiary.value = beneficiaryName;
         siblings.value = knownAccounts
       } catch (err) {
@@ -54,6 +58,7 @@ export const useOverviewStore = defineStore("overview", () => {
     loading,
     siblings,
     beneficiary,
+    isLoan,
     getOverview,
     resetStore,
   };

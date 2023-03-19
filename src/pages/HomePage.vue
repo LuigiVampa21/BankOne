@@ -34,7 +34,7 @@
             </div>
             <!-- HomeOverview -->
 
-            <HomeOverview :lastTX="lastTX" :bankAccounts="bankAccounts" :beneficiary="beneficiary" :currentUser="currentUser"/>
+            <HomeOverview :lastTX="lastTX" :bankAccounts="bankAccounts" :beneficiary="beneficiary" :currentUser="currentUser" :isLoan="isLoan"/>
 
             <!-- :overview="overview" -->
 
@@ -138,7 +138,7 @@ export default {
     const authStore = useAuthStore();
     const overviewStore = useOverviewStore();
     // Those will needs to be passed as arguments to components
-    const { lastTX, bankAccounts, beneficiary, siblings } = storeToRefs(overviewStore);
+    const { lastTX, bankAccounts, beneficiary, siblings, isLoan } = storeToRefs(overviewStore);
     const { isAuth, currentUser } = storeToRefs(authStore);
     const logout = async () => {
       await authStore.handleLogout();
@@ -163,6 +163,7 @@ export default {
       router,
       currentUser,
       lastTX,
+      isLoan,
       bankAccounts,
       beneficiary,
       siblings,
