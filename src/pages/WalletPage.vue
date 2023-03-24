@@ -48,7 +48,7 @@ export default defineComponent({
       txs: ref(null),
     })
     onMounted( async() => {
-      await walletStore.getAllAccounts()
+      await walletStore.getAllAccounts();
       accountsR.value.checking = accountsArray.value[0];
       accountsR.value.savings = accountsArray.value[1];
       accountsR.value.investments = accountsArray.value[2];

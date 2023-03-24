@@ -22,6 +22,7 @@
 </template>
 
 <script>
+
 import LoanApply from "../components/loan/LoanApply.vue";
 import LoanCalculator from "../components/loan/LoanCalculator.vue";
 import { IonRow, IonPage, IonButton, toastController } from "@ionic/vue";

@@ -34,7 +34,7 @@
             </div>
             <!-- HomeOverview -->
 
-            <HomeOverview :lastTX="lastTX" :bankAccounts="bankAccounts" :beneficiary="beneficiary"/>
+            <HomeOverview :lastTX="lastTX" :bankAccounts="bankAccounts" :beneficiary="beneficiary" :currentUser="currentUser" :isLoan="isLoan"/>
 
             <!-- :overview="overview" -->
 
@@ -85,13 +85,7 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 import { useOverviewStore } from "../stores/overview";
 import { storeToRefs } from "pinia";
-import {
-  // reactive,
-  onMounted,
-  // onBeforeMount,
-  // onUpdated,
-  ref,
-} from "vue";
+import { onMounted, ref } from "vue";
 import {
   IonPage,
   IonAvatar,
@@ -102,8 +96,6 @@ import {
   IonRow,
   IonCol,
   IonContent,
-  // IonToolbar,
-  // useIonRouter,
   IonButton,
 } from "@ionic/vue";
 
@@ -138,49 +130,26 @@ export default {
     IonGrid,
     IonRow,
     IonCol,
-    // IonToolbar,
     IonButton,
   },
   setup() {
     const router = useRouter();
     let walletTotal = ref(0);
-    // const ionRouter = useIonRouter();
-    // const overview = reactive({
-    //   lastTx: null,
-    //   accounts: null,
-    // });
     const authStore = useAuthStore();
     const overviewStore = useOverviewStore();
     // Those will needs to be passed as arguments to components
-    const { lastTX, bankAccounts, beneficiary, siblings } = storeToRefs(overviewStore);
-    // let lastTXRef = ref(null);
-    // let bankAccountsRef = ref(null);
-    const { 
-      isAuth, 
-      currentUser } = storeToRefs(authStore);
+    const { lastTX, bankAccounts, beneficiary, siblings, isLoan } = storeToRefs(overviewStore);
+    const { isAuth, currentUser } = storeToRefs(authStore);
     const logout = async () => {
       await authStore.handleLogout();
-      // if (!isAuth.value) {
-      //   navigateToLoginPage();
-      // }
     };
-    // const navigateToLoginPage = () => {
-    //   ionRouter.navigate("/login", "backward", "replace");
-    // };
-    // onMounted(async () => {
-    //   onBeforeMount(async () => {
-    //   await overviewStore.getOverview();
-    //   walletTotal.value = sum(bankAccounts.value, true)
-    // });
-    // onUpdated(async () => {
-
-
 
     onMounted(async () => {
       const id = await authStore.getFromStorage("userID");
       if(!id) {
         return
       }
+      // console.log(currentUser.value);
       await overviewStore.getOverview();
       walletTotal.value = sum(bankAccounts.value, true)
     })
@@ -194,12 +163,12 @@ export default {
       router,
       currentUser,
       lastTX,
+      isLoan,
       bankAccounts,
       beneficiary,
       siblings,
       walletTotal,
       isAuth,
-      // overview,
       logout,
     };
   },

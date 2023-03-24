@@ -1,5 +1,5 @@
-import { ref } from "vue";
 import axios from "axios";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import { useAuthStore } from "./auth";
 import custormCard from "../utils/card/customCard"
@@ -51,9 +51,7 @@ export const useCardStore = defineStore("card", () => {
   };
 
   const applyForInsurance = async () => {
-
     if(hasInsurances.value){
-      // console.log(hasInsurances);
       errorAPIMessage.value = "You already applied for an insurance"
       return;
     }
@@ -81,7 +79,6 @@ export const useCardStore = defineStore("card", () => {
           authorization: `Bearer ${token.value}`,
         },
       })
-
     }catch(err){
       console.error(err);
     }

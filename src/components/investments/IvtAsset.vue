@@ -49,11 +49,6 @@
                     : { color: 'var(--ion-color-danger)' }
                     "
                 >
-                 <!-- :style="
-                    +asset.one_day_change > 0
-                    ? { color: 'var(--ion-color-success)' }
-                    : { color: 'var(--ion-color-danger)' }
-                    " -->
                 {{ asset.one_day_change }} %
               </h6>
             </div>

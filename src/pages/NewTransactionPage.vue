@@ -7,20 +7,22 @@
         :intext="intext"
         @accountSender="accountSender"
         @accountIE="accountIE"
-      />
-      <FinalizeTxInt
+        />
+        <FinalizeTxInt
         v-if="newTransaction.intext == 'internal'"
         :accounts="bankAccountsR"
         :newTransaction="newTransaction"
         @accountToReceive="accountToReceive"
         @amountToSend="amountToSend"
-      />
-      <FinalizeTxExt
+        />
+        <FinalizeTxExt
         v-if="newTransaction.intext == 'external'"
         :newTransaction="newTransaction"
         @exinexBeneficiaryEmit="exinexFn"
         @accountToReceiveFinalize="accountToReceive"
         @amountToSend="amountToSend"
+        @backBtnDown="backBtnDownFn"
+        @backBtnUp="backBtnUpFn"
         :exinexFparent="newTransaction.exinex"
       />
 
@@ -54,11 +56,10 @@
 </template>
 
 <script>
+
 import FinalizeTxInt from "@/components/newTransaction/finalizeTx/FinalizeTxInt";
 import FinalizeTxExt from "@/components/newTransaction/finalizeTx/FinalizeTxExt";
-import { defineComponent, ref, onUnmounted, 
-onMounted
- } from "vue";
+import { defineComponent, ref, onUnmounted, onMounted } from "vue";
 import { IonPage, toastController } from "@ionic/vue";
 import ReactiveTxCp from "@/components/newTransaction/reactiveTxCp";
 
@@ -88,11 +89,12 @@ export default defineComponent({
     const { bankAccounts, siblings } = storeToRefs(overviewStore);
     const {message, color} = storeToRefs(txStore);
     const bankAccountsR = ref(null);
-    const moveUpBackBtn = ref(false);
+    let moveUpBackBtn = ref(false);
     const newTransaction = ref({
       // accountSending: "pR2mS$#7p71pOogHxfV$",
       // intext: "external",
       // accountReceiving: "dLO1G#fu$@YZWg3z2o0j",
+      // exinex: 'new beneficiary',
       accountSending: null,
       intext: null,
       accountReceiving: null,
@@ -111,6 +113,8 @@ export default defineComponent({
       // console.log(newTransaction.value);
       if(i === 'new beneficiary'){
         moveUpBackBtn.value = true;
+      }else{
+        moveUpBackBtn.value = false;
       }
     };
     const accountToReceive = account => {
@@ -131,6 +135,12 @@ export default defineComponent({
       await txToast(message.value, color.value);
       resetTxObj();
     };
+    const backBtnDownFn = () => {
+      moveUpBackBtn.value = false;
+    }
+    const backBtnUpFn = () => {
+      moveUpBackBtn.value = true;
+    }
     onMounted(async()=> {
       await overviewStore.getOverview();
       bankAccountsR.value = orderingAccount(bankAccounts.value);
@@ -148,14 +158,12 @@ export default defineComponent({
       })
       await toast.present()
     } 
-
     const backFn = () => {
       if (
         newTransaction.value.accountSending != null &&
         newTransaction.value.intext === null
       ) {
         newTransaction.value.accountSending = null;
-        // console.log(1);
       }
       if (
         newTransaction.value.intext !== null &&
@@ -163,7 +171,6 @@ export default defineComponent({
         newTransaction.value.accountReceiving === null
       ) {
         newTransaction.value.intext = null;
-        // console.log(2);
       }
       if (
         newTransaction.value.intext === "internal" &&
@@ -171,7 +178,6 @@ export default defineComponent({
         newTransaction.value.amount == 0
       ) {
         newTransaction.value.accountReceiving = null;
-        // console.log(3);
       }
       if (
         newTransaction.value.intext === "external" &&
@@ -188,7 +194,6 @@ export default defineComponent({
         newTransaction.value.amount == 0
       ) {
         newTransaction.value.accountReceiving = null;
-        // console.log(newTransaction.value);
       }
     };
 
@@ -199,7 +204,6 @@ export default defineComponent({
       newTransaction.value.amount = 0;
     }
     return {
-      // accounts,
       accountSender,
       accountIE,
       accountToReceive,
@@ -207,6 +211,8 @@ export default defineComponent({
       backFn,
       sendTx,
       exinexFn,
+      backBtnDownFn,
+      backBtnUpFn,
       newTransaction,
       intext,
       moveUpBackBtn,
@@ -221,6 +227,8 @@ export default defineComponent({
 .back-btn {
   position: relative;
   top: 45vh;
+  --background: var(--ion-color-tertiary);
+  --color: var(--ion-color-primary);
 }
 .back-btn-up {
   position: relative;

@@ -1,7 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import { Storage } from "@ionic/storage";
-// import { useOverviewStore } from "./overview"
 
 import {useAssetsStore} from "./assets"
 import {useCardStore} from "./cards"
@@ -10,12 +9,7 @@ import {useLoanStore} from "./loans"
 import {useOverviewStore} from "./overview"
 import {useTxStore} from "./transactions"
 import {useWalletStore} from "./wallets"
-import { useSettingStore } from "./settings";
-
-// import { useRoute, useRouter } from 'vue-router'
-
-
-
+import {useSettingStore} from "./settings";
 
 import router from '../router'
 import axios from "axios";
@@ -23,12 +17,7 @@ import axios from "axios";
 
 export const useAuthStore = defineStore("auth", () => {
 
-  // const route = useRoute()
-  // const router = useRouter()
-
-  const allowedPath = ["/login", "/register", "/404", "/reset-password"];
-
-
+const allowedPath = ["/login", "/register", "/404", "/reset-password"];
 const assetsStore = useAssetsStore();
 const cardStore = useCardStore();
 const docsStore = useDocsStore();
@@ -42,7 +31,6 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
 
   let currentUser = ref(null);
   let currentToken = ref("");
-  //   isAuth = testing purposes => after prod just use if(currentUser.value !== null)
   let isAuth = ref(false);
   let registerSuccess = ref(false);
   let loading = ref(false);
@@ -73,6 +61,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       currentUser.value = {
         username: user.first_name,
         id: user.id,
+        currency: user.currency
       };
       expirationTokenMilliSec.value = expiry * 1000;
       expirationTime.value = new Date(new Date().getTime() + expirationTokenMilliSec.value).getTime();
@@ -85,7 +74,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       await overviewStore.getOverview();
       loading.value = false;
     } catch (err) {
-      errorAPIMessage.value = err;
+      errorAPIMessage.value = err.response.data.message;
       loading.value = false;
     }
   };
@@ -97,6 +86,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       confirmPassword,
       email,
       firstName,
+      currency,
       lastName,
       password,
       phone,
@@ -107,6 +97,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
         lastName: lastName.toLowerCase(),
         phone,
         birthDate,
+        currency,
         confirmPassword,
         email,
         password,
@@ -148,7 +139,8 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       currentToken.value = "";
       expirationTokenMilliSec.value = 0;
       clearAuthTimer();
-      storesArray.forEach(store => store.resetStore())
+      resetAllStores();
+      // storesArray.forEach(store => store.resetStore())
       setTimeout(() => {
         showLogoutToastr.value = false;
         logoutMsg.value = "";
@@ -178,6 +170,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
         currentUser.value = {
           username: user.first_name,
           id: user.id,
+          currency: user.currency
         };
         if (currentUser.value.id) {
           isAuth.value = true;
@@ -257,6 +250,10 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       loading.value = false;
     }
   }
+
+  const resetAllStores = () => {
+    storesArray.forEach(store => store.resetStore());
+  } 
 
   return {
     currentUser,

@@ -9,7 +9,9 @@
     <ion-row class="ion-justify-content-between">
         <ion-text color="medium">
           <h6>
-            {{ data?.amount }}$</h6>
+            {{ data?.amount }} {{currentUserR?.currency === 'EURO' ? '€'
+                    : currentUserR?.currency === 'POUND' ? '£'
+                    : '$' }}</h6>
           </ion-text>
           <div class="toggle-container">
             <ion-toggle :checked="showTxs && accTxs && data && accTxs.type === data.type" @ionChange="emitChange"></ion-toggle>
@@ -27,7 +29,11 @@ import {
   IonCard,
   IonToggle,
 } from "@ionic/vue";
-import { defineComponent,ref } from "vue";
+
+import { useAuthStore } from "../../stores/auth";
+import { storeToRefs } from "pinia" 
+
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   props: ["data", "accTxs", "loading"],
@@ -38,6 +44,8 @@ export default defineComponent({
     IonToggle,
   },
   setup(props, {emit}) {
+    const authStore = useAuthStore();
+    const { currentUser : currentUserR } = storeToRefs(authStore);
     const showTxs = ref(false);
     const emitChange = () => {
       showTxs.value = !showTxs.value;
@@ -45,6 +53,7 @@ export default defineComponent({
     }
     return {
       showTxs,
+      currentUserR,
       emitChange,
     };
   },

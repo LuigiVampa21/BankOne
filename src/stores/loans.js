@@ -14,16 +14,15 @@ export const useLoanStore = defineStore("loan", () => {
     loading.value = true;
     try{
     token.value = await authStore.getFromStorage("token");
-    const response = await axios.post(process.env.VUE_APP_ROOT_API + "/loans", obj, {
+    // const response = await axios.post(process.env.VUE_APP_ROOT_API + "/loans", obj, {
+    await axios.post(process.env.VUE_APP_ROOT_API + "/loans", obj, {
         headers: {
           authorization: `Bearer ${token.value}`,
         },
       })
-      console.log(response);
       message.value = 'Please check your mailbox to confirm the loan';
       color.value = "success";
     }catch(err){
-      console.error(err);
       message.value = err.response.data.message;
       color.value = "danger";
     }finally{

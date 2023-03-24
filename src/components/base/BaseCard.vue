@@ -19,7 +19,7 @@ export default defineComponent({
     IonRow,
     IonCard,
     IonText,
-  },
+  }
 });
 </script>
 

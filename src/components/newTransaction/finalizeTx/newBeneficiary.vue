@@ -43,9 +43,9 @@
 </template>
 
 <script>
-import { IonRow, IonText, IonInput } from "@ionic/vue";
+import { IonRow, IonText, IonInput, toastController, } from "@ionic/vue";
 import {defineComponent, ref, 
-  reactive
+  reactive, onUnmounted, onMounted
 } from "vue";
 // import newBeneficiary from "../../../utils/newTransferData/newBeneficiary";
 
@@ -65,12 +65,30 @@ export default defineComponent({
       const country = ref("");
       const iban = ref("");
     // CREATE NEW BENEFICIARY IN DATABASE
-    const newBeneficiaryAdded = () => {
+    const newBeneficiaryAdded = async () => {
+      if(!fullName.value || !country.value || !iban.value){
+        return beneficiaryToast("Please fill all of the inputs", "danger")
+      }
       newBeneficiary.fullName = fullName.value;
       newBeneficiary.country = country.value;
       newBeneficiary.iban = iban.value;
       emit("accountReceiving", newBeneficiary);
     };
+    const beneficiaryToast = async (message, color) => {
+      const toast = await toastController.create({
+        message,
+        duration: 2500,
+        position: "top",
+        color,
+      })
+      await toast.present()
+    }
+    onMounted(() => {
+      emit("backBtnUp")
+    })
+    onUnmounted(() => {
+      emit("backBtnDown")
+    })
     return {
       newBeneficiaryAdded,
       fullName,
