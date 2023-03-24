@@ -20,7 +20,7 @@
       </ion-row>
 
         <slot />
-        <div v-show="isVisible && !containerDisturb" class="router-container">
+        <div v-show="isVisible && !containerDisturb" class="router-container" :class="!needsResize ? '' : 'flatten'">
           <ion-icon
           @click="() => router.push('/home')"
           size="large"
@@ -58,6 +58,7 @@ import { settings } from "ionicons/icons";
 import { swapHorizontal } from "ionicons/icons";
 import { home } from "ionicons/icons";
 import { useRouter } from "vue-router";
+import { onMounted } from "vue";
 import {useAuthStore} from "../../stores/auth"
 import {useOverviewStore} from "../../stores/overview";
 import {useAssetsStore} from "../../stores/assets";
@@ -95,6 +96,9 @@ export default defineComponent({
     const loanStore = useLoanStore()
     const scrollTop = ref(0)
     const {loadingUser} = storeToRefs(authStore);
+    const needsResize = ref(false);
+    const height = ref(window.innerHeight);
+    const width = ref(window.innerWidth);
 
      const {loading: loadingO} = storeToRefs(overviewStore);
      const {loading: loadingA} = storeToRefs(assetsStore);
@@ -103,6 +107,12 @@ export default defineComponent({
      const {loading: loadingW} = storeToRefs(walletStore);
      const {loading: loadingD} = storeToRefs(docsStore);
      const {loading: loadingL} = storeToRefs(loanStore);
+
+     onMounted(() => {
+       if(height.value < 670 && width.value < 380 ){
+         needsResize.value = true;
+        }
+      })
 
      const handleScroll = (ev) => {
       scrollTop.value = ev.detail.scrollTop
@@ -127,6 +137,7 @@ export default defineComponent({
       loadingD,
       loadingL,
       isVisible,
+      needsResize,
       handleScroll,
     };
   },
@@ -151,5 +162,28 @@ export default defineComponent({
   transform: translateX(-50%);
   z-index: 1;
   margin: 0 auto;
+}
+
+.router-container.flatten {
+  transition: all 0.2s ease;
+  background: var(--ion-color-tertiary);
+  border: 1px solid white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 35vw;
+  max-width: 160px;
+  height: 6.5vh;
+  border-radius: 9999px;
+  position: fixed;
+  top: 90vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  margin: 0 auto;
+}
+
+.router-container.flatten ion-icon {
+  width: 22px;
 }
 </style>

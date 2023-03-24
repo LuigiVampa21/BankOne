@@ -114,6 +114,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
   const handleLogout = async (reason) => {
     loading.value = true;
     try{
+      router.push('/login');
     currentToken.value = await getFromStorage("token");
     await axios.get(process.env.VUE_APP_ROOT_API + '/auth/logout', {
       headers: {
@@ -149,7 +150,6 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       console.error(err);
     }finally{
       loading.value = false;
-      router.push('/login');
     }
   };
 
