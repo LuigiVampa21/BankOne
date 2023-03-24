@@ -3,43 +3,25 @@
     <ion-header v-if="backLink">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button
-            :defaultHref="backLink"
-            color="medium"
-          ></ion-back-button>
+          <ion-back-button :defaultHref="backLink" color="medium"></ion-back-button>
         </ion-buttons>
-        <ion-progress-bar v-if="loadingO || loadingA || loadingT || loadingC || loadingW || loadingD || loadingL" type="indeterminate" color="tertiary"></ion-progress-bar>
+        <ion-progress-bar v-if="loadingO || loadingA || loadingT || loadingC || loadingW || loadingD || loadingL"
+          type="indeterminate" color="tertiary"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ctn" :scroll-events="true">
-    <!-- <ion-content class="ctn" :scroll-events="true" @ionScroll="handleScroll($event)"> -->
-      <ion-row
-        v-if="title"
-        class="ion-margin-start ion-margin-bottom ion-padding-bottom"
-      >
+    <ion-content class="ctn" :scroll-events="true" @ionScroll="handleScroll($event)">
+      <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
+      <ion-row v-if="title" class="ion-margin-start ion-margin-bottom ion-padding-bottom">
         <h1 class="view-title ion-text-capitalize">{{ title }}</h1>
       </ion-row>
 
-      <!-- <div v-show="isVisible && !containerDisturb" class="router-container" :class="!needsResize ? '' : 'flatten'"> -->
-      <div class="router-container" :class="!needsResize ? '' : 'flatten'">
-        <ion-icon
-          @click="() => router.push('/home')"
-          size="large"
-          color="dark"
-          :icon="home"
-          ></ion-icon>
-          <ion-icon
-          @click="() => router.push('/transactions')"
-          size="large"
-          color="dark"
-          :icon="swapHorizontal"
-        ></ion-icon>
-        <ion-icon
-        @click="() => router.push('/settings')"
-        size="large"
-        color="dark"
-        :icon="settings"
-        ></ion-icon>
+      <div v-show="isVisible && !containerDisturb" class="router-container" :class="!needsResize ? '' : 'flatten'">
+        <ion-icon @click="() => router.push('/home')" size="large" color="dark" :icon="home"></ion-icon>
+        <ion-icon @click="() => router.push('/transactions')" size="large" color="dark" :icon="swapHorizontal"></ion-icon>
+        <ion-icon @click="() => router.push('/settings')" size="large" color="dark" :icon="settings"></ion-icon>
       </div>
       <slot />
     </ion-content>
@@ -54,28 +36,30 @@ import {
   IonButtons,
   IonPage,
   IonToolbar,
-  IonProgressBar
+  IonProgressBar,
+  IonRefresher,
+  IonRefresherContent,
 } from "@ionic/vue";
 import { settings } from "ionicons/icons";
 import { swapHorizontal } from "ionicons/icons";
 import { home } from "ionicons/icons";
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
-import {useAuthStore} from "../../stores/auth"
-import {useOverviewStore} from "../../stores/overview";
-import {useAssetsStore} from "../../stores/assets";
-import {useTxStore} from "../../stores/transactions";
-import {useCardStore} from "../../stores/cards";
-import {useWalletStore} from "../../stores/wallets";
-import {useDocsStore} from "../../stores/documents";
-import {useLoanStore} from "../../stores/loans";
-import {defineComponent, ref} from "vue";
-import {storeToRefs} from "pinia";
+import { useAuthStore } from "../../stores/auth"
+import { useOverviewStore } from "../../stores/overview";
+import { useAssetsStore } from "../../stores/assets";
+import { useTxStore } from "../../stores/transactions";
+import { useCardStore } from "../../stores/cards";
+import { useWalletStore } from "../../stores/wallets";
+import { useDocsStore } from "../../stores/documents";
+import { useLoanStore } from "../../stores/loans";
+import { defineComponent, ref } from "vue";
+import { storeToRefs } from "pinia";
 
 
 export default defineComponent({
   name: "HomePage",
-  props: ["backLink", "title", "containerDisturb"],
+  props: ["backLink", "title", "containerDisturb", "homeP"],
   components: {
     IonPage,
     IonContent,
@@ -83,9 +67,11 @@ export default defineComponent({
     IonBackButton,
     IonButtons,
     IonToolbar,
-    IonProgressBar
+    IonProgressBar,
+    IonRefresher,
+    IonRefresherContent,
   },
-  setup() {
+  setup(props) {
     const isVisible = ref(true);
     const router = useRouter();
     const authStore = useAuthStore();
@@ -96,34 +82,43 @@ export default defineComponent({
     const walletStore = useWalletStore()
     const docsStore = useDocsStore()
     const loanStore = useLoanStore()
-    // const scrollTop = ref(0)
-    const {loadingUser} = storeToRefs(authStore);
+    const scrollTop = ref(0)
+    const { loadingUser } = storeToRefs(authStore);
     const needsResize = ref(false);
     const height = ref(window.innerHeight);
     const width = ref(window.innerWidth);
 
-     const {loading: loadingO} = storeToRefs(overviewStore);
-     const {loading: loadingA} = storeToRefs(assetsStore);
-     const {loading: loadingT} = storeToRefs(txStore);
-     const {loading: loadingC} = storeToRefs(cardStore);
-     const {loading: loadingW} = storeToRefs(walletStore);
-     const {loading: loadingD} = storeToRefs(docsStore);
-     const {loading: loadingL} = storeToRefs(loanStore);
+    const { loading: loadingO } = storeToRefs(overviewStore);
+    const { loading: loadingA } = storeToRefs(assetsStore);
+    const { loading: loadingT } = storeToRefs(txStore);
+    const { loading: loadingC } = storeToRefs(cardStore);
+    const { loading: loadingW } = storeToRefs(walletStore);
+    const { loading: loadingD } = storeToRefs(docsStore);
+    const { loading: loadingL } = storeToRefs(loanStore);
 
-     onMounted(() => {
-       if(height.value < 670 && width.value < 380 ){
-         needsResize.value = true;
-        }
-      })
+    onMounted(() => {
+      if (height.value < 670 && width.value < 380) {
+        needsResize.value = true;
+      }
+    })
 
-    //  const handleScroll = (ev) => {
-    //   scrollTop.value = ev.detail.scrollTop
-    //     if(scrollTop.value >= 100){
-    //       isVisible.value = false
-    //       }else{
-    //         isVisible.value = true
-    //     }
-    // }
+    const handleScroll = (ev) => {
+      scrollTop.value = ev.detail.scrollTop
+      if (scrollTop.value >= 100) {
+        isVisible.value = false
+      } else {
+        isVisible.value = true
+      }
+    }
+
+    const handleRefresh = async (ev) => {
+      if(props.homeP){
+        await overviewStore.getOverview()
+      }
+      setTimeout(() => {
+        ev.target.complete();
+      }, 2000);
+    };
 
     return {
       settings,
@@ -140,7 +135,8 @@ export default defineComponent({
       loadingL,
       isVisible,
       needsResize,
-      // handleScroll,
+      handleScroll,
+      handleRefresh
     };
   },
 });

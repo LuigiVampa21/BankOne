@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content ref="el">
-      <base-layout>
+      <base-layout :homeP="true">
         <ion-row class="ion-justify-content-end">
           <ion-button @click="logout">
             <ion-text color="light" class="ion-text-capitalize"
