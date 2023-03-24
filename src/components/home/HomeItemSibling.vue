@@ -1,6 +1,6 @@
 <template>
        <ion-grid>
-        <ion-row class="ion-justify-content-center ion-margin-bottom">
+        <ion-row class="ion-justify-content-center ion-margin-bottom ion-margin-top">
           <ion-item color="secondary">
             <ion-avatar slot="start" class="sibling-avatar">
               <img
@@ -19,6 +19,7 @@
 <script>
 import { defineComponent } from "vue";
 import {IonGrid, IonRow, IonItem, IonAvatar, IonText} from "@ionic/vue";
+
 export default defineComponent({
 components: {
     IonGrid,
@@ -27,7 +28,7 @@ components: {
     IonAvatar,
     IonText
 },
-props:["data"]
+props:["data"],
 })
 </script>
 

@@ -2,7 +2,8 @@
   <ion-card color="secondary" class="sibling-accounts-container ion-padding-bottom">
     <ion-row v-if="siblings?.length" class="sibling-accounts-row">
 
-      <HomeItemSibling  v-for="sibling of siblings" :key="sibling.id" :data="sibling"/>
+      <!-- <HomeItemSibling  v-for="sibling of siblings" :key="sibling.id" :data="sibling"/> -->
+      <HomeItemSibling  v-for="sibling of sibToDisplay" :key="sibling.id" :data="sibling"/>
       
     </ion-row>
     <ion-row v-else class="ion-justify-content-center">
@@ -20,7 +21,7 @@ import {
   IonText,
 } from "@ionic/vue";
 import HomeItemSibling from "./HomeItemSibling.vue";
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, onUpdated, ref, toRaw } from "vue";
 
 export default defineComponent({
   components: {
@@ -30,6 +31,28 @@ export default defineComponent({
     HomeItemSibling,
   },
   props:['siblings'],
+  setup(props){
+    let array = ref(null);
+    let sibToDisplay = ref(null);
+ onMounted(() => {
+   checkArray();
+  })
+  onUpdated(() => {
+    checkArray();
+  })
+  const checkArray = () => {
+    array.value = props.siblings;
+    const length = toRaw(array.value);
+    if(length > 3){
+      sibToDisplay.value = props.siblings[3];
+    }else{
+      sibToDisplay.value = props.siblings;
+    }
+  }
+  return{
+    sibToDisplay
+  }
+}
 });
 </script>
 

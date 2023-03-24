@@ -1,7 +1,5 @@
 <template>
-    <!-- Unit test has no second Card -->
-    <!-- <div class="cardP"> -->
-      <!-- <div class="layout"> -->
+  <div :class="!needsResize ? '' : 'resized'">
   <div :class="card.type === 'digital' ? 'cardD' : 'cardP'">
     <div class="layout" v-if="!hasSecondCard && card.type === 'physical'">
       <p>
@@ -40,11 +38,12 @@
       <ion-text class="card-holder-logo"> VISA </ion-text>
     </ion-row>
   </div>
+</div>
 </template>
 
 <script>
 import { IonRow, IonText } from "@ionic/vue";
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, onUpdated } from "vue";
 import { formatter, dateFormatter } from "../../utils/card/formatCardNumbers";
 
 export default defineComponent({
@@ -56,13 +55,27 @@ export default defineComponent({
   props: ['card', 'showDetails', 'hasSecondCard'],
   setup(props){
     let cardR = ref(null);
+    let needsResize = ref(false);
+    const height = ref(window.innerHeight);
+    const width = ref(window.innerWidth);
     onMounted(() => {
       cardR.value = props.card; 
       cardR.value.formattedCardNumbers = formatter(props.card.card_numbers);
       cardR.value.formattedDateNumbers = dateFormatter(props.card.expiration_date);
+      if(height.value < 670 && width.value < 380 ){
+        needsResize.value = true;
+        console.log(needsResize.value);
+      }
+    })
+    onUpdated(() => {
+      if(height.value < 670 && width.value < 380 ){
+        needsResize.value = true;
+        console.log(needsResize.value);
+      }
     })
     return{
       cardR,
+      needsResize
     }
   }
 });
@@ -137,6 +150,7 @@ export default defineComponent({
   justify-content: space-around;
 }
 
+
 .hidden-card-numbers{
   font-size: 20px;
   letter-spacing: 2px;
@@ -150,4 +164,89 @@ export default defineComponent({
 .date{
   letter-spacing: 2px;
 }
+
+/* Card Resized */
+
+.resized .cardD {
+  width: 85vw;
+  max-width: 370px;
+  height: 30vh;
+  background: linear-gradient(
+    135deg,
+    rgba(131, 58, 180, 1) 15%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
+  border-radius: 10px;
+}
+.resized .cardP {
+  width: 85vw;
+  max-width: 370px;
+  height: 30vh;
+  background: rgb(252, 176, 69);
+  border-radius: 10px;
+}
+
+.resized .layout {
+  width: 85vw;
+  max-width: 370px;
+  height: 30vh;
+  position: absolute;
+  background: rgba(11,15,18, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.resized .layout p {
+  font-size: 20px;
+}
+.resized .chip {
+  width: 50px;
+  height: 30px;
+  background: #959494;
+  border-radius: 3px;
+}
+
+.resized .expiry-container {
+  width: 150%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resized .expiry-container h6,
+.resized .card-holder-title {
+  color: var(--ion-color-secondary);
+  font-size: 7px;
+  font-weight: bold;
+}
+
+.resized .card-holder-logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.resized .card-numbers{
+  width: 298px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.resized .hidden-card-numbers{
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.resized .hidden-card-holder-name{
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.resized .date{
+  letter-spacing: 2px;
+}
+
 </style>
