@@ -167,14 +167,15 @@ export default defineComponent({
   background: var(--ion-color-tertiary);
   border: 1px solid white;
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+  justify-content: space-evenly;
   align-items: center;
-  width: 35vw;
+  width: 40vw;
   max-width: 160px;
-  height: 6.5vh;
+  height: 7vh;
   border-radius: 9999px;
   position: fixed;
-  top: 75vh;
+  top: 80vh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
