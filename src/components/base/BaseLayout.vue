@@ -174,7 +174,7 @@ export default defineComponent({
   height: 6.5vh;
   border-radius: 9999px;
   position: fixed;
-  top: 90vh;
+  top: 80vh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
