@@ -30,7 +30,7 @@
           <ion-text class="ion-text-capitalize"
             >{{ lastTXR?.type }} transfer</ion-text
           >
-          <ion-text color="medium" class="ion-text-uppercase"><h6> <span v-if="lastTXR.beneficiary_name !== 'Bank One Ltd.'"></span> {{ isLoan ? "Bank One Ltd." : "M. " + lastTXR.beneficiary_name }}</h6></ion-text>
+          <ion-text color="medium" class="ion-text-uppercase"><h6> {{ isLoan || lastTXR.beneficiary_name === "Bank One Ltd." ? "Bank One Ltd." : "M. " + lastTXR.beneficiary_name }}</h6></ion-text>
         </div>
         <ion-row class="tx-amount ion-justify-content-end">
           <ion-text :color="lastTXR?.inflow ? 'success' : 'danger'"> {{lastTXR?.inflow ? '+' : '-'}} {{lastTXR?.amount}} 

@@ -32,6 +32,10 @@ props:["data"],
 })
 </script>
 
-<style>
+<style scoped>
+
+ion-item{
+  z-index: 0;
+}
 
 </style>
