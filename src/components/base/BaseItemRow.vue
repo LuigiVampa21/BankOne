@@ -8,7 +8,7 @@
           <ion-text class="ion-text-capitalize"
             >{{ txI?.type }} transfer</ion-text
           >
-          <ion-text color="medium" class="ion-text-uppercase" v-if="!type"><h6> <span v-if="txI.beneficiary_name !== 'Bank One Ltd.'"></span> {{ txI.type === "loan" ? "Bank One Ltd." : "M. " + txI.beneficiary_name }}</h6></ion-text>
+          <ion-text color="medium" class="ion-text-uppercase" v-if="!type"><h6>{{ txI.type === "loan" ? "Bank One Ltd." : "M. " + txI.beneficiary_name }}</h6></ion-text>
         </div>
         <ion-row class="tx-amount ion-justify-content-end">
           <ion-text class="amount" :color="txI?.inflow ? 'success' : 'danger'"> {{txI?.inflow ? '+' : '-'}} {{txI?.amount}} 
@@ -50,11 +50,23 @@ export default {
 <style scoped>
 .transaction-container {
   height: 80px;
-  width: 100%;
+  width: 95%;
+}
+
+.last-transaction-container{
+  display: flex;
+  flex-wrap: nowrap;
+  /* border: 1px solid white; */
+  transform: translateX(-30px);
+  width: 110%; 
+}
+
+ion-text{
+  font-size: 15px;
 }
 
 .amount{
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .currency{
