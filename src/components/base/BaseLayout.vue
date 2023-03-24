@@ -20,8 +20,8 @@
         <h1 class="view-title ion-text-capitalize">{{ title }}</h1>
       </ion-row>
 
-      <div v-show="isVisible && !containerDisturb" class="router-container" :class="!needsResize ? '' : 'flatten'">
       <!-- <div v-show="isVisible && !containerDisturb" class="router-container" :class="!needsResize ? '' : 'flatten'"> -->
+      <div class="router-container" :class="!needsResize ? '' : 'flatten'">
         <ion-icon
           @click="() => router.push('/home')"
           size="large"
