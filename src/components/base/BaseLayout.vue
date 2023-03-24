@@ -11,7 +11,8 @@
         <ion-progress-bar v-if="loadingO || loadingA || loadingT || loadingC || loadingW || loadingD || loadingL" type="indeterminate" color="tertiary"></ion-progress-bar>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ctn" :scroll-events="true" @ionScroll="handleScroll($event)">
+    <ion-content class="ctn" :scroll-events="true">
+    <!-- <ion-content class="ctn" :scroll-events="true" @ionScroll="handleScroll($event)"> -->
       <ion-row
         v-if="title"
         class="ion-margin-start ion-margin-bottom ion-padding-bottom"
@@ -94,7 +95,7 @@ export default defineComponent({
     const walletStore = useWalletStore()
     const docsStore = useDocsStore()
     const loanStore = useLoanStore()
-    const scrollTop = ref(0)
+    // const scrollTop = ref(0)
     const {loadingUser} = storeToRefs(authStore);
     const needsResize = ref(false);
     const height = ref(window.innerHeight);
@@ -114,14 +115,14 @@ export default defineComponent({
         }
       })
 
-     const handleScroll = (ev) => {
-      scrollTop.value = ev.detail.scrollTop
-        if(scrollTop.value >= 100){
-          isVisible.value = false
-          }else{
-            isVisible.value = true
-        }
-    }
+    //  const handleScroll = (ev) => {
+    //   scrollTop.value = ev.detail.scrollTop
+    //     if(scrollTop.value >= 100){
+    //       isVisible.value = false
+    //       }else{
+    //         isVisible.value = true
+    //     }
+    // }
 
     return {
       settings,
@@ -138,7 +139,7 @@ export default defineComponent({
       loadingL,
       isVisible,
       needsResize,
-      handleScroll,
+      // handleScroll,
     };
   },
 });

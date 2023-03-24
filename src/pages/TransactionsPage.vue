@@ -83,5 +83,8 @@ export default defineComponent({
 
 .no-history{
   font-size: 25px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
