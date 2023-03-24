@@ -7,29 +7,6 @@
   background: var(--ion-color-primary) ;
 }
 
-/* /* ion-content {
-  /* --offset-bottom: auto !important; */
-  /* --overflow: auto; */
-  /* background: var(--ion-secondary, var(--ion-primary, #f4f5f8)) !important; */
-  /* background: var(--ion-secondary) !important; */
-  /* overflow: auto; */
-/* } */
-
-/* .inner-scroll.scroll-y{
-
-} */
-
-/* .scroll-y {
-  /* overflow-y: var(--overflow);
-  overscroll-behavior-y: contain;
-  z-index: 0;
-  will-change: scroll-position; */
-  /* overflow-y: var(--hidden); */
-  /* overscroll-behavior-y: contain;
-  z-index: -1;
-  will-change: scroll-position;
-} */ 
-
 ion-content {
   --background: var(--ion-color-primary);
   --color: var(--ion-color-primary-contrast);

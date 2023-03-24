@@ -66,8 +66,8 @@
                     color="medium"
                     class="ion-margin-bottom ion-padding-bottom"
                   >
-                    <div class="ion-text-center" color="light-tint">
-                      <h6>2022 © Bank One Inc.</h6>
+                    <div class="ion-text-center">
+                      <ion-text color="medium">2022 © Bank One Inc.</ion-text>
                     </div>
                   </div>
                 </ion-col>

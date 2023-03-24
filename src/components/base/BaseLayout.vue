@@ -20,15 +20,14 @@
         <h1 class="view-title ion-text-capitalize">{{ title }}</h1>
       </ion-row>
 
-        <slot />
-        <div v-show="isVisible && !containerDisturb" class="router-container" :class="!needsResize ? '' : 'flatten'">
-          <ion-icon
+      <div v-show="isVisible && !containerDisturb" class="router-container" :class="!needsResize ? '' : 'flatten'">
+        <ion-icon
           @click="() => router.push('/home')"
           size="large"
           color="dark"
           :icon="home"
-        ></ion-icon>
-        <ion-icon
+          ></ion-icon>
+          <ion-icon
           @click="() => router.push('/transactions')"
           size="large"
           color="dark"
@@ -41,6 +40,7 @@
         :icon="settings"
         ></ion-icon>
       </div>
+      <slot />
     </ion-content>
   </ion-page>
 </template>
