@@ -112,7 +112,7 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
   };
 
   const handleLogout = async (reason) => {
-    loading.value = true;
+    // loading.value = true;
     try{
       router.push('/login');
     currentToken.value = await getFromStorage("token");
@@ -148,9 +148,10 @@ const storesArray = [assetsStore, cardStore, docsStore, loanStore, overviewStore
       }, 3500)
     }catch(err){
       console.error(err);
-    }finally{
-      loading.value = false;
     }
+    // finally{
+    //   loading.value = false;
+    // }
   };
 
   const getUser = async () => {

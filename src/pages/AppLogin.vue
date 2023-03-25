@@ -74,7 +74,7 @@
               <ion-grid>
                 <ion-row>
                   <ion-col>
-                    <div class="ion-text-center">
+                    <div class="ion-text-center fgt">
                       <ion-text color="tertiary" @click="showModal = !showModal"> Forgot Password? </ion-text>
                     </div>
                   </ion-col>
@@ -103,7 +103,7 @@
           <ion-title class="ion-text-capitalize">forgot password</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content color="primary" class="ion-padding">
+      <ion-content color="primary" class="ion-padding modal-content">
           <ion-row color="primary" class="pos-down10 input-container-modal">
             <ion-text>Please enter the email linked to your account</ion-text>
             <ion-input type="email" class="custom-3 ion-padding" v-model="emailInput" placeholder="Email"></ion-input>
@@ -324,10 +324,11 @@ h6 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* border: 1px solid red */
 }
 
 .input-container-modal > *:not(.errorMsg) {
-  max-width: 80vw;
+  width: 100%;
   margin: 20px 0 20px
 }
 
@@ -338,5 +339,9 @@ h6 {
 .forgot-container-error{
   align-self: start;
   margin-left: 32px;
+}
+
+.fgt{
+  cursor: pointer;
 }
 </style>
