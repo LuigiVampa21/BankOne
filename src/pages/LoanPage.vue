@@ -25,11 +25,12 @@
 
 import LoanApply from "../components/loan/LoanApply.vue";
 import LoanCalculator from "../components/loan/LoanCalculator.vue";
-import { IonRow, IonPage, IonButton, toastController } from "@ionic/vue";
+import { IonRow, IonPage, IonButton, toastController, useIonRouter } from "@ionic/vue";
 import { reactive } from "vue";
 import { useLoanStore } from "../stores/loans";
 import { storeToRefs } from "pinia";
 // import axios from "axios";
+
 
 export default {
   components: {
@@ -40,6 +41,7 @@ export default {
     IonButton,
   },
   setup() {
+    const ionRouter = useIonRouter();
     const loanStore = useLoanStore();
     const {message, color} = storeToRefs(loanStore);
     const loanObj = reactive({
@@ -69,9 +71,23 @@ export default {
       loanObj.total = total;
     };
     const sendLoan = async () => {
-      await loanStore.postNewLoan(loanObj)
-      // await axios.post(process.env.VUE_APP_ROOT_API + "/loans", loanObj);
+      await loanStore.postNewLoan(loanObj);
       loanToast(message.value, color.value)
+      if(color.value === "success"){
+        resetLoan();
+        navigateToHomePage();
+      }
+    };
+    const navigateToHomePage = () => {
+      ionRouter.navigate('/home', 'forward', 'replace')
+    };
+    const resetLoan = () => {
+      loanObj.amount = 0;
+      loanObj.income = 0;
+      loanObj.duration = 0;
+      loanObj.rate = 0;
+      loanObj.monthlyTotal = 0;
+      loanObj.total = 0;
     };
     const loanToast = async(message, color) => {
       const toast = await toastController.create({
