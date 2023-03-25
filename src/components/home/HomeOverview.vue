@@ -4,15 +4,15 @@
       <ion-row class="ion-justify-content-between">
         <ion-col>
           <ion-card-title class="fontWeight100" v-if="overviewTotal">
-            {{ overviewTotal }} {{currentUserR?.currency === 'EURO' ? '€'
-                    : currentUserR?.currency === 'POUND' ? '£'
-                    : '$' }}
+            {{ overviewTotal }} {{ currentUserR?.currency === 'EURO' ? '€'
+              : currentUserR?.currency === 'POUND' ? '£'
+                : '$' }}
           </ion-card-title>
-          <ion-text>{{currentUserR?.currency === 'EURO' ? 'EUR'
-                    : currentUserR?.currency === 'POUND' ? 'GBP'
-                    : 'USD' }}</ion-text>
+          <ion-text>{{ currentUserR?.currency === 'EURO' ? 'EUR'
+            : currentUserR?.currency === 'POUND' ? 'GBP'
+              : 'USD' }}</ion-text>
         </ion-col>
-          <base-flag :currentUserR="currentUserR"></base-flag>
+        <base-flag :currentUserR="currentUserR"></base-flag>
       </ion-row>
     </ion-card-header>
     <ion-row class="ion-justify-content-between">
@@ -27,16 +27,22 @@
       <ion-row class="ion-justify-content-between last-transaction-container">
         <base-flag :currentUserR="currentUserR"></base-flag>
         <div class="last-transaction">
-          <ion-text class="ion-text-capitalize"
-            >{{ lastTXR?.type }} transfer</ion-text
-          >
-          <ion-text color="medium" class="ion-text-uppercase"><h6> {{ isLoan || lastTXR.beneficiary_name === "Bank One Ltd." ? "Bank One Ltd." : "M. " + lastTXR.beneficiary_name }}</h6></ion-text>
+          <ion-text class="ion-text-capitalize">{{ lastTXR?.type }} transfer</ion-text>
+          <ion-text color="medium" class="ion-text-uppercase">
+            <h6> {{ isLoan || lastTXR.beneficiary_name === "Bank One Ltd." ? "Bank One Ltd." : "M. " +
+              lastTXR.beneficiary_name }}</h6>
+          </ion-text>
         </div>
         <ion-row class="tx-amount ion-justify-content-end">
-          <ion-text :color="lastTXR?.inflow ? 'success' : 'danger'"> {{lastTXR?.inflow ? '+' : '-'}} {{lastTXR?.amount}} 
-                    {{currentUserR?.currency === 'EURO' ? '€'
-                    : currentUserR?.currency === 'POUND' ? '£'
-                    : '$' }} </ion-text> 
+          <ion-text class="amount" :color="lastTXR?.inflow ? 'success' : 'danger'"> {{ lastTXR?.inflow ? '+' : '-' }}
+            {{ lastTXR?.amount }}
+            <span class="currency">
+
+              {{ currentUserR?.currency === 'EURO' ? '€'
+                : currentUserR?.currency === 'POUND' ? '£'
+                  : '$' }}
+            </span>
+          </ion-text>
         </ion-row>
       </ion-row>
     </ion-card-content>
@@ -85,12 +91,12 @@ export default defineComponent({
   setup(props) {
     const router = useRouter();
     const authStore = useAuthStore();
-    const {isAuth} = storeToRefs(authStore)
+    const { isAuth } = storeToRefs(authStore)
     let overviewTotal = ref(0);
     let lastTXR = ref(null);
     let currentUserR = ref(null);
     onBeforeUpdate(() => {
-      if(!isAuth.value) {
+      if (!isAuth.value) {
         return
       }
       overviewTotal.value = sum(props.bankAccounts);
@@ -113,8 +119,34 @@ export default defineComponent({
   font-weight: 100;
 }
 
-.last-transaction-container {
+/* .last-transaction-container {
   padding: 0;
   width: 100%;
+} */
+
+.transaction-container {
+  height: 80px;
+  width: 95%;
+}
+
+.last-transaction-container {
+  display: flex;
+  flex-wrap: nowrap;
+  transform: translateX(-30px);
+  width: 110%;
+}
+
+ion-text {
+  display: flex;
+  flex-wrap: nowrap;
+  font-size: 15px;
+}
+
+.amount {
+  font-size: 13px;
+}
+
+.currency {
+  font-size: 10px;
 }
 </style>

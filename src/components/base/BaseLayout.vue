@@ -18,7 +18,7 @@
         <h1 class="view-title ion-text-capitalize">{{ title }}</h1>
       </ion-row>
 
-      <div v-show="isVisible && !containerDisturb" class="router-container" :class="!needsResize ? '' : 'flatten'">
+      <div v-show="isVisible && homeP" class="router-container" :class="!needsResize ? '' : 'flatten'">
         <ion-icon @click="() => router.push('/home')" size="large" color="dark" :icon="home"></ion-icon>
         <ion-icon @click="() => router.push('/transactions')" size="large" color="dark" :icon="swapHorizontal"></ion-icon>
         <ion-icon @click="() => router.push('/settings')" size="large" color="dark" :icon="settings"></ion-icon>
@@ -59,7 +59,7 @@ import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "HomePage",
-  props: ["backLink", "title", "containerDisturb", "homeP"],
+  props: ["backLink", "title", "homeP"],
   components: {
     IonPage,
     IonContent,
@@ -104,7 +104,7 @@ export default defineComponent({
 
     const handleScroll = (ev) => {
       scrollTop.value = ev.detail.scrollTop
-      if (scrollTop.value >= 100) {
+      if (scrollTop.value >= 10) {
         isVisible.value = false
       } else {
         isVisible.value = true
@@ -144,44 +144,31 @@ export default defineComponent({
 
 <style scoped>
 .router-container {
+
   transition: all 0.2s ease;
-  background: var(--ion-color-tertiary);
-  border: 1px solid white;
+  /* background: var(--ion-color-tertiary); */
+  background: rgba(179,195,255, 0.8);
   display: flex;
-  justify-content: space-around;
+  border: 1px solid var(--ion-color-secondary);
+  justify-content: space-evenly;
   align-items: center;
   width: 40vw;
   max-width: 160px;
-  height: 6vh;
+  height: 7.5vh;
   border-radius: 9999px;
   position: fixed;
-  top: 90vh;
+  top: 85vh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
   margin: 0 auto;
+}
+
+.router-container ion-icon {
+  width: 22px;
 }
 
 .router-container.flatten {
-  transition: all 0.2s ease;
-  background: var(--ion-color-tertiary);
-  border: 1px solid white;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 35vw;
-  max-width: 160px;
-  height: 6.5vh;
-  border-radius: 9999px;
-  position: fixed;
-  top: 75vh;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  margin: 0 auto;
-}
-
-.router-container.flatten ion-icon {
-  width: 22px;
+  height: 8.5vh;
 }
 </style>
