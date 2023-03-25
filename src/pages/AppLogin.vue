@@ -215,13 +215,6 @@ export default defineComponent({
     }
     const loginToastFail = async() => {
       await loginToast(errorAPIMessage.value, 'danger')
-      // const toast = await toastController.create({
-      //   message: errorAPIMessage.value,
-      //   duration: 2500,
-      //   position: "top",
-      //   color: 'danger',
-      // })
-      // await toast.present()
     } 
     const confirm = () => {
       if(validateEmail(emailInput.value) === null || !emailInput.value){
